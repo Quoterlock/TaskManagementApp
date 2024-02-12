@@ -1,0 +1,49 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "TasksApp/1.0.0": {
+        "dependencies": {
+          "TasksApp.BusinessLogic": "1.0.0"
+        },
+        "runtime": {
+          "TasksApp.dll": {}
+        }
+      },
+      "TasksApp.BusinessLogic/1.0.0": {
+        "dependencies": {
+          "TasksApp.DataAccess": "1.0.0"
+        },
+        "runtime": {
+          "TasksApp.BusinessLogic.dll": {}
+        }
+      },
+      "TasksApp.DataAccess/1.0.0": {
+        "runtime": {
+          "TasksApp.DataAccess.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "TasksApp/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "TasksApp.BusinessLogic/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "TasksApp.DataAccess/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

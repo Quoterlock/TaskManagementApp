@@ -1,0 +1,26 @@
+﻿<Window x:Class="TasksApp.UI.Windows.TaskDetailsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TasksApp.UI.Windows"
+        mc:Ignorable="d"
+        Title="TaskDetailsWindow" Height="450" Width="800">
+    <Grid>
+        <StackPanel>
+            <Label>Text</Label>
+            <TextBox x:Name="taskTextBox" TextChanged="TextChanged"/>
+            <Label>DueTo (Date)</Label>
+            <TextBox x:Name="dueToTextBox" TextChanged="TextChanged"/>
+            <Label>Start Time</Label>
+            <TextBox x:Name="startTimeTextBox" TextChanged="TextChanged"/>
+            <Label>End Time</Label>
+            <TextBox x:Name="endTimeTextBox" TextChanged="TextChanged"/>
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="saveBtn" Click="saveBtn_Click">Save</Button>
+                <Button x:Name="markDoneBtn">MarkDone</Button>
+                <Button x:Name="goBackBtn">Back</Button>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
