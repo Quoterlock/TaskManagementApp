@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "WYWNbeqvSWkjtAO38LCaKPkgb7Jw6xwLo+YOpFNmO1Ay4nW4g7NXTSEH/oE6qKFDnkQWQM2zt9+zLgDMPJ61XA==",
+  "dgSpecHash": "R4kuOkoc8khiuB08iRQGf/kjBgkK5Ydx3YW3Qt8jt6h8W1h8pgBgb0fCXBTS2VHujFlaRpyRvTJk+oq6b82PgA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Kyrpa Vladislav\\Desktop\\TasksApp-BackUp\\TasksApp.DataAccess\\TasksApp.DataAccess.csproj",
+  "projectFilePath": "C:\\Users\\Kyrpa Vladislav\\source\\repos\\TasksApp\\TasksApp.DataAccess\\TasksApp.DataAccess.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "07CNtE2uY2noUXHkZ1E26Q+gKMnCm6oesT/UGGq0ClB1Gd7xX7YeNdqat36azC8MiIFLpgNWXjaFdW8HGA463w==",
+  "dgSpecHash": "NNMmDImG6Xkipg8YRdO64klWxHnxdUqVedhdfFnoGRvRP9NYAUPMXP96kDbAtiM+iKmw2RkavCk8clzCSGn0aQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Kyrpa Vladislav\\Desktop\\TasksApp-BackUp\\TasksApp.UnitTests\\TasksApp.UnitTests.csproj",
+  "projectFilePath": "C:\\Users\\Kyrpa Vladislav\\source\\repos\\TasksApp\\TasksApp.UnitTests\\TasksApp.UnitTests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Kyrpa Vladislav\\.nuget\\packages\\coverlet.collector\\6.0.0\\coverlet.collector.6.0.0.nupkg.sha512",
     "C:\\Users\\Kyrpa Vladislav\\.nuget\\packages\\microsoft.codecoverage\\17.6.0\\microsoft.codecoverage.17.6.0.nupkg.sha512",

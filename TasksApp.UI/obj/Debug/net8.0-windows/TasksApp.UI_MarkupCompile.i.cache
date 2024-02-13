@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-C:\Users\Kyrpa Vladislav\Desktop\TasksApp-BackUp\TasksApp.UI\obj\Debug\net8.0-windows\
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\obj\Debug\net8.0-windows\
 TasksApp.UI
 none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
-C:\Users\Kyrpa Vladislav\Desktop\TasksApp-BackUp\TasksApp.UI\App.xaml
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\App.xaml
 7-1793506064
 
 13-987697740
-200-101227605
+200-1155049639
 MainWindow.xaml;Pages\ListPage.xaml;Pages\MonthViewPage.xaml;Pages\PresentationPage.xaml;Pages\WeekViewPage.xaml;Windows\NewTaskWindow.xaml;Windows\TaskDetailsWindow.xaml;
 
 True

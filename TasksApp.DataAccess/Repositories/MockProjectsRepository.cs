@@ -14,9 +14,9 @@ namespace TasksApp.DataAccess.Repositories
         {
             return new List<ProjectEntity>()
             {
-                new ProjectEntity { Id = "0", Name = "Project1", IsArchived = false },
-                new ProjectEntity { Id = "1", Name = "Project2", IsArchived = false },
-                new ProjectEntity { Id = "2", Name = "Project3", IsArchived = true },
+                new ProjectEntity { Id = "0", Name = "Project1", IsArchived = false, Category = "Personal" },
+                new ProjectEntity { Id = "1", Name = "Project2", IsArchived = false, Category = "Study" },
+                new ProjectEntity { Id = "2", Name = "Project3", IsArchived = true, Category = "DevProjects" },
             };
         }
 

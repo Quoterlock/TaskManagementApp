@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = TasksApp.UI
-build_property.ProjectDir = C:\Users\Kyrpa Vladislav\Desktop\TasksApp-BackUp\TasksApp.UI\
+build_property.ProjectDir = C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

@@ -22,6 +22,7 @@ namespace TasksApp.BusinessLogic.Services
                 {
                     try
                     {
+                        model.Id = Guid.NewGuid().ToString();
                         _tasks.Add(Convert(model));
                     } catch(Exception ex)
                     {

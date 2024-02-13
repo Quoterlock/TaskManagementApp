@@ -50,11 +50,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Kyrpa Vladislav\\Desktop\\TasksApp-BackUp\\TasksApp.UI\\TasksApp.UI.csproj",
+      "projectUniqueName": "C:\\Users\\Kyrpa Vladislav\\source\\repos\\TasksApp\\TasksApp.UI\\TasksApp.UI.csproj",
       "projectName": "TasksApp.UI",
-      "projectPath": "C:\\Users\\Kyrpa Vladislav\\Desktop\\TasksApp-BackUp\\TasksApp.UI\\TasksApp.UI.csproj",
+      "projectPath": "C:\\Users\\Kyrpa Vladislav\\source\\repos\\TasksApp\\TasksApp.UI\\TasksApp.UI.csproj",
       "packagesPath": "C:\\Users\\Kyrpa Vladislav\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Kyrpa Vladislav\\Desktop\\TasksApp-BackUp\\TasksApp.UI\\obj\\",
+      "outputPath": "C:\\Users\\Kyrpa Vladislav\\source\\repos\\TasksApp\\TasksApp.UI\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Kyrpa Vladislav\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -71,8 +71,8 @@
         "net8.0-windows7.0": {
           "targetAlias": "net8.0-windows",
           "projectReferences": {
-            "C:\\Users\\Kyrpa Vladislav\\Desktop\\TasksApp-BackUp\\TasksApp.BusinessLayer\\TasksApp.BusinessLogic.csproj": {
-              "projectPath": "C:\\Users\\Kyrpa Vladislav\\Desktop\\TasksApp-BackUp\\TasksApp.BusinessLayer\\TasksApp.BusinessLogic.csproj"
+            "C:\\Users\\Kyrpa Vladislav\\source\\repos\\TasksApp\\TasksApp.BusinessLayer\\TasksApp.BusinessLogic.csproj": {
+              "projectPath": "C:\\Users\\Kyrpa Vladislav\\source\\repos\\TasksApp\\TasksApp.BusinessLayer\\TasksApp.BusinessLogic.csproj"
             }
           }
         }

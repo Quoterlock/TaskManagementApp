@@ -38,5 +38,11 @@ namespace TasksApp.UI
             var createTaskDialog = new NewTaskWindow(services);
             createTaskDialog.ShowDialog();        
         }
+
+        private void listBtn_Click(object sender, RoutedEventArgs e)
+        {
+            mainFrame.Content = new ListPage(services);
+            mainFrame.NavigationService.RemoveBackEntry();
+        }
     }
 }

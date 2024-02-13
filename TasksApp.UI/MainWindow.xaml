@@ -14,7 +14,7 @@
         
         <StackPanel>
             <Button x:Name="homeBtn">Home</Button>
-            <Button x:Name="listBtn">List</Button>
+            <Button x:Name="listBtn" Click="listBtn_Click">List</Button>
             <Button x:Name="calendarBtn" Click="calendarBtn_Click">Calendar</Button>
             <Button x:Name="addBtn" Click="addBtn_Click">New</Button>
         </StackPanel>

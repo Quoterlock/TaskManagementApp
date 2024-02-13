@@ -5558,11 +5558,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Kyrpa Vladislav\\Desktop\\TasksApp-BackUp\\TasksApp.UnitTests\\TasksApp.UnitTests.csproj",
+      "projectUniqueName": "C:\\Users\\Kyrpa Vladislav\\source\\repos\\TasksApp\\TasksApp.UnitTests\\TasksApp.UnitTests.csproj",
       "projectName": "TasksApp.UnitTests",
-      "projectPath": "C:\\Users\\Kyrpa Vladislav\\Desktop\\TasksApp-BackUp\\TasksApp.UnitTests\\TasksApp.UnitTests.csproj",
+      "projectPath": "C:\\Users\\Kyrpa Vladislav\\source\\repos\\TasksApp\\TasksApp.UnitTests\\TasksApp.UnitTests.csproj",
       "packagesPath": "C:\\Users\\Kyrpa Vladislav\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Kyrpa Vladislav\\Desktop\\TasksApp-BackUp\\TasksApp.UnitTests\\obj\\",
+      "outputPath": "C:\\Users\\Kyrpa Vladislav\\source\\repos\\TasksApp\\TasksApp.UnitTests\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Kyrpa Vladislav\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -5579,11 +5579,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\Kyrpa Vladislav\\Desktop\\TasksApp-BackUp\\TasksApp.BusinessLayer\\TasksApp.BusinessLogic.csproj": {
-              "projectPath": "C:\\Users\\Kyrpa Vladislav\\Desktop\\TasksApp-BackUp\\TasksApp.BusinessLayer\\TasksApp.BusinessLogic.csproj"
+            "C:\\Users\\Kyrpa Vladislav\\source\\repos\\TasksApp\\TasksApp.BusinessLayer\\TasksApp.BusinessLogic.csproj": {
+              "projectPath": "C:\\Users\\Kyrpa Vladislav\\source\\repos\\TasksApp\\TasksApp.BusinessLayer\\TasksApp.BusinessLogic.csproj"
             },
-            "C:\\Users\\Kyrpa Vladislav\\Desktop\\TasksApp-BackUp\\TasksApp.DataAccess\\TasksApp.DataAccess.csproj": {
-              "projectPath": "C:\\Users\\Kyrpa Vladislav\\Desktop\\TasksApp-BackUp\\TasksApp.DataAccess\\TasksApp.DataAccess.csproj"
+            "C:\\Users\\Kyrpa Vladislav\\source\\repos\\TasksApp\\TasksApp.DataAccess\\TasksApp.DataAccess.csproj": {
+              "projectPath": "C:\\Users\\Kyrpa Vladislav\\source\\repos\\TasksApp\\TasksApp.DataAccess\\TasksApp.DataAccess.csproj"
             }
           }
         }

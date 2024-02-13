@@ -11,5 +11,7 @@ namespace TasksApp.BusinessLogic.Interfaces
         ProjectModel GetProjectById(string id);
         List<ProjectModel> GetAll();
         List<ProjectModel> GetAllNotArchived();
+        Dictionary<string, List<ProjectModel>> GetAllGrouped(bool isArchived);
+        List<ProjectModel> GetAllArchived();
     }
 }

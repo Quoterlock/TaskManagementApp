@@ -44,6 +44,24 @@ namespace TasksApp.BusinessLogic.Services
             return ConvertToModels(_projectsRepository.GetAll());
         }
 
+        public List<ProjectModel> GetAllArchived()
+        {
+            return ConvertToModels(_projectsRepository.GetByMatch(p => p.IsArchived == true));
+        }
+
+        public Dictionary<string, List<ProjectModel>> GetAllGrouped(bool isArchived)
+        {
+            var projects = isArchived ? GetAllArchived() : GetAllNotArchived();
+            var grouped = new Dictionary<string, List<ProjectModel>>();
+            foreach(var project in projects)
+            {
+                if (!grouped.ContainsKey(project.Category))
+                    grouped[project.Category] = new List<ProjectModel>();
+                grouped[project.Category].Add(project);
+            }
+            return grouped;
+        }
+
         public List<ProjectModel> GetAllNotArchived()
         {
             return ConvertToModels(_projectsRepository.GetByMatch(p => p.IsArchived == false));
@@ -85,7 +103,8 @@ namespace TasksApp.BusinessLogic.Services
             {
                 Id = model.Id,
                 Name = model.Name,
-                IsArchived = model.IsArchived
+                IsArchived = model.IsArchived,
+                Category = model.Category
             };
         }
         private ProjectModel Convert(ProjectEntity entity)
@@ -95,6 +114,7 @@ namespace TasksApp.BusinessLogic.Services
                 Id = entity.Id,
                 Name = entity.Name,
                 IsArchived = entity.IsArchived,
+                Category = entity.Category
             };
         }
         private List<ProjectModel> ConvertToModels(IEnumerable<ProjectEntity> entities)

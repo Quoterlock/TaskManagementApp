@@ -14,7 +14,9 @@
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
 
-        <ListView x:Name="projectsListView"/>
-        <ListView x:Name="projectTasksListView" Grid.Column = "1"/>
+        <TreeView x:Name="projectsTreeView" SelectedItemChanged="projectsTreeView_SelectedItemChanged">
+        </TreeView>
+        <ListView x:Name="projectTasksListView" Grid.Column = "1">
+        </ListView>
     </Grid>
 </Page>

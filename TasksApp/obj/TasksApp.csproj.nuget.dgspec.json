@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Kyrpa Vladislav\\Desktop\\TasksApp-BackUp\\TasksApp\\TasksApp.csproj": {}
+    "C:\\Users\\Kyrpa Vladislav\\source\\repos\\TasksApp\\TasksApp\\TasksApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Kyrpa Vladislav\\Desktop\\TasksApp-BackUp\\TasksApp.BusinessLayer\\TasksApp.BusinessLogic.csproj": {
+    "C:\\Users\\Kyrpa Vladislav\\source\\repos\\TasksApp\\TasksApp.BusinessLayer\\TasksApp.BusinessLogic.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Kyrpa Vladislav\\Desktop\\TasksApp-BackUp\\TasksApp.BusinessLayer\\TasksApp.BusinessLogic.csproj",
+        "projectUniqueName": "C:\\Users\\Kyrpa Vladislav\\source\\repos\\TasksApp\\TasksApp.BusinessLayer\\TasksApp.BusinessLogic.csproj",
         "projectName": "TasksApp.BusinessLogic",
-        "projectPath": "C:\\Users\\Kyrpa Vladislav\\Desktop\\TasksApp-BackUp\\TasksApp.BusinessLayer\\TasksApp.BusinessLogic.csproj",
+        "projectPath": "C:\\Users\\Kyrpa Vladislav\\source\\repos\\TasksApp\\TasksApp.BusinessLayer\\TasksApp.BusinessLogic.csproj",
         "packagesPath": "C:\\Users\\Kyrpa Vladislav\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Kyrpa Vladislav\\Desktop\\TasksApp-BackUp\\TasksApp.BusinessLayer\\obj\\",
+        "outputPath": "C:\\Users\\Kyrpa Vladislav\\source\\repos\\TasksApp\\TasksApp.BusinessLayer\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Kyrpa Vladislav\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -28,8 +28,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\Kyrpa Vladislav\\Desktop\\TasksApp-BackUp\\TasksApp.DataAccess\\TasksApp.DataAccess.csproj": {
-                "projectPath": "C:\\Users\\Kyrpa Vladislav\\Desktop\\TasksApp-BackUp\\TasksApp.DataAccess\\TasksApp.DataAccess.csproj"
+              "C:\\Users\\Kyrpa Vladislav\\source\\repos\\TasksApp\\TasksApp.DataAccess\\TasksApp.DataAccess.csproj": {
+                "projectPath": "C:\\Users\\Kyrpa Vladislav\\source\\repos\\TasksApp\\TasksApp.DataAccess\\TasksApp.DataAccess.csproj"
               }
             }
           }
@@ -63,14 +63,14 @@
         }
       }
     },
-    "C:\\Users\\Kyrpa Vladislav\\Desktop\\TasksApp-BackUp\\TasksApp.DataAccess\\TasksApp.DataAccess.csproj": {
+    "C:\\Users\\Kyrpa Vladislav\\source\\repos\\TasksApp\\TasksApp.DataAccess\\TasksApp.DataAccess.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Kyrpa Vladislav\\Desktop\\TasksApp-BackUp\\TasksApp.DataAccess\\TasksApp.DataAccess.csproj",
+        "projectUniqueName": "C:\\Users\\Kyrpa Vladislav\\source\\repos\\TasksApp\\TasksApp.DataAccess\\TasksApp.DataAccess.csproj",
         "projectName": "TasksApp.DataAccess",
-        "projectPath": "C:\\Users\\Kyrpa Vladislav\\Desktop\\TasksApp-BackUp\\TasksApp.DataAccess\\TasksApp.DataAccess.csproj",
+        "projectPath": "C:\\Users\\Kyrpa Vladislav\\source\\repos\\TasksApp\\TasksApp.DataAccess\\TasksApp.DataAccess.csproj",
         "packagesPath": "C:\\Users\\Kyrpa Vladislav\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Kyrpa Vladislav\\Desktop\\TasksApp-BackUp\\TasksApp.DataAccess\\obj\\",
+        "outputPath": "C:\\Users\\Kyrpa Vladislav\\source\\repos\\TasksApp\\TasksApp.DataAccess\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Kyrpa Vladislav\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -118,14 +118,14 @@
         }
       }
     },
-    "C:\\Users\\Kyrpa Vladislav\\Desktop\\TasksApp-BackUp\\TasksApp\\TasksApp.csproj": {
+    "C:\\Users\\Kyrpa Vladislav\\source\\repos\\TasksApp\\TasksApp\\TasksApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Kyrpa Vladislav\\Desktop\\TasksApp-BackUp\\TasksApp\\TasksApp.csproj",
+        "projectUniqueName": "C:\\Users\\Kyrpa Vladislav\\source\\repos\\TasksApp\\TasksApp\\TasksApp.csproj",
         "projectName": "TasksApp",
-        "projectPath": "C:\\Users\\Kyrpa Vladislav\\Desktop\\TasksApp-BackUp\\TasksApp\\TasksApp.csproj",
+        "projectPath": "C:\\Users\\Kyrpa Vladislav\\source\\repos\\TasksApp\\TasksApp\\TasksApp.csproj",
         "packagesPath": "C:\\Users\\Kyrpa Vladislav\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Kyrpa Vladislav\\Desktop\\TasksApp-BackUp\\TasksApp\\obj\\",
+        "outputPath": "C:\\Users\\Kyrpa Vladislav\\source\\repos\\TasksApp\\TasksApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Kyrpa Vladislav\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -142,8 +142,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\Kyrpa Vladislav\\Desktop\\TasksApp-BackUp\\TasksApp.BusinessLayer\\TasksApp.BusinessLogic.csproj": {
-                "projectPath": "C:\\Users\\Kyrpa Vladislav\\Desktop\\TasksApp-BackUp\\TasksApp.BusinessLayer\\TasksApp.BusinessLogic.csproj"
+              "C:\\Users\\Kyrpa Vladislav\\source\\repos\\TasksApp\\TasksApp.BusinessLayer\\TasksApp.BusinessLogic.csproj": {
+                "projectPath": "C:\\Users\\Kyrpa Vladislav\\source\\repos\\TasksApp\\TasksApp.BusinessLayer\\TasksApp.BusinessLogic.csproj"
               }
             }
           }

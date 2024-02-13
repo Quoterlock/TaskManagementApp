@@ -21,3 +21,15 @@ C:\Users\Kyrpa Vladislav\Desktop\TasksApp-BackUp\TasksApp.DataAccess\obj\Debug\n
 C:\Users\Kyrpa Vladislav\Desktop\TasksApp-BackUp\TasksApp.DataAccess\obj\Debug\net8.0\refint\TasksApp.DataAccess.dll
 C:\Users\Kyrpa Vladislav\Desktop\TasksApp-BackUp\TasksApp.DataAccess\obj\Debug\net8.0\TasksApp.DataAccess.pdb
 C:\Users\Kyrpa Vladislav\Desktop\TasksApp-BackUp\TasksApp.DataAccess\obj\Debug\net8.0\ref\TasksApp.DataAccess.dll
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.DataAccess\bin\Debug\net8.0\TasksApp.DataAccess.deps.json
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.DataAccess\bin\Debug\net8.0\TasksApp.DataAccess.dll
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.DataAccess\bin\Debug\net8.0\TasksApp.DataAccess.pdb
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.DataAccess\obj\Debug\net8.0\TasksApp.DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.DataAccess\obj\Debug\net8.0\TasksApp.DataAccess.AssemblyInfoInputs.cache
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.DataAccess\obj\Debug\net8.0\TasksApp.DataAccess.AssemblyInfo.cs
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.DataAccess\obj\Debug\net8.0\TasksApp.DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.DataAccess\obj\Debug\net8.0\TasksApp.DataAccess.sourcelink.json
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.DataAccess\obj\Debug\net8.0\TasksApp.DataAccess.dll
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.DataAccess\obj\Debug\net8.0\refint\TasksApp.DataAccess.dll
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.DataAccess\obj\Debug\net8.0\TasksApp.DataAccess.pdb
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.DataAccess\obj\Debug\net8.0\ref\TasksApp.DataAccess.dll

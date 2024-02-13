@@ -11,5 +11,6 @@ namespace TasksApp.BusinessLogic.Models
         public string Id { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
         public bool IsArchived { get; set; } = false;
+        public string Category { get; set; } = string.Empty;
     }
 }

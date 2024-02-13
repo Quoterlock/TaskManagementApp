@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "N7nC2wBRi88Hw65LrmdAoMvibfVKArwQdkW+Mbpfn+Svvj5EudC14A+n1c7iLuHxPbEMdlRDZcr2J9D4UVCSXQ==",
+  "dgSpecHash": "F0SUmAipesq/habUc2Dvw+qtYPHFzy8NfhGOwF/D4vVNiiTYuxgNKx9MgIH9VRmVkg1a5FEROQVhB4bB8T+fwA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Kyrpa Vladislav\\Desktop\\TasksApp-BackUp\\TasksApp.BusinessLayer\\TasksApp.BusinessLogic.csproj",
+  "projectFilePath": "C:\\Users\\Kyrpa Vladislav\\source\\repos\\TasksApp\\TasksApp.BusinessLayer\\TasksApp.BusinessLogic.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
