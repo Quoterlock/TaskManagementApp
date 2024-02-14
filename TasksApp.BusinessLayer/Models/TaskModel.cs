@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TasksApp.BusinessLogic.Models
+﻿namespace TasksApp.BusinessLogic.Models
 {
     public class TaskModel
     {
@@ -15,6 +9,6 @@ namespace TasksApp.BusinessLogic.Models
         public TimeOnly EndTime { get; set; }
         public bool IsDone { get; set; }
         public int Priority { get; set; }
-        public ProjectModel Project { get; set; } = new ProjectModel();
+        public ProjectInfoModel Project { get; set; } = new ProjectInfoModel();
     }
 }

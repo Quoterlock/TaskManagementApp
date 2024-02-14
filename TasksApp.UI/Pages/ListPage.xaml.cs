@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using TasksApp.BusinessLogic.Interfaces;
 using TasksApp.BusinessLogic.Models;
 using TasksApp.UI.Services;
@@ -11,34 +12,39 @@ namespace TasksApp.UI.Pages
     /// </summary>
     public partial class ListPage : Page
     {
-        private Dictionary<string, List<ProjectModel>> projects;
-        private Dictionary<string, List<ProjectModel>> archivedProjects;
-        private ServicesContainer _services;
+        private List<ProjectInfoModel> archivedProjects;
+        private List<CategoryModel> activeCategories;
+        private readonly ServicesContainer _services;
         public ListPage(ServicesContainer services)
         {
             InitializeComponent();
             _services = services;
+            archivedProjects = [];
             LoadProjects();
         }
 
         private void LoadProjects()
         {
-            var service = _services.Get<IProjectsService>();
-            archivedProjects = service.GetAllGrouped(true);
-            projects = service.GetAllGrouped(false);
+            var projectsService = _services.Get<IProjectsService>();
+            var categoriesService = _services.Get<ICategoriesService>();
+
+            archivedProjects = projectsService.GetProjectsList().Where(p=>p.IsArchived == true).ToList();
+            
+            var catList = categoriesService.GetList();
+            foreach(var category in catList)
+                activeCategories.Add(categoriesService.GetCategoryWithProjects(category.Id));
 
             var activeFolder = new TreeViewItem();
             activeFolder.Header = "Active";
-            foreach (var category in projects)
+            foreach (var category in activeCategories)
             {
                 var categoryItem = new TreeViewItem();
-                categoryItem.Header = category.Key;
-                foreach (var project in category.Value)
+                categoryItem.Header = category.Name;
+                foreach (var project in category.Projects)
                 {
                     var projectItem = new TreeViewItem();
                     projectItem.Header = project.Name;
-                    projectItem.DataContext = project;
-                    projectItem.MouseLeftButtonDown += ProjectsThreeItemClick;
+                    projectItem.DataContext = project.Id;
                     categoryItem.Items.Add(projectItem);
                 }
                 activeFolder.Items.Add(categoryItem);
@@ -46,19 +52,13 @@ namespace TasksApp.UI.Pages
 
             var archivedFolder = new TreeViewItem();
             archivedFolder.Header = "Archive";
-            foreach (var category in archivedProjects)
+
+            foreach (var projectInfo in archivedProjects)
             {
-                var categoryItem = new TreeViewItem();
-                categoryItem.Header = category.Key;
-                foreach(var project in category.Value)
-                {
-                    var projectItem = new TreeViewItem();
-                    projectItem.Header = project.Name;
-                    projectItem.DataContext = project;
-                    projectItem.Selected += ProjectsThreeItemClick;
-                    categoryItem.Items.Add(projectItem);
-                }
-                archivedFolder.Items.Add(categoryItem);
+                var projectItem = new TreeViewItem();
+                projectItem.Header = projectInfo.Name;
+                projectItem.Uid = projectInfo.Id;
+                archivedFolder.Items.Add(projectItem);
             }
 
             projectsTreeView.Items.Clear();
@@ -66,43 +66,26 @@ namespace TasksApp.UI.Pages
             projectsTreeView.Items.Add(archivedFolder);
         }
 
-        private void ProjectsThreeItemClick(object sender, RoutedEventArgs e)
-        {
-            projectTasksListView.Items.Clear();
-            var projectItem = (TreeViewItem)sender;
-            var project = (ProjectModel)projectItem.DataContext;
-            var tasks = LoadTasksForProject(project);
-            foreach (var group in tasks) 
-            {
-                foreach (var task in group.Value) {
-                    var item = new ListViewItem();
-                    item.DataContext = task.Text;
-                    projectTasksListView.Items.Add(item);
-                }
-            }
-            
-        }
-
-        private Dictionary<TaskStatusEnum, List<TaskModel>> LoadTasksForProject(ProjectModel project)
+        private ProjectModel GetProjectWithTasks(string projectId)
         {
             var service = _services.Get<ITasksPresenter>();
-            return service.GetByProject(project);
+            return service.GetProjectWithTasks(projectId);
         }
 
         private void projectsTreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             projectTasksListView.Items.Clear();
             var projectItem = (TreeViewItem)e.NewValue;
-            var project = (ProjectModel)projectItem.DataContext;
-            if(project != null)
+            var projectId = (string)projectItem.DataContext;
+            if(projectId != null)
             {
-                var tasks = LoadTasksForProject(project);
-                foreach (var group in tasks)
+                var project = GetProjectWithTasks(projectId);
+                
+                // TODO: Create two lists for done and undone
+                // TODO: Create fields to display project info
+                foreach (var task in project.Tasks)
                 {
-                    foreach (var task in group.Value)
-                    {
-                        projectTasksListView.Items.Add(task.Text + " - DueTo: " + task.DueTo.ToString() + ", " + task.StartTime.ToString() + " - " + task.EndTime.ToString());
-                    }
+                    projectTasksListView.Items.Add(task.Text + " - DueTo: " + task.DueTo.ToString() + ", " + task.StartTime.ToString() + " - " + task.EndTime.ToString());
                 }
             }
         }

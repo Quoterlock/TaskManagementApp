@@ -6,67 +6,59 @@ namespace TasksApp.BusinessLogic.Services
 {
     public class TasksPresenter : ITasksPresenter
     {
-        private ITasksService _tasks;
-        private IProjectsService _projects;
+        private readonly ITasksService _tasks;
+        private readonly IProjectsService _projects;
+
         public TasksPresenter(ITasksService tasks, IProjectsService projects)
         {
             _projects = projects;
             _tasks = tasks;
         }
-        public List<TaskModel> GetAllUndoneTasks()
+
+        public List<CategoryModel> GetAllCategories()
         {
             throw new NotImplementedException();
         }
 
-        public List<TaskModel> GetByDate(DateTime date)
+        public List<TaskModel> GetByDate(DateTime date, bool archiveIncluded)
         {
-            var tasks = _tasks.GetTasksByDate(date);
-            return IncludeProjects(tasks);
+            var tasks = _tasks.GetTasksByDate(date, archiveIncluded);
+            return tasks;
         }
 
-        public Dictionary<DateTime, List<TaskModel>> GetByMonth(int year, int monthNumber)
+        public Dictionary<DateTime, List<TaskModel>> GetByMonth(int year, int monthNumber, bool archiveIncluded)
         {
             var monthTasks = new Dictionary<DateTime, List<TaskModel>>();
             for(int i = 1; i < DateTime.DaysInMonth(year, monthNumber)+1; i++)
             {
                 var date = new DateTime(year, monthNumber, i);
-                monthTasks.Add(date, IncludeProjects(GetByDate(date)));
+                monthTasks.Add(date, GetByDate(date, archiveIncluded));
             }
             return monthTasks;
         }
 
-        public Dictionary<TaskStatusEnum, List<TaskModel>> GetByProject(ProjectModel project)
-        {
-            var tasks = _tasks.GetTasksByProject(project.Id);
-            tasks = IncludeProjects(tasks);
-            var sortedTasks = new Dictionary<TaskStatusEnum, List<TaskModel>>
-            {
-                { TaskStatusEnum.Done, tasks.Where(t => t.IsDone == true).ToList() },
-                { TaskStatusEnum.Undone, tasks.Where(t => t.IsDone == false).ToList() }
-            };
-            return sortedTasks;
-        }
-
-        public Dictionary<DateTime, List<TaskModel>> GetByWeek(int year, int weekNumber)
+        public Dictionary<DateTime, List<TaskModel>> GetByWeek(int year, int weekNumber, bool archiveIncluded)
         {
             var weekTasks = new Dictionary<DateTime, List<TaskModel>>();
             var mondayDate = GetMondayDate(year, weekNumber);
             for (int i = 0; i < 7; i++)
             {
                 var date = mondayDate.AddDays(i);
-                weekTasks.Add(date, IncludeProjects(GetByDate(date)));
+                weekTasks.Add(date, GetByDate(date, archiveIncluded));
             }
             return weekTasks;
         }
 
         public List<TaskModel> GetOverdueTasks(DateTime date)
         {
-            return IncludeProjects(_tasks.GetOverdueTasks(date));
+            return _tasks.GetOverdueTasks(date);
         }
 
-        public List<TaskModel> SortByPriority()
+        public ProjectModel GetProjectWithTasks(string projectId)
         {
-            throw new NotImplementedException();
+            var project = _projects.GetProjectById(projectId);
+            project.Tasks = _tasks.GetTasksByProject(projectId);
+            return project;
         }
 
         private DateTime GetMondayDate(int year, int weekNumber)
@@ -86,15 +78,5 @@ namespace TasksApp.BusinessLogic.Services
             return firstMonday.AddDays(weekNumber * 7);
         }
 
-        private List<TaskModel> IncludeProjects(List<TaskModel> tasks)
-        {
-            var tasksResult = new List<TaskModel>();
-            foreach(var task in tasks) 
-            {
-                task.Project = _projects.GetProjectById(task.Project.Id);
-                tasksResult.Add(task);
-            }
-            return tasksResult;
-        }
     }
 }

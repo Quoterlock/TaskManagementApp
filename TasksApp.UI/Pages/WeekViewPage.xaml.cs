@@ -44,7 +44,7 @@ namespace TasksApp.UI.Pages
             System.Globalization.Calendar calendar = cultureInfo.Calendar;
             int weekNumber = calendar.GetWeekOfYear(currentDate, CalendarWeekRule.FirstFullWeek, DayOfWeek.Monday);
             
-            _tasks = presenter.GetByWeek(currentDate.Year, weekNumber);
+            _tasks = presenter.GetByWeek(currentDate.Year, weekNumber, false);
         }
 
         private void UpdateCanvas()

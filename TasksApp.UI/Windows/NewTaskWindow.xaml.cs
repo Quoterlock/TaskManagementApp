@@ -37,7 +37,7 @@ namespace TasksApp.UI.Windows
                 DueTo = DateOnly.Parse(dueToTextBox.Text),
                 StartTime = TimeOnly.Parse(startTimeTextBox.Text),
                 EndTime = TimeOnly.Parse(endTimeTextBox.Text),
-                Project = new ProjectModel() { Id = "0" }
+                Project = new ProjectInfoModel() { Id = "0" }
             };
             var tasksService = _services.Get<ITasksService>();
             tasksService.AddTask(task);

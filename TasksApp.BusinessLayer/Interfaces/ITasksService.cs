@@ -13,7 +13,7 @@ namespace TasksApp.BusinessLogic.Interfaces
         void DeleteTask(TaskModel model);
         void UpdateTask(TaskModel model);
         TaskModel GetTaskById(string id);
-        List<TaskModel> GetTasksByDate(DateTime date);
+        List<TaskModel> GetTasksByDate(DateTime date, bool archivedIncluded);
         List<TaskModel> GetTasksByProject(string projectId);
         List<TaskModel> GetOverdueTasks(DateTime date);
     }

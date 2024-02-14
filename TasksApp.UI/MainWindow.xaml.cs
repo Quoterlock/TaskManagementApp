@@ -1,7 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Windows;
 using TasksApp.BusinessLogic.Interfaces;
+using TasksApp.BusinessLogic.Models;
 using TasksApp.BusinessLogic.Services;
+using TasksApp.DataAccess;
+using TasksApp.DataAccess.Entities;
 using TasksApp.DataAccess.Interfaces;
 using TasksApp.DataAccess.Repositories;
 using TasksApp.UI.Pages;
@@ -20,11 +23,35 @@ namespace TasksApp.UI
         {
             InitializeComponent();
             services = new ServicesContainer();
-            services.Bind<ITasksRepository, MockTasksRepository>();
-            services.Bind<IProjectsRepository, MockProjectsRepository>();
-            services.Bind<ITasksService, TasksService>(services.Get<ITasksRepository>());
-            services.Bind<IProjectsService, ProjectsService>(services.Get<IProjectsRepository>());
-            services.Bind<ITasksPresenter, TasksPresenter>(services.Get<ITasksService>(), services.Get<IProjectsService>());
+            SetupBuilder.CheckFiles();
+            var dbContext = new AppDbContext();
+
+            services.Bind<ITasksRepository, TasksRepository>(dbContext);
+            services.Bind<IProjectsRepository, ProjectsRepository>(dbContext);
+            services.Bind<ICategoriesRepository, CategoriesRepository>(dbContext);
+
+            services.Bind<IAdapterME<TaskModel, TaskEntity>, TaskAdapter>();
+            services.Bind<IAdapterME<ProjectModel, ProjectEntity>, ProjectAdapter>();
+            services.Bind<IAdapterME<CategoryModel, CategoryEntity>, CategoryAdapter>();
+
+            
+            services.Bind<IProjectsService, ProjectsService>(
+                services.Get<IProjectsRepository>(),
+                services.Get<IAdapterME<ProjectModel, ProjectEntity>>());
+
+            services.Bind<ITasksService, TasksService>(
+                services.Get<ITasksRepository>(),
+                services.Get<IProjectsService>(),
+                services.Get<IAdapterME<TaskModel, TaskEntity>>());
+
+            services.Bind<ICategoriesService, CategoriesService>(
+                services.Get<ICategoriesRepository>(), 
+                services.Get<IProjectsService>(),
+                services.Get<IAdapterME<CategoryModel, CategoryEntity>>());
+
+            services.Bind<ITasksPresenter, TasksPresenter>(
+                services.Get<ITasksService>(),
+                services.Get<IProjectsService>());
         }
 
         private void calendarBtn_Click(object sender, RoutedEventArgs e)

@@ -8,10 +8,14 @@ namespace TasksApp.BusinessLogic.Services
     public class TasksService : ITasksService
     {
         private readonly ITasksRepository _tasks;
+        private readonly IAdapterME<TaskModel, TaskEntity> _tasksAdapter;
+        private readonly IProjectsService _projectsService;
 
-        public TasksService(ITasksRepository tasks) 
+        public TasksService(ITasksRepository tasks, IProjectsService projectsService, IAdapterME<TaskModel, TaskEntity> tasksAdapter) 
         {
             _tasks = tasks;
+            _tasksAdapter = tasksAdapter;
+            _projectsService = projectsService;
         }
 
         public void AddTask(TaskModel model)
@@ -22,27 +26,49 @@ namespace TasksApp.BusinessLogic.Services
                 {
                     try
                     {
-                        model.Id = Guid.NewGuid().ToString();
-                        _tasks.Add(Convert(model));
-                    } catch(Exception ex)
+                        // TODO: add check for category existence
+                        _tasks.Create(_tasksAdapter.ModelToEntity(model));
+                    } 
+                    catch(Exception ex)
                     {
                         throw new Exception(ex.Message);
                     }
                 }
             }
-            else throw new ArgumentNullException("Task_Model");
+            else throw new ArgumentNullException("task_model");
         }
 
         public void DeleteTask(TaskModel model)
         {
             if(model != null)
             {
-                if (!string.IsNullOrEmpty(model.Id))
+                try
                 {
-                    _tasks.Delete(model.Id);
+                    _tasks.Delete(_tasksAdapter.ModelToEntity(model));
+                }
+                catch (Exception ex) 
+                { 
+                    throw new Exception(ex.Message);
+                }
+
+            }
+            else throw new ArgumentNullException("task_model");
+        }
+
+        public void UpdateTask(TaskModel model)
+        {
+            if (model != null)
+            {
+                try
+                {
+                    _tasks.Update(_tasksAdapter.ModelToEntity(model));
+                }
+                catch(Exception ex)
+                {
+                    throw new Exception(ex.Message);
                 }
             }
-            else throw new ArgumentNullException("Task_Model");
+            else throw new ArgumentNullException(nameof(model));
         }
 
         public TaskModel GetTaskById(string id)
@@ -51,83 +77,56 @@ namespace TasksApp.BusinessLogic.Services
             {
                 var entity = _tasks.GetById(id);
                 if (entity != null)
-                    return Convert(entity);
-                else 
-                    throw new Exception("Task not found with id:" + id);
+                {
+                    var task = _tasksAdapter.EntityToModel(entity);
+                    task.Project = _projectsService.GetProjectsList()
+                        .FirstOrDefault(p => p.Id == entity.ProjectId) ?? new ProjectInfoModel();
+                    return task;
+                }
+                else throw new Exception("Task not found with id:" + id);
             }
             else throw new ArgumentNullException(nameof(id));
         }
 
-        public List<TaskModel> GetTasksByDate(DateTime date)
+        public List<TaskModel> GetTasksByDate(DateTime date, bool archiveIncluded)
         {
-            var entities = _tasks.GetByDate(date);
-            return ConvertToModels(entities);
+            if (archiveIncluded)
+                return ConvertToModels(_tasks.GetByMatch(t => 
+                    t.StartTime.Date.Equals(date.Date)));
+            else
+                return ConvertToModels(_tasks.GetByMatch(t => 
+                    t.StartTime.Date.Equals(date.Date) && 
+                    t.IsArchived == false));
         }
 
         public List<TaskModel> GetTasksByProject(string projectId)
         {
             if (!string.IsNullOrEmpty(projectId))
             {
-                var entities = _tasks.GetByProject(projectId);
+                var entities = _tasks.GetByMatch(t=>t.ProjectId == projectId);
                 return ConvertToModels(entities);
             }
             else throw new ArgumentNullException(nameof(projectId));
         }
 
-        public void UpdateTask(TaskModel model)
-        {
-            if(model != null)
-            {
-                if (!string.IsNullOrEmpty(model.Id))
-                {
-                    _tasks.Update(model.Id, Convert(model));
-                } 
-                else throw new ArgumentNullException(nameof(model.Id));
-            } 
-            else throw new ArgumentNullException(nameof(model));
-        }
-
         public List<TaskModel> GetOverdueTasks(DateTime date)
         {
-            var tasks = _tasks.GetOverdue(date);
+            var tasks = _tasks.GetByMatch(t=>t.StartTime.Date < date.Date);
             return ConvertToModels(tasks);
         }
 
-        private static TaskModel Convert(TaskEntity entity)
+        private List<TaskModel> ConvertToModels(IEnumerable<TaskEntity> entities)
         {
-            return new TaskModel
-            {
-                Id = entity.Id,
-                Text = entity.Text,
-                DueTo = DateOnly.FromDateTime(entity.StartTime),
-                StartTime = TimeOnly.FromDateTime(entity.StartTime),
-                EndTime = TimeOnly.FromDateTime(entity.EndTime),
-                Priority = entity.Priority,
-                IsDone = entity.IsDone,
-                Project = new ProjectModel() { Id = entity.ProjectId },
-            };
-        }
-
-        private static List<TaskModel> ConvertToModels(IEnumerable<TaskEntity> entities)
-        {
+            var projects = _projectsService.GetProjectsList();
             var models = new List<TaskModel>();
             foreach (var entity in entities)
-                models.Add(Convert(entity));
-            return models;
-        }
-
-        private static TaskEntity Convert(TaskModel model)
-        {
-            return new TaskEntity
             {
-                Id = model.Id,
-                Text = model.Text,
-                Priority = model.Priority,
-                ProjectId = model.Project.Id,
-                IsDone = model.IsDone,
-                StartTime = model.DueTo.ToDateTime(model.StartTime),
-                EndTime = model.DueTo.ToDateTime(model.EndTime)
-            };
+                var model = _tasksAdapter.EntityToModel(entity);
+                var project =
+                model.Project = projects.FirstOrDefault(p => p.Id == entity.ProjectId) ?? new ProjectInfoModel();
+                models.Add(model);
+            }
+            return models;
         }
     }
 }

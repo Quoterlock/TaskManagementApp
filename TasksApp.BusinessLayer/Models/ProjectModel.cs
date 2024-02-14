@@ -1,16 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TasksApp.BusinessLogic.Models
+﻿namespace TasksApp.BusinessLogic.Models
 {
     public class ProjectModel
     {
         public string Id { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
+        public string NoteText { get; set; } = string.Empty;
+        public CategoryModel Category { get; set; } = new CategoryModel();
+        public List<TaskModel> Tasks { get; set; } = [];
         public bool IsArchived { get; set; } = false;
-        public string Category { get; set; } = string.Empty;
+    }
+    public class ProjectInfoModel
+    {
+        public string Id { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
+        public string CategoryId { get; set; } = string.Empty;
+        public bool IsArchived { get; set; } = false;
     }
 }

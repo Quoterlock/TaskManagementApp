@@ -8,22 +8,46 @@ namespace TasksApp.BusinessLogic.Services
     public class ProjectsService : IProjectsService
     {
         private readonly IProjectsRepository _projectsRepository;
-        public ProjectsService(IProjectsRepository projectsRepository) 
+        private readonly IAdapterME<ProjectModel, ProjectEntity> _projectAdapter;
+        public ProjectsService(
+            IProjectsRepository projectsRepository, 
+            IAdapterME<ProjectModel, ProjectEntity> projectAdapter) 
         {
             _projectsRepository = projectsRepository;
+            _projectAdapter = projectAdapter;
         }
-        public void AddProject(ProjectModel project)
+        
+        public void AddProject(string name, string categoryId)
         {
-            if (project != null)
+            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException("project_name");
+            if (string.IsNullOrEmpty(categoryId)) throw new ArgumentNullException("category_id");
+
+            try
             {
-                if (!string.IsNullOrEmpty(project.Name))
-                {
-                    project.Id = Guid.NewGuid().ToString();
-                    _projectsRepository.Add(Convert(project));
-                }
-                else throw new ArgumentNullException(nameof(project.Name));
+                _projectsRepository.Create(name, categoryId);
             }
-            else throw new ArgumentNullException(nameof(project));
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public void DeleteProject(string id)
+        {
+            if (!string.IsNullOrEmpty(id))
+            {
+                try
+                {
+                    // get project with no tasks
+                    var entity = _projectsRepository.GetById(id);
+                    _projectsRepository.Delete(entity);
+                }
+                catch (Exception ex) 
+                {
+                    throw new Exception(ex.Message);
+                }
+            }
+            else throw new ArgumentNullException("project_id");
         }
 
         public void DeleteProject(ProjectModel project)
@@ -32,7 +56,14 @@ namespace TasksApp.BusinessLogic.Services
             {
                 if (!string.IsNullOrEmpty(project.Id))
                 {
-                    _projectsRepository.Delete(project.Id);
+                    try
+                    {
+                        _projectsRepository.Delete(_projectAdapter.ModelToEntity(project));
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception(ex.Message);
+                    }
                 }
                 else throw new ArgumentNullException(nameof(project.Id));
             }
@@ -44,84 +75,95 @@ namespace TasksApp.BusinessLogic.Services
             return ConvertToModels(_projectsRepository.GetAll());
         }
 
-        public List<ProjectModel> GetAllArchived()
-        {
-            return ConvertToModels(_projectsRepository.GetByMatch(p => p.IsArchived == true));
-        }
-
-        public Dictionary<string, List<ProjectModel>> GetAllGrouped(bool isArchived)
-        {
-            var projects = isArchived ? GetAllArchived() : GetAllNotArchived();
-            var grouped = new Dictionary<string, List<ProjectModel>>();
-            foreach(var project in projects)
-            {
-                if (!grouped.ContainsKey(project.Category))
-                    grouped[project.Category] = new List<ProjectModel>();
-                grouped[project.Category].Add(project);
-            }
-            return grouped;
-        }
-
-        public List<ProjectModel> GetAllNotArchived()
-        {
-            return ConvertToModels(_projectsRepository.GetByMatch(p => p.IsArchived == false));
-        }
-
         public ProjectModel GetProjectById(string id)
         {
             if (!string.IsNullOrEmpty(id))
             {
                 var entity = _projectsRepository.GetById(id);
                 if (entity != null)
-                    return Convert(entity);
+                {
+                    var project = _projectAdapter.EntityToModel(entity);
+                    return project;
+                }
                 else 
                     throw new Exception("Project not found with id:" + id);
             }
             else throw new ArgumentNullException("project_id");
         }
 
+        public List<ProjectInfoModel> GetProjectsList()
+        {
+            var projects = _projectsRepository.GetAll();
+
+            var resultList = new List<ProjectInfoModel>();
+            foreach (var project in projects)
+                resultList.Add(new ProjectInfoModel 
+                { 
+                    Id = project.Id, 
+                    Name = project.Name, 
+                    IsArchived = project.IsArchived,
+                    CategoryId = project.CategoryId,
+                });
+            
+            return resultList;
+        }
+
         public void UpdateProject(ProjectModel project)
+        {
+            if (project == null) 
+                throw new ArgumentNullException(nameof(project));
+            if (string.IsNullOrEmpty(project.Id)) 
+                throw new ArgumentNullException(nameof(project.Id));
+            if (string.IsNullOrEmpty(project.Name)) 
+                throw new Exception("New project name is null or empty");
+
+            try
+            {
+                _projectsRepository.Update(_projectAdapter.ModelToEntity(project));
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+
+        }
+
+        public void Archive(ProjectModel project)
+        {
+            if(project != null)
+            {
+                try
+                {
+                    _projectsRepository.Archive(_projectAdapter.ModelToEntity(project));
+                }
+                catch(Exception ex) 
+                { 
+                    throw new Exception(ex.Message); 
+                }
+            }
+        }
+
+        public void Unarchive(ProjectModel project)
         {
             if (project != null)
             {
-                if (!string.IsNullOrEmpty(project.Id))
+                try
                 {
-                    if (!string.IsNullOrEmpty(project.Name))
-                    {
-                        _projectsRepository.Update(project.Id, Convert(project));
-                    }
-                    else throw new Exception("New project name is null or empty");
+                    _projectsRepository.Unarchive(_projectAdapter.ModelToEntity(project));
                 }
-                else throw new ArgumentNullException(nameof(project.Id));
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
             }
-            else throw new ArgumentNullException(nameof(project));
         }
 
-        private ProjectEntity Convert(ProjectModel model)
-        {
-            return new ProjectEntity
-            {
-                Id = model.Id,
-                Name = model.Name,
-                IsArchived = model.IsArchived,
-                Category = model.Category
-            };
-        }
-        private ProjectModel Convert(ProjectEntity entity)
-        {
-            return new ProjectModel
-            {
-                Id = entity.Id,
-                Name = entity.Name,
-                IsArchived = entity.IsArchived,
-                Category = entity.Category
-            };
-        }
         private List<ProjectModel> ConvertToModels(IEnumerable<ProjectEntity> entities)
         {
             var models = new List<ProjectModel>();
             foreach (var entity in entities)
-                models.Add(Convert(entity));
+                models.Add(_projectAdapter.EntityToModel(entity));
             return models;
         }
     }

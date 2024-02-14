@@ -4,12 +4,10 @@ namespace TasksApp.DataAccess.Interfaces
 {
     public interface ITasksRepository
     {
-        void Add(TaskEntity entity);
-        void Delete(string id);
-        void Update(string id, TaskEntity entity);
+        void Create(TaskEntity task);
+        void Delete(TaskEntity task);
+        void Update(TaskEntity task);
         TaskEntity GetById(string id);
-        IEnumerable<TaskEntity> GetByDate(DateTime date);
-        IEnumerable<TaskEntity> GetByProject(string projectId);
-        IEnumerable<TaskEntity> GetOverdue(DateTime date);
+        IEnumerable<TaskEntity> GetByMatch(Func<TaskEntity, bool> predicate);
     }
 }

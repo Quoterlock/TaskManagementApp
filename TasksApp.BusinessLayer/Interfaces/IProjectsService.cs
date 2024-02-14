@@ -5,13 +5,13 @@ namespace TasksApp.BusinessLogic.Interfaces
 {
     public interface IProjectsService
     {
-        void AddProject(ProjectModel project);
+        void AddProject(string name, string categoryId);
         void DeleteProject(ProjectModel project);
+        void DeleteProject(string id);
         void UpdateProject(ProjectModel project);
         ProjectModel GetProjectById(string id);
-        List<ProjectModel> GetAll();
-        List<ProjectModel> GetAllNotArchived();
-        Dictionary<string, List<ProjectModel>> GetAllGrouped(bool isArchived);
-        List<ProjectModel> GetAllArchived();
+        List<ProjectInfoModel> GetProjectsList();
+        void Archive(ProjectModel project);
+        void Unarchive(ProjectModel project);
     }
 }
