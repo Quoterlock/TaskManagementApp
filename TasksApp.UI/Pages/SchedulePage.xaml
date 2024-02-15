@@ -1,0 +1,47 @@
+﻿<Page x:Class="TasksApp.UI.Pages.SchedulePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TasksApp.UI.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="SchedulePage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="4">
+            <Button x:Name="addItemBtn" Content="Add Item" Width="60" Click="addItemBtn_Click"/>
+            <Button x:Name="clearBtn" Content="Clear All" Width="60" Click="clearBtn_Click"/>
+        </StackPanel>
+
+        <Label Grid.Row="1">Monday</Label>
+        <ListBox Grid.Row="2" x:Name="mondayListBox"/>
+        <Label Grid.Row="1" Grid.Column="1">Tuesday</Label>
+        <ListBox Grid.Row="2" Grid.Column="1" x:Name="tuesdayListBox"/>
+        <Label Grid.Row="1" Grid.Column="2">Wednesday</Label>
+        <ListBox Grid.Row="2" Grid.Column="2" x:Name="wednesdayListBox"/>
+        <Label Grid.Row="1" Grid.Column="3">Thursday</Label>
+        <ListBox Grid.Row="2" Grid.Column="3" x:Name="thursdayListBox"/>
+        <Label Grid.Row="3" Grid.Column="0">Friday</Label>
+        <ListBox Grid.Row="4" Grid.Column="0" x:Name="fridayListBox"/>
+        <Label Grid.Row="3" Grid.Column="1">Saturday</Label>
+        <ListBox Grid.Row="4" Grid.Column="1" x:Name="saturdayListBox"/>
+        <Label Grid.Row="3" Grid.Column="2">Sunday</Label>
+        <ListBox Grid.Row="4" Grid.Column="2" x:Name="sundayListBox"/>
+
+    </Grid>
+</Page>

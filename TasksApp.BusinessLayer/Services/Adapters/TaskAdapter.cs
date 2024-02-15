@@ -8,7 +8,7 @@ using TasksApp.BusinessLogic.Interfaces;
 using TasksApp.BusinessLogic.Models;
 using TasksApp.DataAccess.Entities;
 
-namespace TasksApp.BusinessLogic.Services
+namespace TasksApp.BusinessLogic.Services.Adapters
 {
     public class TaskAdapter : IAdapterME<TaskModel, TaskEntity>
     {

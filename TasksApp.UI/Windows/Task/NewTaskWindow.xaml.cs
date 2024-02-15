@@ -122,10 +122,5 @@ namespace TasksApp.UI.Windows
             return true;
             
         }
-
-        private void projectsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
     }
 }

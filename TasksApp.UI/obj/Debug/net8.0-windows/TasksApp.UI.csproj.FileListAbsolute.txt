@@ -187,3 +187,7 @@ C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\obj\Debug\net8.0-wind
 C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\obj\Debug\net8.0-windows\Windows\Task\NewTaskWindow.baml
 C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\obj\Debug\net8.0-windows\Windows\Task\TaskDetailsWindow.baml
 C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\obj\Debug\net8.0-windows\App.baml
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\obj\Debug\net8.0-windows\Pages\SchedulePage.g.cs
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\obj\Debug\net8.0-windows\Windows\Schedule\AddScheduleBlockWindow.g.cs
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\obj\Debug\net8.0-windows\Pages\SchedulePage.baml
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\obj\Debug\net8.0-windows\Windows\Schedule\AddScheduleBlockWindow.baml

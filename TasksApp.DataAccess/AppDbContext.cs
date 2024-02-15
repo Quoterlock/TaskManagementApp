@@ -9,6 +9,7 @@ namespace TasksApp.DataAccess
         public DbSet<TaskEntity> Tasks { get; set; }
         public DbSet<CategoryEntity> Categories { get; set; }
         public DbSet<ProjectEntity> Projects { get; set; }
+        public DbSet<ScheduleItemEntity> ScheduleItems { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

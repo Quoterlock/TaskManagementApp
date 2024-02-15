@@ -2,19 +2,19 @@
 using TasksApp.BusinessLogic.Models;
 using TasksApp.DataAccess.Entities;
 
-namespace TasksApp.BusinessLogic.Services
+namespace TasksApp.BusinessLogic.Services.Adapters
 {
     public class ProjectAdapter : IAdapterME<ProjectModel, ProjectEntity>
     {
         public ProjectModel EntityToModel(ProjectEntity entity)
         {
-            return new ProjectModel 
-            { 
+            return new ProjectModel
+            {
                 Id = entity.Id,
-                Name = entity.Name, 
+                Name = entity.Name,
                 IsArchived = entity.
-                IsArchived, 
-                NoteText = entity.NoteText 
+                IsArchived,
+                NoteText = entity.NoteText
             };
         }
 

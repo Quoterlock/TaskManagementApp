@@ -1,0 +1,45 @@
+﻿<Window x:Class="TasksApp.UI.Windows.Schedule.AddScheduleBlockWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TasksApp.UI.Windows.Schedule"
+        mc:Ignorable="d"
+        Title="AddSheduleBlockWindow" Height="250" Width="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="24"/>
+        </Grid.RowDefinitions>
+        <Label Content="Title"/>
+        <TextBox x:Name="titleTextBox" Grid.Row="1"/>
+        <Label Content="Duration (time)" Grid.Row="2"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="3">
+            <Label Content="start"/>
+            <TextBox x:Name="startTimeTextBox" Width="100"/>
+            <Label Content="- end"/>
+            <TextBox x:Name="endTimeTextBox" Width="100"/>
+        </StackPanel>
+        <Label Content="Repeat every:" Grid.Row="4"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="5">
+            <CheckBox Content="Mo" x:Name="moCheckBox"/>
+            <CheckBox Content="Tu" x:Name="tuCheckBox"/>
+            <CheckBox Content="We" x:Name="weCheckBox"/>
+            <CheckBox Content="Th" x:Name="thCheckBox"/>
+            <CheckBox Content="Fr" x:Name="frCheckBox"/>
+            <CheckBox Content="Sa" x:Name="saCheckBox"/>
+            <CheckBox Content="Su" x:Name="suCheckBox"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="7" HorizontalAlignment="Right">
+            <Button x:Name="addBtn" Content="Add" Width="60" Click="addBtn_Click"/>
+            <Button x:Name="cancelBtn" Content="Cancel" Width="60" Click="cancelBtn_Click"/>
+        </StackPanel>
+
+    </Grid>
+</Window>

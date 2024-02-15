@@ -8,24 +8,25 @@ using TasksApp.BusinessLogic.Interfaces;
 using TasksApp.BusinessLogic.Models;
 using TasksApp.DataAccess.Entities;
 
-namespace TasksApp.BusinessLogic.Services
+namespace TasksApp.BusinessLogic.Services.Adapters
 {
     public class CategoryAdapter : IAdapterME<CategoryModel, CategoryEntity>
     {
         public CategoryModel EntityToModel(CategoryEntity entity)
         {
-            return new CategoryModel { 
-                Id = entity.Id, 
-                Name = entity.Name 
+            return new CategoryModel
+            {
+                Id = entity.Id,
+                Name = entity.Name
             };
         }
 
         public CategoryEntity ModelToEntity(CategoryModel model)
         {
-            return new CategoryEntity 
-            { 
-                Id = model.Id, 
-                Name = model.Name, 
+            return new CategoryEntity
+            {
+                Id = model.Id,
+                Name = model.Name,
             };
         }
     }

@@ -10,6 +10,9 @@
     <Compile Update="Pages\ListPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Pages\SchedulePage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Windows\Category\EditCategoryWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -17,6 +20,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Windows\Project\NewProjectWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Windows\Schedule\AddScheduleBlockWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Windows\Task\NewTaskWindow.xaml.cs">
@@ -33,6 +39,9 @@
     <Page Update="Pages\ListPage.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Pages\SchedulePage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Windows\Category\EditCategoryWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -40,6 +49,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Windows\Project\NewProjectWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\Schedule\AddScheduleBlockWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Windows\Task\NewTaskWindow.xaml">
