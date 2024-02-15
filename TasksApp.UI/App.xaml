@@ -4,6 +4,16 @@
              xmlns:local="clr-namespace:TasksApp.UI"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <BitmapImage x:Key="calendarIcon" UriSource="/Assets/icons/calendar-icon.png"/>
+        <BitmapImage x:Key="listIcon" UriSource="/Assets/icons/list-icon.png"/>
+        <BitmapImage x:Key="addIcon" UriSource="/Assets/icons/add-icon.png"/>
+        <BitmapImage x:Key="homeIcon" UriSource="/Assets/icons/home-icon.png"/>
+        <BitmapImage x:Key="addListIcon" UriSource="/Assets/icons/add-list-icon.png"/>
+        <BitmapImage x:Key="uncheckedIcon" UriSource="/Assets/icons/unchecked-icon.png"/>
+        <BitmapImage x:Key="checkedIcon" UriSource="/Assets/icons/checked-icon.png"/>
+        <BitmapImage x:Key="deleteIcon" UriSource="/Assets/icons/delete-icon.png"/>
+        <BitmapImage x:Key="editIcon" UriSource="/Assets/icons/edit-icon.png"/>
+        <BitmapImage x:Key="archiveIcon" UriSource="/Assets/icons/archive-icon.png"/>
+        <BitmapImage x:Key="unarchiveIcon" UriSource="/Assets/icons/unarchive-icon.png"/>
     </Application.Resources>
 </Application>

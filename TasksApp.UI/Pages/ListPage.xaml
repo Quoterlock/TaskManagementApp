@@ -11,12 +11,39 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-        <TreeView x:Name="projectsTreeView" SelectedItemChanged="projectsTreeView_SelectedItemChanged">
-        </TreeView>
-        <ListView x:Name="projectTasksListView" Grid.Column = "1">
-        </ListView>
+        <ListBox Grid.Row="1" x:Name="categoriesListBox" Grid.RowSpan="3"/>
+        <ListBox Grid.Row="1" Grid.Column="1" x:Name="projectsListBox" Grid.RowSpan="3"/>
+        <ListBox Grid.Row="1" Grid.Column="2" x:Name="undoneTasksListBox"/>
+        <ListBox Grid.Row="3" Grid.Column="2" x:Name="doneTasksListBox"/>
+        <StackPanel Orientation="Horizontal">
+            <Label Content="Categories"/>
+            <Button x:Name="addCategoryBtn" Click="addCategoryBtn_Click">
+                <Image Source="{StaticResource addListIcon}"/>
+            </Button>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Column="1">
+            <Label Content="Projects"/>
+            <Button x:Name="addProjectBtn" Click="addProjectBtn_Click">
+                <Image Source="{StaticResource addListIcon}"/>
+            </Button>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Column="2">
+            <Label Content="Undone tasks"/>
+            <Button x:Name="addTaskBtn" Click="addTaskBtn_Click">
+                <Image Source="{StaticResource addIcon}"/>
+            </Button>
+        </StackPanel>
+        <Label Grid.Row="2" Grid.Column="2" Content="Done tasks"/>
+
     </Grid>
 </Page>

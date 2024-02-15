@@ -36,6 +36,7 @@ namespace TasksApp.BusinessLogic.Services
                 EndTime = model.DueTo.ToDateTime(model.EndTime),
                 Text = model.Text,
                 IsArchived = model.Project.IsArchived,
+                IsDone = model.IsDone,
                 ProjectId = model.Project.Id
             };
         }

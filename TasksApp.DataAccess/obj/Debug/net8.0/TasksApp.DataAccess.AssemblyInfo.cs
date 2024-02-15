@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TasksApp.DataAccess")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cf16e7e101ffaef1319b3275dc4f766bbaf7516c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+82b9611ff7581cacce6f7a02fb70214984bbb259")]
 [assembly: System.Reflection.AssemblyProductAttribute("TasksApp.DataAccess")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TasksApp.DataAccess")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

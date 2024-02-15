@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TasksApp.DataAccess.Entities;
 using TasksApp.DataAccess.Interfaces;
 using TasksApp;
+using Microsoft.EntityFrameworkCore;
 
 namespace TasksApp.DataAccess.Repositories
 {
@@ -33,6 +34,7 @@ namespace TasksApp.DataAccess.Repositories
             {
                 if (!string.IsNullOrEmpty(category.Id))
                 {
+                    _context.ChangeTracker.Clear();
                     _context.Categories.Remove(category);
                     _context.SaveChanges();
                 }
@@ -55,7 +57,7 @@ namespace TasksApp.DataAccess.Repositories
         {
             if (!string.IsNullOrEmpty(id))
             {
-                var category = _context.Categories.FirstOrDefault(c => c.Id == id);
+                var category = _context.Categories.AsNoTracking().FirstOrDefault(c => c.Id == id);
                 if (category != null)
                     return category;
                 else
@@ -66,7 +68,7 @@ namespace TasksApp.DataAccess.Repositories
 
         public IEnumerable<CategoryEntity> GetAll()
         {
-            return _context.Categories ?? Enumerable.Empty<CategoryEntity>();
+            return _context.Categories.AsNoTracking() ?? Enumerable.Empty<CategoryEntity>();
         }
     }
 }

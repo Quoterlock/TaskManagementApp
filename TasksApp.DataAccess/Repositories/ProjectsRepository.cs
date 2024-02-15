@@ -25,6 +25,7 @@ namespace TasksApp.DataAccess.Repositories
             foreach (var task in tasks)
                 task.IsArchived = true;
 
+            _context.ChangeTracker.Clear();
             _context.Tasks.UpdateRange(tasks);
             _context.Projects.Update(project);
             _context.SaveChanges();
@@ -43,6 +44,7 @@ namespace TasksApp.DataAccess.Repositories
             foreach (var task in tasks)
                 task.IsArchived = false;
 
+            _context.ChangeTracker.Clear();
             _context.Tasks.UpdateRange(tasks);
             _context.Projects.Update(project);
             _context.SaveChanges();
@@ -74,6 +76,7 @@ namespace TasksApp.DataAccess.Repositories
         {
             if (project != null)
             {
+                _context.ChangeTracker.Clear();
                 _context.Remove(project);
                 var tasks = _context.Tasks.Where(t => t.ProjectId == project.Id);
                 _context.Tasks.RemoveRange(tasks);

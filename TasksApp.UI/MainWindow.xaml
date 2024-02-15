@@ -11,12 +11,20 @@
             <ColumnDefinition Width="28"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        
+
         <StackPanel>
-            <Button x:Name="homeBtn">Home</Button>
-            <Button x:Name="listBtn" Click="listBtn_Click">List</Button>
-            <Button x:Name="calendarBtn" Click="calendarBtn_Click">Calendar</Button>
-            <Button x:Name="addBtn" Click="addBtn_Click">New</Button>
+            <Button x:Name="homeBtn">
+                <Image Source="{StaticResource homeIcon}"/>
+            </Button>
+            <Button x:Name="listBtn" Click="listBtn_Click">
+                <Image Source="{StaticResource listIcon}"/>
+            </Button>
+            <Button x:Name="calendarBtn" Click="calendarBtn_Click">
+                <Image Source="{StaticResource calendarIcon}"/>
+            </Button>
+            <Button x:Name="addBtn" Click="addBtn_Click">
+                <Image Source="{StaticResource addIcon}"/>
+            </Button>
         </StackPanel>
 
         <Frame x:Name="mainFrame" Grid.Column="1" NavigationUIVisibility="Hidden"/>

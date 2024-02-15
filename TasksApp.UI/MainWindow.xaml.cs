@@ -62,7 +62,7 @@ namespace TasksApp.UI
 
         private void addBtn_Click(object sender, RoutedEventArgs e)
         {
-            var createTaskDialog = new NewTaskWindow(services);
+            var createTaskDialog = new NewTaskWindow(services, string.Empty);
             createTaskDialog.ShowDialog();        
         }
 

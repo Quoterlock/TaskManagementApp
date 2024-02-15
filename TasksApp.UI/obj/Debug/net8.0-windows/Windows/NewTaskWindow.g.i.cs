@@ -101,7 +101,7 @@ namespace TasksApp.UI.Windows {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/TasksApp.UI;component/windows/newtaskwindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/TasksApp.UI;V1.0.0.0;component/windows/newtaskwindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\Windows\NewTaskWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

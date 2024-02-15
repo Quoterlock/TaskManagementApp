@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\App.xaml
-7-1793506064
+10160180871
 
-13-1879193578
+16-1944998183
 2191912132062
-MainWindow.xaml;Pages\ListPage.xaml;Pages\MonthViewPage.xaml;Pages\PresentationPage.xaml;Pages\WeekViewPage.xaml;Windows\NewTaskWindow.xaml;Windows\TaskDetailsWindow.xaml;
+MainWindow.xaml;Pages\ListPage.xaml;Pages\MonthViewPage.xaml;Pages\PresentationPage.xaml;Pages\WeekViewPage.xaml;Windows\Category\EditCategoryWindow.xaml;Windows\Category\NewCategoryWindow.xaml;Windows\Project\NewProjectWindow.xaml;Windows\Task\NewTaskWindow.xaml;Windows\Task\TaskDetailsWindow.xaml;
 
 False
 

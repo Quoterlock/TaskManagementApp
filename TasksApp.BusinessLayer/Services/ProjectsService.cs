@@ -1,4 +1,5 @@
-﻿using TasksApp.BusinessLogic.Interfaces;
+﻿using Microsoft.EntityFrameworkCore.Storage.Json;
+using TasksApp.BusinessLogic.Interfaces;
 using TasksApp.BusinessLogic.Models;
 using TasksApp.DataAccess.Entities;
 using TasksApp.DataAccess.Interfaces;
@@ -83,6 +84,7 @@ namespace TasksApp.BusinessLogic.Services
                 if (entity != null)
                 {
                     var project = _projectAdapter.EntityToModel(entity);
+                    project.Category = new CategoryModel { Id = entity.CategoryId };
                     return project;
                 }
                 else 

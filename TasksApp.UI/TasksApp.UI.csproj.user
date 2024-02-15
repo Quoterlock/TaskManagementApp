@@ -7,10 +7,22 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Windows\NewTaskWindow.xaml.cs">
+    <Compile Update="Pages\ListPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Windows\TaskDetailsWindow.xaml.cs">
+    <Compile Update="Windows\Category\EditCategoryWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Windows\Category\NewCategoryWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Windows\Project\NewProjectWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Windows\Task\NewTaskWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Windows\Task\TaskDetailsWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -18,10 +30,22 @@
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Windows\NewTaskWindow.xaml">
+    <Page Update="Pages\ListPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Windows\TaskDetailsWindow.xaml">
+    <Page Update="Windows\Category\EditCategoryWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\Category\NewCategoryWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\Project\NewProjectWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\Task\NewTaskWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\Task\TaskDetailsWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

@@ -28,6 +28,7 @@ namespace TasksApp.DataAccess.Repositories
             {
                 if (!string.IsNullOrEmpty(task.Id))
                 {
+                    _context.ChangeTracker.Clear();
                     _context.Tasks.Remove(task);
                     _context.SaveChanges();
                 }
@@ -53,6 +54,7 @@ namespace TasksApp.DataAccess.Repositories
         {
             if (task != null)
             {
+                _context.ChangeTracker.Clear();
                 _context.Update(task);
                 _context.SaveChanges();
             }
