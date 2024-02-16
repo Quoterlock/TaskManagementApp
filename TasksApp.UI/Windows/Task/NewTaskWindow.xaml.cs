@@ -70,6 +70,11 @@ namespace TasksApp.UI.Windows
 
         private void createBtn_Click(object sender, RoutedEventArgs e)
         {
+            if(!(timeBlockedCheckBox.IsChecked ?? false))
+            {
+                startTimeTextBox.Text = TimeOnly.MinValue.ToString();
+                endTimeTextBox.Text = TimeOnly.MinValue.ToString();
+            }
             if (CheckInput())
             {
                 var task = new TaskModel()
@@ -98,7 +103,7 @@ namespace TasksApp.UI.Windows
             {
                 var time = TimeOnly.Parse(startTimeTextBox.Text);
                 var time2 = TimeOnly.Parse(endTimeTextBox.Text);
-                if(time > time2) 
+                if(time > time2 && time2 != TimeOnly.MinValue) 
                 { 
                     MessageBox.Show("Start time must be before end time"); 
                     return false; 
@@ -121,6 +126,20 @@ namespace TasksApp.UI.Windows
 
             return true;
             
+        }
+
+        private void timeBlockedCheckBox_Changed(object sender, RoutedEventArgs e)
+        {
+            if (timeBlockedCheckBox.IsChecked ?? false)
+            {
+                startTimeTextBox.IsEnabled = true;
+                endTimeTextBox.IsEnabled = true;
+            }
+            else
+            {
+                startTimeTextBox.IsEnabled = false;
+                endTimeTextBox.IsEnabled = false;
+            }
         }
     }
 }

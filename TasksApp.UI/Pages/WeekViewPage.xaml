@@ -9,9 +9,54 @@
       Title="WeekViewPage">
 
     <Grid>
-        <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="24"/>
+            <RowDefinition x:Name="notTimeBlockedTasksRow" Height="48"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="1" Margin="40,0,19,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="24"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <ListBox x:Name="moListBox" Grid.Row="1"/>
+            <ListBox x:Name="tuListBox" Grid.Row="1" Grid.Column="1"/>
+            <ListBox x:Name="weListBox" Grid.Row="1" Grid.Column="2"/>
+            <ListBox x:Name="thListBox" Grid.Row="1" Grid.Column="3"/>
+            <ListBox x:Name="frListBox" Grid.Row="1" Grid.Column="4"/>
+            <ListBox x:Name="saListBox" Grid.Row="1" Grid.Column="5"/>
+            <ListBox x:Name="suListBox" Grid.Row="1" Grid.Column="6"/>
+
+            <Label x:Name="moLabel" VerticalAlignment="Center" HorizontalContentAlignment="Center"/>
+            <Label x:Name="tuLabel" Grid.Column="1" VerticalAlignment="Center" HorizontalContentAlignment="Center"/>
+            <Label x:Name="weLabel" Grid.Column="2" VerticalAlignment="Center" HorizontalContentAlignment="Center"/>
+            <Label x:Name="thLabel" Grid.Column="3" VerticalAlignment="Center" HorizontalContentAlignment="Center"/>
+            <Label x:Name="frLabel" Grid.Column="4" VerticalAlignment="Center" HorizontalContentAlignment="Center"/>
+            <Label x:Name="saLabel" Grid.Column="5" VerticalAlignment="Center" HorizontalContentAlignment="Center"/>
+            <Label x:Name="suLabel" Grid.Column="6" VerticalAlignment="Center" HorizontalContentAlignment="Center"/>
+        </Grid>
+        
+        
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled" Grid.Row="2">
             <Canvas x:Name="mainCanvas" SizeChanged="mainCanvas_SizeChanged"/>
         </ScrollViewer>
-        <Button Width="100" Height="28" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Button_Click">Refresh</Button>
+        <StackPanel Orientation="Horizontal" Grid.Row="0">
+            <Button Width="60" HorizontalAlignment="Left" Click="Button_Click">Refresh</Button>
+            <Button x:Name="applyScheduleBtn" Width="100" HorizontalAlignment="Left" Click="applyScheduleBtn_Click">Apply Schedule</Button>
+            <Button x:Name="prevWeekBtn" Content="prev" Click="prevWeekBtn_Click"/>
+            <Label x:Name="currentWeek" Width="100" VerticalAlignment="Center" HorizontalContentAlignment="Center"/>
+            <Button x:Name="nextWeekBtn" Content="next" Click="nextWeekBtn_Click"/>
+        </StackPanel>
     </Grid>
 </Page>

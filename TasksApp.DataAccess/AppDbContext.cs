@@ -7,6 +7,7 @@ namespace TasksApp.DataAccess
     public class AppDbContext : DbContext
     {
         public DbSet<TaskEntity> Tasks { get; set; }
+        public DbSet<ScheduleTaskEntity> ScheduleTasks { get; set; }
         public DbSet<CategoryEntity> Categories { get; set; }
         public DbSet<ProjectEntity> Projects { get; set; }
         public DbSet<ScheduleItemEntity> ScheduleItems { get; set; }

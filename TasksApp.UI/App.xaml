@@ -4,6 +4,15 @@
              xmlns:local="clr-namespace:TasksApp.UI"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+
+        <SolidColorBrush x:Key="scheduleBlockColor" Color="#34eb77" Opacity="0.5"/>
+        <SolidColorBrush x:Key="timeBlockColor0" Color="#fee440" Opacity="0.5"/>
+        <SolidColorBrush x:Key="timeBlockColor1" Color="#f15bb5" Opacity="0.5"/>
+        <SolidColorBrush x:Key="timeBlockColor2" Color="#9b5de5" Opacity="0.5"/>
+        <SolidColorBrush x:Key="timeBlockColor3" Color="#00bbf9" Opacity="0.5"/>
+        <SolidColorBrush x:Key="timeBlockColor4" Color="#00f5d4" Opacity="0.5"/>
+        <SolidColorBrush x:Key="timeBlockColor5" Color="#f77f00" Opacity="0.5"/>
+
         <BitmapImage x:Key="calendarIcon" UriSource="/Assets/icons/calendar-icon.png"/>
         <BitmapImage x:Key="listIcon" UriSource="/Assets/icons/list-icon.png"/>
         <BitmapImage x:Key="addIcon" UriSource="/Assets/icons/add-icon.png"/>

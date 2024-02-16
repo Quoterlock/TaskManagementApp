@@ -8,11 +8,13 @@ namespace TasksApp.BusinessLogic.Services
     {
         private readonly ITasksService _tasks;
         private readonly IProjectsService _projects;
+        private readonly IScheduleService _schedule;
 
-        public TasksPresenter(ITasksService tasks, IProjectsService projects)
+        public TasksPresenter(ITasksService tasks, IProjectsService projects, IScheduleService schedule)
         {
             _projects = projects;
             _tasks = tasks;
+            _schedule = schedule;
         }
 
         public List<CategoryModel> GetAllCategories()
@@ -61,6 +63,29 @@ namespace TasksApp.BusinessLogic.Services
             return project;
         }
 
+        public Dictionary<DateTime, List<ScheduleTaskModel>> GetScheduleTasksByMonth(int year, int month)
+        {
+            var monthTasks = new Dictionary<DateTime, List<ScheduleTaskModel>>();
+            for (int i = 1; i < DateTime.DaysInMonth(year, month) + 1; i++)
+            {
+                var date = new DateTime(year, month, i);
+                monthTasks.Add(date, _schedule.GetTasksByDate(date));
+            }
+            return monthTasks;
+        }
+
+        public Dictionary<DateTime, List<ScheduleTaskModel>> GetScheduleTasksByWeek(int year, int weekNumber)
+        {
+            var weekTasks = new Dictionary<DateTime, List<ScheduleTaskModel>>();
+            var mondayDate = GetMondayDate(year, weekNumber);
+            for (int i = 0; i < 7; i++)
+            {
+                var date = mondayDate.AddDays(i);
+                weekTasks.Add(date, _schedule.GetTasksByDate(date));
+            }
+            return weekTasks;
+        }
+
         private DateTime GetMondayDate(int year, int weekNumber)
         {
             DateTime jan1 = new DateTime(year, 1, 1);
@@ -77,6 +102,5 @@ namespace TasksApp.BusinessLogic.Services
 
             return firstMonday.AddDays(weekNumber * 7);
         }
-
     }
 }

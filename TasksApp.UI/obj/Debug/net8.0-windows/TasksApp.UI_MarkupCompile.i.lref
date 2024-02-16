@@ -10,6 +10,8 @@ FC:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\Windows\Category\Edi
 FC:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\Windows\Category\NewCategoryWindow.xaml;;
 FC:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\Windows\Project\NewProjectWindow.xaml;;
 FC:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\Windows\Schedule\AddScheduleBlockWindow.xaml;;
+FC:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\Windows\Schedule\EditScheduleBlockWindow.xaml;;
+FC:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\Windows\Schedule\EnterDateDialog.xaml;;
 FC:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\Windows\Task\NewTaskWindow.xaml;;
 FC:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\Windows\Task\TaskDetailsWindow.xaml;;
 

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TasksApp.UnitTests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+102350c0a967445ef862653c830ea8268675cb72")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8caac2034d30389a3525ae44ed651061ec1277e6")]
 [assembly: System.Reflection.AssemblyProductAttribute("TasksApp.UnitTests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TasksApp.UnitTests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 using TasksApp.BusinessLogic.Interfaces;
 using TasksApp.BusinessLogic.Models;
 using TasksApp.UI.Services;
@@ -26,29 +27,88 @@ namespace TasksApp.UI.Pages
     public partial class WeekViewPage : Page
     {
         private ServicesContainer _services;
-        private Dictionary<DateTime, List<TaskModel>> _tasks;
+        private Dictionary<DateTime, List<TaskModel>> _tasks = [];
+        private Dictionary<DateTime, List<ScheduleTaskModel>> _scheduleTasks = [];
+        private int _selectedWeek;
+        private int _selectedYear;
+
         public WeekViewPage(ServicesContainer services)
         {
             _services = services;
+            _selectedWeek = GetWeekNumber(DateTime.UtcNow);
+            _selectedYear = DateTime.UtcNow.Year;
+
             InitializeComponent();
+            UpdateState();
+        }
+
+        private void UpdateState()
+        {
             LoadTasks();
-            UpdateCanvas();
+            LoadSchedule();
+            currentWeek.Content = "Week " + _selectedWeek.ToString() + ", " + _selectedYear.ToString();
+            DisplayNotTimeBlockedTasks();
+            DisplayTasksOnCanvas();
+
         }
 
         private void LoadTasks()
         {
-            var presenter = _services.Get<ITasksPresenter>();
-
-            DateTime currentDate = DateTime.Now;
-            CultureInfo cultureInfo = CultureInfo.CurrentCulture;
-            System.Globalization.Calendar calendar = cultureInfo.Calendar;
-            int weekNumber = calendar.GetWeekOfYear(currentDate, CalendarWeekRule.FirstFullWeek, DayOfWeek.Monday);
-            
-            _tasks = presenter.GetByWeek(currentDate.Year, weekNumber, false);
+            var presenter = _services.Get<ITasksPresenter>();     
+            _tasks = presenter.GetByWeek(_selectedYear, _selectedWeek, false);
         }
 
-        private void UpdateCanvas()
+        private void LoadSchedule()
         {
+            _scheduleTasks = _services.Get<ITasksPresenter>().GetScheduleTasksByWeek(_selectedYear, _selectedWeek);
+        }
+
+        private void DisplayNotTimeBlockedTasks()
+        {
+            int itemHeight = 28;
+
+            var listsArray = new ListBox[] { moListBox, tuListBox, weListBox, thListBox, frListBox, saListBox, suListBox };
+            foreach (var list in listsArray)
+                list.Items.Clear();
+
+            var labelsArray = new Label[] { moLabel, tuLabel, weLabel, thLabel, frLabel, saLabel, suLabel };
+
+            var dayCounter = 0;
+
+            // display not time blocked tasks in list
+            foreach (var day in _tasks)
+            {
+                labelsArray[dayCounter].Content = day.Key.ToString("dd.MM.yyyy") + " (" + day.Key.DayOfWeek.ToString() + ")";
+                foreach (var task in day.Value)
+                {
+                    if (task.StartTime == task.EndTime && task.StartTime == TimeOnly.MinValue)
+                    {
+                        var item = new ListBoxItem();
+                        var label = new Label();
+                        label.Content = task.Text;
+                        label.Height = itemHeight;
+                        item.Uid = task.Id;
+                        item.Content = label;
+                        item.Height = itemHeight;
+                        item.MouseDoubleClick += TaskClicked;
+
+                        listsArray[dayCounter].Items.Add(item);
+                    }
+                }
+                dayCounter++;
+            }
+
+            // find max tasks count
+            int maxCount = 0;
+            foreach (var list in listsArray)
+                if (maxCount < list.Items.Count)
+                    maxCount = list.Items.Count;
+            notTimeBlockedTasksRow.Height = new GridLength(maxCount * itemHeight + itemHeight);
+        }
+
+        private void DisplayTasksOnCanvas()
+        {
+            // draw tasks on canvas
             mainCanvas.Children.Clear();
             int margin = 40;
             int canvasWidth = (int)mainCanvas.ActualWidth - margin;
@@ -100,11 +160,10 @@ namespace TasksApp.UI.Pages
                 mainCanvas.Children.Add(line);
             }
 
-            // display tasks
+            // display schedule
             int dayCounter = 0;
-            foreach (var pair in _tasks)
+            foreach (var pair in _scheduleTasks)
             {
-                // add title 
                 foreach(var task in pair.Value)
                 {
                     // draw task on canvas
@@ -112,8 +171,8 @@ namespace TasksApp.UI.Pages
                     label.Content = task.Text + "(" + task.StartTime.ToString() + " - " + task.EndTime.ToString() + ")";
                     label.Width = blockWidth;
                     label.Uid = task.Id;
-                    label.MouseDown += TaskClicked;
-                    label.Background = Brushes.Red;
+                    label.MouseDown += ScheduleTaskClicked;
+                    label.Background = GetColor("scheduleBlockColor");
                     label.Height = CalculateHeightByDuration((int)(task.EndTime - task.StartTime).TotalMinutes, canvasHeight);
                     if (label.Height < 2) label.Height = minBlockSize;
                     Canvas.SetTop(label, PosByTime(task.StartTime.Hour, task.StartTime.Minute, canvasHeight));
@@ -122,6 +181,118 @@ namespace TasksApp.UI.Pages
                 }
                 dayCounter++;
             }
+            
+            // display tasks
+            dayCounter = 0;
+            foreach (var pair in _tasks)
+            {
+                // add title 
+                foreach (var task in pair.Value)
+                {
+                    // if it is blocked
+                    if (task.StartTime != task.EndTime)
+                    {
+                        var label = new Label();
+                        label.Content = task.Text + "(" + task.StartTime.ToString() + " - " + task.EndTime.ToString() + ")";
+                        label.Width = blockWidth;
+                        label.Uid = task.Id;
+                        label.MouseDown += TaskClicked;
+                        label.Background = GetRandomBlockColor();
+                        if(task.EndTime == TimeOnly.MinValue && task.StartTime != task.EndTime)
+                        {
+                            label.Height = minBlockSize;
+                        }
+                        else
+                        {
+                            label.Height = CalculateHeightByDuration((int)(task.EndTime - task.StartTime).TotalMinutes, canvasHeight);
+                            if (label.Height < 2) label.Height = minBlockSize;
+                        }
+                        Canvas.SetTop(label, PosByTime(task.StartTime.Hour, task.StartTime.Minute, canvasHeight));
+                        Canvas.SetLeft(label, blockWidth * dayCounter + margin);
+                        mainCanvas.Children.Add(label);
+                    }
+                }
+                dayCounter++;
+            }
+        }
+
+        private void mainCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            DisplayTasksOnCanvas();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            LoadTasks();
+            DisplayTasksOnCanvas();
+        }
+
+        private void TaskClicked(object sender, MouseButtonEventArgs e)
+        {
+            var taskLabel = (Control)sender;
+            var taskWindow = new TaskDetailsWindow(taskLabel.Uid, _services);
+            taskWindow.ShowDialog();
+        }
+
+        private void ScheduleTaskClicked(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox.Show("Schedule task selected");
+            //var taskLabel = (Label)sender;
+            //var taskWindow = new TaskDetailsWindow(taskLabel.Uid, _services);
+            //taskWindow.ShowDialog();
+        }
+
+        private void applyScheduleBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var date = DateTime.UtcNow;
+            if (_selectedWeek != GetWeekNumber(date))
+            {
+                // get monday date of selected week
+
+                DateTime jan1 = new DateTime(_selectedYear, 1, 1);
+                int daysOffset = DayOfWeek.Monday - jan1.DayOfWeek;
+
+                DateTime firstMonday = jan1.AddDays(daysOffset);
+
+                int firstWeek = CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(jan1, CalendarWeekRule.FirstFullWeek, DayOfWeek.Monday);
+
+                int week = 0;
+                if (firstWeek <= 1)
+                    week = _selectedWeek - 1;
+
+                date = firstMonday.AddDays(week * 7);
+            }
+
+            try
+            {
+                _services.Get<IScheduleService>().AddScheduleForRestOfWeek(date);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            } 
+        }
+
+        private void prevWeekBtn_Click(object sender, RoutedEventArgs e)
+        {
+            _selectedWeek--;
+            if (_selectedWeek < 0)
+            {
+                _selectedYear--;
+                _selectedWeek = GetWeeksInYear(_selectedYear);
+            }
+            UpdateState();
+        }
+
+        private void nextWeekBtn_Click(object sender, RoutedEventArgs e)
+        {
+            _selectedWeek++;
+            if (_selectedWeek > GetWeeksInYear(_selectedYear))
+            {
+                _selectedYear++;
+                _selectedWeek = 0;
+            }
+            UpdateState();
         }
 
         private int PosByTime(int hour, int minutes, int height)
@@ -135,22 +306,32 @@ namespace TasksApp.UI.Pages
             return totalHeight * minutes / (24 * 60);
         }
 
-        private void mainCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
+        public int GetWeeksInYear(int year)
         {
-            UpdateCanvas();
+            DateTimeFormatInfo dfi = DateTimeFormatInfo.CurrentInfo;
+            DateTime date1 = new DateTime(year, 12, 31);
+            System.Globalization.Calendar cal = dfi.Calendar;
+            return cal.GetWeekOfYear(date1, dfi.CalendarWeekRule,
+                                                dfi.FirstDayOfWeek);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private int GetWeekNumber(DateTime date)
         {
-            LoadTasks();
-            UpdateCanvas();
+            CultureInfo cultureInfo = CultureInfo.CurrentCulture;
+            System.Globalization.Calendar calendar = cultureInfo.Calendar;
+            return calendar.GetWeekOfYear(date, CalendarWeekRule.FirstFullWeek, DayOfWeek.Monday);
         }
 
-        private void TaskClicked(object sender, MouseButtonEventArgs e)
+        private Brush GetColor(string key)
         {
-            var taskLabel = (Label)sender;
-            var taskWindow = new TaskDetailsWindow(taskLabel.Uid, _services);
-            taskWindow.ShowDialog();
+            return (SolidColorBrush)Application.Current.Resources[key];
+        }
+
+        private Brush GetRandomBlockColor()
+        {
+            Random rnd = new Random();
+            int index = rnd.Next(6);     // creates a number between 0 and 51
+            return GetColor("timeBlockColor" + index.ToString());
         }
     }
 }

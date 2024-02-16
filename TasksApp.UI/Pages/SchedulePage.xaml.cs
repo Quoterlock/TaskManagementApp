@@ -93,21 +93,46 @@ namespace TasksApp.UI.Pages
             MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure you want to delete this block?", "Delete Confirmation", MessageBoxButton.YesNo);
             if (messageBoxResult == MessageBoxResult.Yes)
             {
-                _services.Get<IScheduleService>().RemoveBlock(blockId);
-                LoadSchedule();
+                var service = _services.Get<IScheduleService>();
+                service.RemoveBlock(blockId);
+
+                var dialog = new EnterDateDialog("Enter start date to apply new Schedule");
+                dialog.ShowDialog();
+                if (dialog.isConfirmed)
+                {
+                    service.UpdateFutureTasksToScheme(dialog.date.ToDateTime(TimeOnly.MinValue));
+                    LoadSchedule();
+                }
             }
         }
 
         private void EditBlockEvent(object sender, RoutedEventArgs e)
         {
             var blockId = ((Button)sender).Uid;
+            var window = new EditScheduleBlockWindow(_services, blockId);
+            window.ShowDialog();
+
+            var dialog = new EnterDateDialog("Enter start date to apply new Schedule");
+            dialog.ShowDialog();
+            if (dialog.isConfirmed)
+            {
+                _services.Get<IScheduleService>().UpdateFutureTasksToScheme(dialog.date.ToDateTime(TimeOnly.MinValue));
+                LoadSchedule();
+            }
         }
 
         private void addItemBtn_Click(object sender, RoutedEventArgs e)
         {
             var window = new AddScheduleBlockWindow(_services);
             window.ShowDialog();
-            LoadSchedule();
+
+            var dialog = new EnterDateDialog("Enter start date to apply new Schedule");
+            dialog.ShowDialog();
+            if (dialog.isConfirmed)
+            {
+                _services.Get<IScheduleService>().UpdateFutureTasksToScheme(dialog.date.ToDateTime(TimeOnly.MinValue));
+                LoadSchedule();
+            }
         }
 
         private void clearBtn_Click(object sender, RoutedEventArgs e)

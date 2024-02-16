@@ -9,6 +9,16 @@
       Title="MonthViewPage">
 
     <Grid>
-        <Label>MonthView</Label>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Canvas x:Name="calendarCanvas" Grid.Row="1"/>
+        
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="prevMonthBtn" Content="Prev"/>
+            <Label x:Name="selectedMonthLabel" Content="00.0000 - Month"/>
+            <Button x:Name="nextMonthBtn" Content="Next"/>
+        </StackPanel>
     </Grid>
 </Page>

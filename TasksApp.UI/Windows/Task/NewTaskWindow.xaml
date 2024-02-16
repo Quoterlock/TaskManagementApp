@@ -18,6 +18,7 @@
             <RowDefinition Height="24"/>
             <RowDefinition Height="24"/>
             <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="24"/>
         </Grid.RowDefinitions>
@@ -30,12 +31,14 @@
         <Label Grid.Row="2" Grid.ColumnSpan="2">DueTo (Date)</Label>
         <TextBox Grid.Row="3" Grid.ColumnSpan="2" x:Name="dueToTextBox"/>
 
-        <Label Grid.Row="4">Start Time</Label>
-        <TextBox Grid.Row="5" x:Name="startTimeTextBox"/>
+        <CheckBox Grid.Row="4" Grid.ColumnSpan="2" x:Name="timeBlockedCheckBox" Content="Time blocked" IsChecked="False" Checked="timeBlockedCheckBox_Changed" Unchecked="timeBlockedCheckBox_Changed"/>
 
-        <Label Grid.Row="4" Grid.Column="1">End Time</Label>
-        <TextBox Grid.Row="5" Grid.Column="1" x:Name="endTimeTextBox"/>
-        <StackPanel Grid.Row="7" Grid.ColumnSpan="2" HorizontalAlignment="Right" Orientation="Horizontal">
+        <Label Grid.Row="5">Start Time</Label>
+        <TextBox Grid.Row="6" x:Name="startTimeTextBox" IsEnabled="False" Text="00:00"/>
+
+        <Label Grid.Row="5" Grid.Column="1">End Time</Label>
+        <TextBox Grid.Row="6" Grid.Column="1" IsEnabled="False" x:Name="endTimeTextBox" Text="00:00"/>
+        <StackPanel Grid.Row="8" Grid.ColumnSpan="2" HorizontalAlignment="Right" Orientation="Horizontal">
             <Button Width="60" x:Name="createBtn" Click="createBtn_Click">Create</Button>
             <Button Width="60" x:Name="cancelBtn">Cancel</Button>
         </StackPanel>

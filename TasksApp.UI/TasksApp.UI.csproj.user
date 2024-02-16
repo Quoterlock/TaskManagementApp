@@ -25,6 +25,12 @@
     <Compile Update="Windows\Schedule\AddScheduleBlockWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Windows\Schedule\EditScheduleBlockWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Windows\Schedule\EnterDateDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Windows\Task\NewTaskWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -52,6 +58,12 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Windows\Schedule\AddScheduleBlockWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\Schedule\EditScheduleBlockWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\Schedule\EnterDateDialog.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Windows\Task\NewTaskWindow.xaml">

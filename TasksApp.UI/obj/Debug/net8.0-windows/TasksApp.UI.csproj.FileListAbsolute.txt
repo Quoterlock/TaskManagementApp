@@ -191,3 +191,7 @@ C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\obj\Debug\net8.0-wind
 C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\obj\Debug\net8.0-windows\Windows\Schedule\AddScheduleBlockWindow.g.cs
 C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\obj\Debug\net8.0-windows\Pages\SchedulePage.baml
 C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\obj\Debug\net8.0-windows\Windows\Schedule\AddScheduleBlockWindow.baml
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\obj\Debug\net8.0-windows\Windows\Schedule\EditScheduleBlockWindow.g.cs
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\obj\Debug\net8.0-windows\Windows\Schedule\EditScheduleBlockWindow.baml
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\obj\Debug\net8.0-windows\Windows\Schedule\EnterDateDialog.g.cs
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\obj\Debug\net8.0-windows\Windows\Schedule\EnterDateDialog.baml

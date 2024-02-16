@@ -31,12 +31,14 @@ namespace TasksApp.UI
             services.Bind<IProjectsRepository, ProjectsRepository>(dbContext);
             services.Bind<ICategoriesRepository, CategoriesRepository>(dbContext);
             services.Bind<IScheduleRepository, ScheduleRepository>(dbContext);
+            services.Bind<IScheduleTasksRepository, ScheduleTasksRepository>(dbContext);
 
             services.Bind<IAdapterME<TaskModel, TaskEntity>, TaskAdapter>();
             services.Bind<IAdapterME<ProjectModel, ProjectEntity>, ProjectAdapter>();
             services.Bind<IAdapterME<CategoryModel, CategoryEntity>, CategoryAdapter>();
             services.Bind<IAdapterME<ScheduleBlockModel, ScheduleItemEntity>, ScheduleBlockAdapter>();
-            
+            services.Bind<IAdapterME<ScheduleTaskModel, ScheduleTaskEntity>, ScheduleTaskAdapter>();
+
             services.Bind<IProjectsService, ProjectsService>(
                 services.Get<IProjectsRepository>(),
                 services.Get<IAdapterME<ProjectModel, ProjectEntity>>());
@@ -51,13 +53,16 @@ namespace TasksApp.UI
                 services.Get<IProjectsService>(),
                 services.Get<IAdapterME<CategoryModel, CategoryEntity>>());
 
-            services.Bind<ITasksPresenter, TasksPresenter>(
-                services.Get<ITasksService>(),
-                services.Get<IProjectsService>());
-
             services.Bind<IScheduleService, ScheduleService>(
                 services.Get<IScheduleRepository>(),
-                services.Get<IAdapterME<ScheduleBlockModel, ScheduleItemEntity>>());
+                services.Get<IScheduleTasksRepository>(),
+                services.Get<IAdapterME<ScheduleBlockModel, ScheduleItemEntity>>(),
+                services.Get<IAdapterME<ScheduleTaskModel, ScheduleTaskEntity>>());
+
+            services.Bind<ITasksPresenter, TasksPresenter>(
+                services.Get<ITasksService>(),
+                services.Get<IProjectsService>(),
+                services.Get<IScheduleService>());
         }
 
         private void calendarBtn_Click(object sender, RoutedEventArgs e)

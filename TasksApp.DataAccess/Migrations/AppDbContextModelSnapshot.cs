@@ -80,6 +80,26 @@ namespace TasksApp.DataAccess.Migrations
                     b.ToTable("ScheduleItems");
                 });
 
+            modelBuilder.Entity("TasksApp.DataAccess.Entities.ScheduleTaskEntity", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ScheduleTasks");
+                });
+
             modelBuilder.Entity("TasksApp.DataAccess.Entities.TaskEntity", b =>
                 {
                     b.Property<string>("Id")
