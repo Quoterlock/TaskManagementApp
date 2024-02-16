@@ -18,6 +18,7 @@ using TasksApp.BusinessLogic.Interfaces;
 using TasksApp.BusinessLogic.Models;
 using TasksApp.UI.Services;
 using TasksApp.UI.Windows;
+using TasksApp.UI.Windows.Schedule;
 
 namespace TasksApp.UI.Pages
 {
@@ -87,6 +88,7 @@ namespace TasksApp.UI.Pages
                         var label = new Label();
                         label.Content = task.Text;
                         label.Height = itemHeight;
+                        label.Background = GetRandomBlockColor();
                         item.Uid = task.Id;
                         item.Content = label;
                         item.Height = itemHeight;
@@ -103,7 +105,7 @@ namespace TasksApp.UI.Pages
             foreach (var list in listsArray)
                 if (maxCount < list.Items.Count)
                     maxCount = list.Items.Count;
-            notTimeBlockedTasksRow.Height = new GridLength(maxCount * itemHeight + itemHeight);
+            notTimeBlockedTasksRow.Height = new GridLength((maxCount + 1) * itemHeight + itemHeight);
         }
 
         private void DisplayTasksOnCanvas()
@@ -214,6 +216,26 @@ namespace TasksApp.UI.Pages
                 }
                 dayCounter++;
             }
+
+
+            // draw current time line
+            var dateTimeNow = DateTime.Now;
+            if(_selectedWeek == GetWeekNumber(dateTimeNow) && _selectedYear == dateTimeNow.Year)
+            {
+                var daysList = new List<DayOfWeek> {
+                DayOfWeek.Monday, DayOfWeek.Tuesday,
+                DayOfWeek.Wednesday, DayOfWeek.Thursday,
+                DayOfWeek.Friday, DayOfWeek.Saturday,
+                DayOfWeek.Sunday};
+
+                int timeLinePosX1 = daysList.FindIndex(d=>d == dateTimeNow.DayOfWeek) * blockWidth + margin; int timeLinePosX2 = timeLinePosX1 + blockWidth;
+                int timeLinePosY = PosByTime(dateTimeNow.Hour, dateTimeNow.Minute, canvasHeight);
+                var line = new Line() { X1 = timeLinePosX1, X2 =  timeLinePosX2 };
+                line.Stroke = Brushes.Red;
+                line.StrokeThickness = 2;
+                Canvas.SetTop(line, timeLinePosY);
+                mainCanvas.Children.Add(line);
+            }
         }
 
         private void mainCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -223,8 +245,7 @@ namespace TasksApp.UI.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            LoadTasks();
-            DisplayTasksOnCanvas();
+            UpdateState();
         }
 
         private void TaskClicked(object sender, MouseButtonEventArgs e)
@@ -232,45 +253,28 @@ namespace TasksApp.UI.Pages
             var taskLabel = (Control)sender;
             var taskWindow = new TaskDetailsWindow(taskLabel.Uid, _services);
             taskWindow.ShowDialog();
+
+            if (taskWindow.IsModified) UpdateState();
         }
 
         private void ScheduleTaskClicked(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show("Schedule task selected");
-            //var taskLabel = (Label)sender;
-            //var taskWindow = new TaskDetailsWindow(taskLabel.Uid, _services);
-            //taskWindow.ShowDialog();
+            var taskLabel = (Control)sender;
+            var dialog = new ScheduleTaskDetailsWindow(_services, taskLabel.Uid);
+            dialog.ShowDialog();
+
+            if (dialog.IsModified) UpdateState();
         }
 
         private void applyScheduleBtn_Click(object sender, RoutedEventArgs e)
         {
-            var date = DateTime.UtcNow;
-            if (_selectedWeek != GetWeekNumber(date))
+            var dialog = new EnterDateDialog("Enter start date to apply current schedule");
+            dialog.ShowDialog();
+            if (dialog.isConfirmed)
             {
-                // get monday date of selected week
-
-                DateTime jan1 = new DateTime(_selectedYear, 1, 1);
-                int daysOffset = DayOfWeek.Monday - jan1.DayOfWeek;
-
-                DateTime firstMonday = jan1.AddDays(daysOffset);
-
-                int firstWeek = CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(jan1, CalendarWeekRule.FirstFullWeek, DayOfWeek.Monday);
-
-                int week = 0;
-                if (firstWeek <= 1)
-                    week = _selectedWeek - 1;
-
-                date = firstMonday.AddDays(week * 7);
+                _services.Get<IScheduleService>().UpdateFutureTasksToScheme(dialog.date.ToDateTime(TimeOnly.MinValue));
+                UpdateState();
             }
-
-            try
-            {
-                _services.Get<IScheduleService>().AddScheduleForRestOfWeek(date);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            } 
         }
 
         private void prevWeekBtn_Click(object sender, RoutedEventArgs e)

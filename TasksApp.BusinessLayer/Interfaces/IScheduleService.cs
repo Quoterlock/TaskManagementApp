@@ -11,6 +11,7 @@ namespace TasksApp.BusinessLogic.Interfaces
         void ClearSchedule();
         void AddScheduleInTasks(DateOnly date);
         List<ScheduleTaskModel> GetTasksByDate(DateTime date);
+        ScheduleTaskModel GetTaskById(string id);
         void RemoveTask(string id);
         void UpdateTask(ScheduleTaskModel task);
         public void AddScheduleForRestOfWeek(DateTime date);

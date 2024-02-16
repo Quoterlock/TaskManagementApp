@@ -26,6 +26,7 @@ namespace TasksApp.UI.Windows
         private ServicesContainer _services;
         private TaskModel _task;
         private string selectedProjectId;
+        public bool IsModified = false;
         public TaskDetailsWindow(string taskId, ServicesContainer services)
         {
             _services = services;
@@ -97,6 +98,7 @@ namespace TasksApp.UI.Windows
                 _services.Get<ITasksService>().UpdateTask(_task);
                 // hide btn
                 SetChanged(false);
+                IsModified = true;
             } 
             catch (Exception ex)
             {
@@ -125,8 +127,15 @@ namespace TasksApp.UI.Windows
             MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure you want to delete this task?", "Delete Confirmation", MessageBoxButton.YesNo);
             if (messageBoxResult == MessageBoxResult.Yes)
             {
-                _services.Get<ITasksService>().DeleteTask(_task);
-                this.Close();
+                try
+                {
+                    _services.Get<ITasksService>().DeleteTask(_task);
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
 

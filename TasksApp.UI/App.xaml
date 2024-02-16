@@ -12,6 +12,8 @@
         <SolidColorBrush x:Key="timeBlockColor3" Color="#00bbf9" Opacity="0.5"/>
         <SolidColorBrush x:Key="timeBlockColor4" Color="#00f5d4" Opacity="0.5"/>
         <SolidColorBrush x:Key="timeBlockColor5" Color="#f77f00" Opacity="0.5"/>
+        <SolidColorBrush x:Key="calendarBackgroundColor" Color="#e0e0e0"/>
+        <SolidColorBrush x:Key="todayHighlightColor" Color="#c7ffd8"/>
 
         <BitmapImage x:Key="calendarIcon" UriSource="/Assets/icons/calendar-icon.png"/>
         <BitmapImage x:Key="listIcon" UriSource="/Assets/icons/list-icon.png"/>

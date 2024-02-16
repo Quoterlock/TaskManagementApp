@@ -63,6 +63,11 @@ namespace TasksApp.UI
                 services.Get<ITasksService>(),
                 services.Get<IProjectsService>(),
                 services.Get<IScheduleService>());
+
+
+            // home page as a default
+            mainFrame.Content = new HomePage(services);
+            mainFrame.NavigationService.RemoveBackEntry();
         }
 
         private void calendarBtn_Click(object sender, RoutedEventArgs e)
@@ -86,6 +91,12 @@ namespace TasksApp.UI
         private void scheduleBtn_Click(object sender, RoutedEventArgs e)
         {
             mainFrame.Content = new SchedulePage(services);
+            mainFrame.NavigationService.RemoveBackEntry();
+        }
+
+        private void homeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            mainFrame.Content = new HomePage(services);
             mainFrame.NavigationService.RemoveBackEntry();
         }
     }

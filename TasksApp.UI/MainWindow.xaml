@@ -13,7 +13,7 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel>
-            <Button x:Name="homeBtn">
+            <Button x:Name="homeBtn" Click="homeBtn_Click">
                 <Image Source="{StaticResource homeIcon}"/>
             </Button>
             <Button x:Name="listBtn" Click="listBtn_Click">

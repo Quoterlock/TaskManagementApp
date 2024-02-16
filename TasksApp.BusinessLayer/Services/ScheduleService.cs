@@ -186,5 +186,18 @@ namespace TasksApp.BusinessLogic.Services
             ClearFutureTasks(date);
             AddScheduleForRestOfWeek(date);
         }
+
+        public ScheduleTaskModel GetTaskById(string id)
+        {
+            if (!string.IsNullOrEmpty(id))
+            {
+                var entity = _scheduleTasksRepository.GetById(id);
+                if (entity != null)
+                    return _scheduleTaskAdapter.EntityToModel(entity);
+                else 
+                    throw new Exception("schedule task not found with id: " + id);
+            }
+            else throw new ArgumentNullException("schedule_task_id");
+        }
     }
 }

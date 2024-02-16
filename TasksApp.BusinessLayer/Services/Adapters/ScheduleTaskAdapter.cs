@@ -27,6 +27,7 @@ namespace TasksApp.BusinessLogic.Services.Adapters
         {
             return new ScheduleTaskEntity
             {
+                Id = model.Id,
                 Text = model.Text,
                 StartTime = model.DueTo.ToDateTime(model.StartTime),
                 EndTime = model.DueTo.ToDateTime(model.EndTime),

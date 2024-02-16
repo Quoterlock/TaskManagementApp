@@ -7,6 +7,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Pages\HomePage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Pages\ListPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -31,6 +34,9 @@
     <Compile Update="Windows\Schedule\EnterDateDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Windows\Schedule\ScheduleTaskDetailsWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Windows\Task\NewTaskWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -40,6 +46,9 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\HomePage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\ListPage.xaml">
@@ -64,6 +73,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Windows\Schedule\EnterDateDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\Schedule\ScheduleTaskDetailsWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Windows\Task\NewTaskWindow.xaml">

@@ -111,7 +111,7 @@ namespace TasksApp.BusinessLogic.Services
 
         public List<TaskModel> GetOverdueTasks(DateTime date)
         {
-            var tasks = _tasks.GetByMatch(t=>t.StartTime.Date < date.Date);
+            var tasks = _tasks.GetByMatch(t=>t.StartTime.Date < date.Date && t.IsDone == false);
             return ConvertToModels(tasks);
         }
 
