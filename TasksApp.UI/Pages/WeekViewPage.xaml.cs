@@ -36,8 +36,8 @@ namespace TasksApp.UI.Pages
         public WeekViewPage(ServicesContainer services)
         {
             _services = services;
-            _selectedWeek = GetWeekNumber(DateTime.UtcNow);
-            _selectedYear = DateTime.UtcNow.Year;
+            _selectedWeek = GetWeekNumber(DateTime.Now);
+            _selectedYear = DateTime.Now.Year;
 
             InitializeComponent();
             UpdateState();
@@ -79,18 +79,38 @@ namespace TasksApp.UI.Pages
             // display not time blocked tasks in list
             foreach (var day in _tasks)
             {
-                labelsArray[dayCounter].Content = day.Key.ToString("dd.MM.yyyy") + " (" + day.Key.DayOfWeek.ToString() + ")";
+                labelsArray[dayCounter].Content = day.Key.DayOfWeek.ToString() + " (" + day.Key.ToString("dd.MM.yyyy") + ")";
                 foreach (var task in day.Value)
                 {
                     if (task.StartTime == task.EndTime && task.StartTime == TimeOnly.MinValue)
                     {
                         var item = new ListBoxItem();
+                        var grid = new Grid();
+                        grid.Children.Add(new Rectangle
+                        {
+                            Fill = new SolidColorBrush()
+                            {
+                                Color = (Color)ColorConverter.ConvertFromString(task.Project.ColorHex)
+                            },
+                            RadiusX = 3,
+                            RadiusY = 3
+                        });
+
                         var label = new Label();
                         label.Content = task.Text;
-                        label.Height = itemHeight;
-                        label.Background = GetRandomBlockColor();
+                        var icon = ResourceManager.GetIcon(task.IsDone ? "checkedIcon" : "uncheckedIcon");
+                        icon.Width = 16; icon.Height = 16;
+
+                        var stack = new StackPanel();
+                        stack.Orientation = Orientation.Horizontal;
+                        stack.Children.Add(icon);
+                        stack.Children.Add(label);
+                        stack.Height = itemHeight;
+                        stack.Margin = new Thickness(3, 0 , 3, 0) ;
+
+                        grid.Children.Add(stack);
+                        item.Content = grid;
                         item.Uid = task.Id;
-                        item.Content = label;
                         item.Height = itemHeight;
                         item.MouseDoubleClick += TaskClicked;
 
@@ -110,10 +130,10 @@ namespace TasksApp.UI.Pages
 
         private void DisplayTasksOnCanvas()
         {
-            // draw tasks on canvas
             mainCanvas.Children.Clear();
-            int margin = 40;
-            int canvasWidth = (int)mainCanvas.ActualWidth - margin;
+            int gridMargin = 40;
+            int blockMargin = 2;
+            int canvasWidth = (int)mainCanvas.ActualWidth - gridMargin;
             int minBlockSize = 28; // 15 min
             int canvasHeight = minBlockSize * 4 * 24;
             mainCanvas.Height = canvasHeight;
@@ -132,12 +152,12 @@ namespace TasksApp.UI.Pages
             {
                 var line = new Line();
                 line.StrokeThickness = 1;
-                line.X1 = margin; line.X2 = canvasWidth;
+                line.X1 = gridMargin; line.X2 = canvasWidth;
                 line.Y1 = 0; line.Y2 = 0;
                 Canvas.SetTop(line, i * minBlockSize * 2);
                 //line.Y1 = i*minBlockSize*2; line.Y2 = line.Y1;
                 
-                line.Stroke = Brushes.Gray;
+                line.Stroke = ResourceManager.GetColor("gridColor");
                 mainCanvas.Children.Add(line);
 
                 //add time to line
@@ -156,9 +176,9 @@ namespace TasksApp.UI.Pages
             {
                 var line = new Line();
                 line.StrokeThickness = 1;
-                line.X1 = i * blockWidth + margin; line.X2 = line.X1;
+                line.X1 = i * blockWidth + gridMargin; line.X2 = line.X1;
                 line.Y1 = 0; line.Y2 = canvasHeight;
-                line.Stroke = Brushes.Gray;
+                line.Stroke = ResourceManager.GetColor("gridColor");
                 mainCanvas.Children.Add(line);
             }
 
@@ -171,14 +191,15 @@ namespace TasksApp.UI.Pages
                     // draw task on canvas
                     var label = new Label();
                     label.Content = task.Text + "(" + task.StartTime.ToString() + " - " + task.EndTime.ToString() + ")";
-                    label.Width = blockWidth;
+                    label.Width = blockWidth - blockMargin*2 < 0 ? 0 : blockWidth - blockMargin*2;
                     label.Uid = task.Id;
                     label.MouseDown += ScheduleTaskClicked;
-                    label.Background = GetColor("scheduleBlockColor");
+                    label.Background = ResourceManager.GetColor("scheduleBlockColor");
                     label.Height = CalculateHeightByDuration((int)(task.EndTime - task.StartTime).TotalMinutes, canvasHeight);
                     if (label.Height < 2) label.Height = minBlockSize;
-                    Canvas.SetTop(label, PosByTime(task.StartTime.Hour, task.StartTime.Minute, canvasHeight));
-                    Canvas.SetLeft(label, blockWidth * dayCounter + margin);
+                    label.Height -= blockMargin * 2;
+                    Canvas.SetTop(label, PosByTime(task.StartTime.Hour, task.StartTime.Minute, canvasHeight) + blockMargin);
+                    Canvas.SetLeft(label, blockWidth * dayCounter + gridMargin + blockMargin);
                     mainCanvas.Children.Add(label);
                 }
                 dayCounter++;
@@ -195,12 +216,17 @@ namespace TasksApp.UI.Pages
                     if (task.StartTime != task.EndTime)
                     {
                         var label = new Label();
-                        label.Content = task.Text + "(" + task.StartTime.ToString() + " - " + task.EndTime.ToString() + ")";
-                        label.Width = blockWidth;
+                        label.Content = (task.IsDone? "✓ " : "") 
+                            + task.Text + "(" + task.StartTime.ToString() 
+                            + " - " + task.EndTime.ToString() + ")";
+                        label.Width = blockWidth - blockMargin*2 < 0 ? 0 : blockWidth - blockMargin*2;
                         label.Uid = task.Id;
                         label.MouseDown += TaskClicked;
-                        label.Background = GetRandomBlockColor();
-                        if(task.EndTime == TimeOnly.MinValue && task.StartTime != task.EndTime)
+                        label.Background = new SolidColorBrush() { 
+                            Color = (Color)ColorConverter.ConvertFromString(task.Project.ColorHex), 
+                            Opacity = 0.5
+                        }; //GetRandomBlockColor();
+                        if (task.EndTime == TimeOnly.MinValue && task.StartTime != task.EndTime)
                         {
                             label.Height = minBlockSize;
                         }
@@ -208,9 +234,10 @@ namespace TasksApp.UI.Pages
                         {
                             label.Height = CalculateHeightByDuration((int)(task.EndTime - task.StartTime).TotalMinutes, canvasHeight);
                             if (label.Height < 2) label.Height = minBlockSize;
+                            label.Height -= blockMargin*2;
                         }
-                        Canvas.SetTop(label, PosByTime(task.StartTime.Hour, task.StartTime.Minute, canvasHeight));
-                        Canvas.SetLeft(label, blockWidth * dayCounter + margin);
+                        Canvas.SetTop(label, PosByTime(task.StartTime.Hour, task.StartTime.Minute, canvasHeight) + blockMargin);
+                        Canvas.SetLeft(label, blockWidth * dayCounter + gridMargin + blockMargin);
                         mainCanvas.Children.Add(label);
                     }
                 }
@@ -228,7 +255,7 @@ namespace TasksApp.UI.Pages
                 DayOfWeek.Friday, DayOfWeek.Saturday,
                 DayOfWeek.Sunday};
 
-                int timeLinePosX1 = daysList.FindIndex(d=>d == dateTimeNow.DayOfWeek) * blockWidth + margin; int timeLinePosX2 = timeLinePosX1 + blockWidth;
+                int timeLinePosX1 = daysList.FindIndex(d=>d == dateTimeNow.DayOfWeek) * blockWidth + gridMargin; int timeLinePosX2 = timeLinePosX1 + blockWidth;
                 int timeLinePosY = PosByTime(dateTimeNow.Hour, dateTimeNow.Minute, canvasHeight);
                 var line = new Line() { X1 = timeLinePosX1, X2 =  timeLinePosX2 };
                 line.Stroke = Brushes.Red;
@@ -326,16 +353,11 @@ namespace TasksApp.UI.Pages
             return calendar.GetWeekOfYear(date, CalendarWeekRule.FirstFullWeek, DayOfWeek.Monday);
         }
 
-        private Brush GetColor(string key)
-        {
-            return (SolidColorBrush)Application.Current.Resources[key];
-        }
-
         private Brush GetRandomBlockColor()
         {
             Random rnd = new Random();
             int index = rnd.Next(6);     // creates a number between 0 and 51
-            return GetColor("timeBlockColor" + index.ToString());
+            return ResourceManager.GetColor("timeBlockColor" + index.ToString());
         }
     }
 }

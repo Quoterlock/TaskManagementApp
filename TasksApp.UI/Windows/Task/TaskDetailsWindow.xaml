@@ -9,7 +9,8 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="24"/>
-            <RowDefinition Height="48"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
             <RowDefinition Height="24"/>
             <RowDefinition Height="24"/>
             <RowDefinition Height="24"/>
@@ -26,24 +27,27 @@
         <ComboBox x:Name="projectsComboBox" Grid.Column="1">
             
         </ComboBox>
-        <TextBox Grid.Row="1" Grid.ColumnSpan="2" x:Name="taskTextBox" TextChanged="TextChanged"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="2">
+            <Button x:Name="markDoneBtn" Click="markDoneBtn_Click"/>
+            <TextBox x:Name="taskTextBox" TextChanged="TextChanged" Width="350"/>
+        </StackPanel>
 
         <Label Grid.Row="2">DueTo (Date)</Label>
         <TextBox Grid.Row="3" Grid.ColumnSpan="2" x:Name="dueToTextBox" TextChanged="TextChanged"/>
 
-        <Label Grid.Row="4">Start Time</Label>
-        <TextBox Grid.Row="5" x:Name="startTimeTextBox" TextChanged="TextChanged"/>
+        <CheckBox x:Name="timeBlockedCheckBox" Content="Time blocked" Grid.Row="4" Checked="timeBlockedCheckBox_Checked" Unchecked="timeBlockedCheckBox_Checked"/>
 
-        <Label Grid.Row="4" Grid.Column="1">End Time</Label>
-        <TextBox Grid.Row="5" Grid.Column="1" x:Name="endTimeTextBox" TextChanged="TextChanged"/>
-        
-        <StackPanel Orientation="Horizontal" Grid.Row="7">
-            <Button x:Name="markDoneBtn" Click="markDoneBtn_Click">Mark Done</Button>
-        </StackPanel>
-        
-        <StackPanel Orientation="Horizontal" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Right">
+        <Label Grid.Row="5">Start Time</Label>
+        <TextBox Grid.Row="6" x:Name="startTimeTextBox" TextChanged="TextChanged"/>
+
+        <Label Grid.Row="5" Grid.Column="1">End Time</Label>
+        <TextBox Grid.Row="6" Grid.Column="1" x:Name="endTimeTextBox" TextChanged="TextChanged"/>
+                
+        <StackPanel Orientation="Horizontal" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Right">
             <Button x:Name="saveBtn" Click="saveBtn_Click" Width="60">Save</Button>
-            <Button x:Name="deleteBtn" Width="60" Click="deleteBtn_Click">Delete</Button>
+            <Button x:Name="deleteBtn" Width="24" Click="deleteBtn_Click">
+                <Image Source="{DynamicResource deleteIcon}"/>
+            </Button>
         </StackPanel>
     </Grid>
 </Window>

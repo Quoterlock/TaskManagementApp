@@ -23,7 +23,7 @@
                 <Image Source="{StaticResource calendarIcon}"/>
             </Button>
             <Button x:Name="scheduleBtn" Click="scheduleBtn_Click">
-                <Image Source="{StaticResource calendarIcon}"/>
+                <Image Source="{StaticResource scheduleIcon}"/>
             </Button>
             <Button x:Name="addBtn" Click="addBtn_Click">
                 <Image Source="{StaticResource addIcon}"/>

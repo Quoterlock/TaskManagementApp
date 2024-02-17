@@ -18,14 +18,20 @@ namespace TasksApp.BusinessLogic.Services
             _projectAdapter = projectAdapter;
         }
         
-        public void AddProject(string name, string categoryId)
+        public void AddProject(ProjectInfoModel projectInfo)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException("project_name");
-            if (string.IsNullOrEmpty(categoryId)) throw new ArgumentNullException("category_id");
+            if (projectInfo == null) throw new ArgumentNullException(nameof(projectInfo));
+            if (string.IsNullOrEmpty(projectInfo.Name)) throw new ArgumentNullException("project_name");
+            if (string.IsNullOrEmpty(projectInfo.CategoryId)) throw new ArgumentNullException("category_id");
 
             try
             {
-                _projectsRepository.Create(name, categoryId);
+                _projectsRepository.Create(new ProjectEntity 
+                { 
+                    CategoryId = projectInfo.CategoryId, 
+                    ColorHex = projectInfo.ColorHex ,
+                    Name = projectInfo.Name,
+                });
             }
             catch (Exception ex)
             {
@@ -105,6 +111,7 @@ namespace TasksApp.BusinessLogic.Services
                     Name = project.Name, 
                     IsArchived = project.IsArchived,
                     CategoryId = project.CategoryId,
+                    ColorHex = string.IsNullOrEmpty(project.ColorHex)? "#FFFFFF" : project.ColorHex,
                 });
             
             return resultList;

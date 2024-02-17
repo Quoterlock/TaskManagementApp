@@ -69,10 +69,12 @@ namespace TasksApp.UI.Pages
 
             var editBtn = new Button() { Content = "edit" };
             editBtn.Uid = block.Id;
+            editBtn.Width = 60;
             editBtn.Click += EditBlockEvent;
 
             var deleteBtn = new Button() { Content = "delete"};
             deleteBtn.Uid = block.Id;
+            deleteBtn.Width = 60;
             deleteBtn.Click += DeleteBlockEvent;
 
             var stack = new StackPanel();

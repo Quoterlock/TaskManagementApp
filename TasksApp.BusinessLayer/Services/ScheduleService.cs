@@ -85,7 +85,7 @@ namespace TasksApp.BusinessLogic.Services
             {
                 foreach (var block in blocks)
                     _scheduleRepository.DeleteItem(block.Id);
-                ClearFutureTasks(DateTime.UtcNow.Date);
+                ClearFutureTasks(DateTime.Now.Date);
             }
             catch(Exception ex)
             {

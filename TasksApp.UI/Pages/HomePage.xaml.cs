@@ -34,7 +34,6 @@ namespace TasksApp.UI.Pages
             LoadTasks();
         }
 
-
         void LoadTasks()
         {
             todayTasksListBox.Items.Clear();
@@ -77,23 +76,40 @@ namespace TasksApp.UI.Pages
             stack.Orientation = Orientation.Horizontal;
             var statusBtn = new Button();
             statusBtn.Uid = task.Id;
-            var label = new Label()
+
+
+            var label = new Label();
+
+            // if is overdue
+            if(task.DueTo < DateOnly.FromDateTime(DateTime.Now))
             {
-                Content = task.Text
-                + "- DueTo:" + task.DueTo.ToString()
-                + " (" + task.StartTime.ToString()
-                + "-" + task.EndTime.ToString() + ")"
-            };
+                label.Content = task.Text + " - "
+                + task.Project.Name + " (" + task.DueTo.ToString() + ")";
+            }
+            else
+            {
+                label.Content = task.Text + " - "
+                + task.Project.Name + " ("
+                + task.StartTime.ToString() + "-"
+                + task.EndTime.ToString() + ")";
+            }
+
 
             var staticRes = new StaticResourceExtension();
             if (task.IsDone)
             {
-                statusBtn.Content = GetIcon("checkedIcon");
+                var icon = ResourceManager.GetIcon("checkedIcon");
+                icon.Height = 20;
+                icon.Width = 20;
+                statusBtn.Content = icon;
                 statusBtn.Click += MarkTaskUndoneEvent;
             }
             else
             {
-                statusBtn.Content = GetIcon("uncheckedIcon");
+                var icon = ResourceManager.GetIcon("uncheckedIcon");
+                icon.Height = 20;
+                icon.Width = 20;
+                statusBtn.Content = icon;
                 statusBtn.Click += MarkTaskDoneEvent;
             }
 
@@ -101,16 +117,6 @@ namespace TasksApp.UI.Pages
             stack.Children.Add(label);
             item.Content = stack;
             return item;
-        }
-
-        private Image GetIcon(string key)
-        {
-            return new Image()
-            {
-                Source = (BitmapImage)Application.Current.Resources[key],
-                Height = 20,
-                Width = 20
-            };
         }
 
         private void TaskSelectedEvent(object sender, RoutedEventArgs e)

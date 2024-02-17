@@ -5,12 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TasksApp.UI.Windows"
         mc:Ignorable="d"
-        Title="NewProject" Height="150" Width="200">
+        Title="NewProject" Height="200" Width="200">
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <Label>Project Name</Label>
             <TextBox x:Name="projectNameTextBox"></TextBox>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Label>Color (Hex)</Label>
+            <TextBox x:Name="colorTextBox"></TextBox>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button x:Name="createBtn" Click="createBtn_Click">Create</Button>
                 <Button x:Name="cancelBtn" Click="cancelBtn_Click">Cancel</Button>
             </StackPanel>

@@ -13,9 +13,9 @@
             <RowDefinition Height="28"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button x:Name="weekViewBtn" Click="weekViewBtn_Click">Week</Button>
-            <Button x:Name="monthViewBtn" Click="monthViewBtn_Click">Month</Button>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button x:Name="weekViewBtn" Width="60" Click="weekViewBtn_Click">Week</Button>
+            <Button x:Name="monthViewBtn" Width="60" Click="monthViewBtn_Click">Month</Button>
         </StackPanel>
         <Frame x:Name="viewFrame" Grid.Row="1" NavigationUIVisibility="Hidden"/>
     </Grid>

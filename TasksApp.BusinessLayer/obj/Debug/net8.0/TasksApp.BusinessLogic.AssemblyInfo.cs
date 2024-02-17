@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TasksApp.BusinessLogic")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8d2ff2bc80e8670f26c6e1f9d5a3a568a7e53c4f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e87fc7eeee2d7b7b6f146bc41dcfcdffac25ac92")]
 [assembly: System.Reflection.AssemblyProductAttribute("TasksApp.BusinessLogic")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TasksApp.BusinessLogic")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

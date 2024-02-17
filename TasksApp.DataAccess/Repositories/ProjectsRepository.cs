@@ -50,20 +50,18 @@ namespace TasksApp.DataAccess.Repositories
             _context.SaveChanges();
         }
 
-        public void Create(string projectName, string categoryId)
+        public void Create(ProjectEntity project)
         {
-            if (!string.IsNullOrEmpty(projectName))
+            ArgumentNullException.ThrowIfNull(project);
+
+            if (!string.IsNullOrEmpty(project.Name))
             {
-                if (!string.IsNullOrEmpty(categoryId))
+                if (!string.IsNullOrEmpty(project.CategoryId))
                 {
-                    if(_context.Categories.Any(c=>c.Id == categoryId))
+                    if(_context.Categories.Any(c=>c.Id == project.CategoryId))
                     {
-                        _context.Add(new ProjectEntity 
-                        { 
-                            Id = Guid.NewGuid().ToString(), 
-                            Name = projectName, 
-                            CategoryId = categoryId 
-                        });
+                        project.Id = Guid.NewGuid().ToString();
+                        _context.Add(project);
                         _context.SaveChanges();
                     }
                 }
@@ -112,6 +110,7 @@ namespace TasksApp.DataAccess.Repositories
         {
             if (project != null)
             {
+                _context.ChangeTracker.Clear();
                 _context.Projects.Update(project);
                 _context.SaveChanges();
             }

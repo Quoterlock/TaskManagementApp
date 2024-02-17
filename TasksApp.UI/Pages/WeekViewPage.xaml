@@ -30,13 +30,13 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <ListBox x:Name="moListBox" Grid.Row="1"/>
-            <ListBox x:Name="tuListBox" Grid.Row="1" Grid.Column="1"/>
-            <ListBox x:Name="weListBox" Grid.Row="1" Grid.Column="2"/>
-            <ListBox x:Name="thListBox" Grid.Row="1" Grid.Column="3"/>
-            <ListBox x:Name="frListBox" Grid.Row="1" Grid.Column="4"/>
-            <ListBox x:Name="saListBox" Grid.Row="1" Grid.Column="5"/>
-            <ListBox x:Name="suListBox" Grid.Row="1" Grid.Column="6"/>
+            <ListBox BorderBrush="{DynamicResource gridColor}" x:Name="moListBox" Grid.Row="1"/>
+            <ListBox BorderBrush="{DynamicResource gridColor}" x:Name="tuListBox" Grid.Row="1" Grid.Column="1"/>
+            <ListBox BorderBrush="{DynamicResource gridColor}" x:Name="weListBox" Grid.Row="1" Grid.Column="2"/>
+            <ListBox BorderBrush="{DynamicResource gridColor}" x:Name="thListBox" Grid.Row="1" Grid.Column="3"/>
+            <ListBox BorderBrush="{DynamicResource gridColor}" x:Name="frListBox" Grid.Row="1" Grid.Column="4"/>
+            <ListBox BorderBrush="{DynamicResource gridColor}" x:Name="saListBox" Grid.Row="1" Grid.Column="5"/>
+            <ListBox BorderBrush="{DynamicResource gridColor}" x:Name="suListBox" Grid.Row="1" Grid.Column="6"/>
 
             <Label x:Name="moLabel" VerticalAlignment="Center" HorizontalContentAlignment="Center"/>
             <Label x:Name="tuLabel" Grid.Column="1" VerticalAlignment="Center" HorizontalContentAlignment="Center"/>
@@ -46,17 +46,19 @@
             <Label x:Name="saLabel" Grid.Column="5" VerticalAlignment="Center" HorizontalContentAlignment="Center"/>
             <Label x:Name="suLabel" Grid.Column="6" VerticalAlignment="Center" HorizontalContentAlignment="Center"/>
         </Grid>
-        
-        
+
+
         <ScrollViewer HorizontalScrollBarVisibility="Disabled" Grid.Row="2">
             <Canvas x:Name="mainCanvas" SizeChanged="mainCanvas_SizeChanged"/>
         </ScrollViewer>
-        <StackPanel Orientation="Horizontal" Grid.Row="0">
-            <Button Width="60" HorizontalAlignment="Left" Click="Button_Click">Refresh</Button>
-            <Button x:Name="applyScheduleBtn" Width="100" HorizontalAlignment="Left" Click="applyScheduleBtn_Click">Apply Schedule</Button>
-            <Button x:Name="prevWeekBtn" Content="prev" Click="prevWeekBtn_Click"/>
+        <Button Width="24" HorizontalAlignment="Left" Click="Button_Click">
+            <Image Source="{DynamicResource refreshIcon}" Height="16" Width="16"/>
+        </Button>
+        <Button x:Name="applyScheduleBtn" Width="100" HorizontalAlignment="Right" Click="applyScheduleBtn_Click">Apply Schedule</Button>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button x:Name="prevWeekBtn" Content="&#x276E;" Width="24" Click="prevWeekBtn_Click"/>
             <Label x:Name="currentWeek" Width="100" VerticalAlignment="Center" HorizontalContentAlignment="Center"/>
-            <Button x:Name="nextWeekBtn" Content="next" Click="nextWeekBtn_Click"/>
+            <Button x:Name="nextWeekBtn" Content="&#x276F;" Width="24" Click="nextWeekBtn_Click"/>
         </StackPanel>
     </Grid>
 </Page>

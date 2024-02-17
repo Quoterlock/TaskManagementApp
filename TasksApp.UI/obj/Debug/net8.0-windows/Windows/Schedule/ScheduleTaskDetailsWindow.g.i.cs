@@ -93,7 +93,7 @@ namespace TasksApp.UI.Windows.Schedule {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/TasksApp.UI;component/windows/schedule/scheduletaskdetailswindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/TasksApp.UI;V1.0.0.0;component/windows/schedule/scheduletaskdetailswindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\Windows\Schedule\ScheduleTaskDetailsWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

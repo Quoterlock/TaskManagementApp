@@ -14,7 +14,8 @@ namespace TasksApp.BusinessLogic.Services.Adapters
                 Name = entity.Name,
                 IsArchived = entity.
                 IsArchived,
-                NoteText = entity.NoteText
+                NoteText = entity.NoteText,
+                ColorHex = string.IsNullOrEmpty(entity.ColorHex)? "#FFFFFF" : entity.ColorHex,
             };
         }
 
@@ -26,7 +27,8 @@ namespace TasksApp.BusinessLogic.Services.Adapters
                 Name = model.Name,
                 IsArchived = model.IsArchived,
                 NoteText = model.NoteText,
-                CategoryId = model.Category.Id
+                CategoryId = model.Category.Id,
+                ColorHex = model.ColorHex
             };
         }
     }

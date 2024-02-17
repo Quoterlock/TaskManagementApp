@@ -5,15 +5,57 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
 
+        <SolidColorBrush x:Key="borderColor" Color="#c4c4c4"/>
+        <SolidColorBrush x:Key="controlBackgroundColor" Color="Transparent"/>
+        <SolidColorBrush x:Key="highlightColor" Color="#dedede"/>
+
         <SolidColorBrush x:Key="scheduleBlockColor" Color="#34eb77" Opacity="0.5"/>
-        <SolidColorBrush x:Key="timeBlockColor0" Color="#fee440" Opacity="0.5"/>
-        <SolidColorBrush x:Key="timeBlockColor1" Color="#f15bb5" Opacity="0.5"/>
-        <SolidColorBrush x:Key="timeBlockColor2" Color="#9b5de5" Opacity="0.5"/>
-        <SolidColorBrush x:Key="timeBlockColor3" Color="#00bbf9" Opacity="0.5"/>
-        <SolidColorBrush x:Key="timeBlockColor4" Color="#00f5d4" Opacity="0.5"/>
-        <SolidColorBrush x:Key="timeBlockColor5" Color="#f77f00" Opacity="0.5"/>
-        <SolidColorBrush x:Key="calendarBackgroundColor" Color="#e0e0e0"/>
+        
+        <SolidColorBrush x:Key="calendarBackgroundColor" Color="#f0f0f0"/>
         <SolidColorBrush x:Key="todayHighlightColor" Color="#c7ffd8"/>
+        <SolidColorBrush x:Key="gridColor" Color="#d6d6d6"/>
+
+        <Style TargetType="{x:Type Button}">
+            <!-- Template for button style -->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <!-- Content handles within a border -->
+                        <Border x:Name="bdr" CornerRadius="3" Margin="2" BorderThickness="1" BorderBrush="{DynamicResource borderColor}" Background="{DynamicResource controlBackgroundColor}">
+                            <!-- ContentPresenter properties. Set the content source as the content from each control define below -->
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" TextBlock.FontSize="12" />
+                        </Border>
+                        <!-- Required triggers define here -->
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bdr" Property="Background" Value="{DynamicResource highlightColor}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style  TargetType="Label">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Label}">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" 
+            BorderThickness="{TemplateBinding BorderThickness}" 
+            Background="{TemplateBinding Background}" 
+            Padding="{TemplateBinding Padding}" 
+            SnapsToDevicePixels="true" 
+            CornerRadius="3">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
         <BitmapImage x:Key="calendarIcon" UriSource="/Assets/icons/calendar-icon.png"/>
         <BitmapImage x:Key="listIcon" UriSource="/Assets/icons/list-icon.png"/>
@@ -26,5 +68,7 @@
         <BitmapImage x:Key="editIcon" UriSource="/Assets/icons/edit-icon.png"/>
         <BitmapImage x:Key="archiveIcon" UriSource="/Assets/icons/archive-icon.png"/>
         <BitmapImage x:Key="unarchiveIcon" UriSource="/Assets/icons/unarchive-icon.png"/>
+        <BitmapImage x:Key="scheduleIcon" UriSource="/Assets/icons/schedule-icon.png"/>
+        <BitmapImage x:Key="refreshIcon" UriSource="/Assets/icons/refresh-icon.png"/>
     </Application.Resources>
 </Application>

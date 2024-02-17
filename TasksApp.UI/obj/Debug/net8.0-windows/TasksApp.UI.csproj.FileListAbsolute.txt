@@ -199,3 +199,5 @@ C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\obj\Debug\net8.0-wind
 C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\obj\Debug\net8.0-windows\Windows\Schedule\ScheduleTaskDetailsWindow.baml
 C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\obj\Debug\net8.0-windows\Pages\HomePage.g.cs
 C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\obj\Debug\net8.0-windows\Pages\HomePage.baml
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\obj\Debug\net8.0-windows\Windows\Project\EditProjectWindow.g.cs
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\obj\Debug\net8.0-windows\Windows\Project\EditProjectWindow.baml

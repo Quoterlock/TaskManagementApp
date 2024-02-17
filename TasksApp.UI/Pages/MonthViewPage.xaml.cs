@@ -19,6 +19,7 @@ using TasksApp.BusinessLogic.Interfaces;
 using TasksApp.BusinessLogic.Models;
 using TasksApp.UI.Services;
 using TasksApp.UI.Windows;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace TasksApp.UI.Pages
 {
@@ -43,7 +44,9 @@ namespace TasksApp.UI.Pages
 
         private void UpdateState()
         {
-            selectedMonthLabel.Content = _selectedMonth.ToString() + "." + _selectedYear.ToString(); 
+            DateTime date = new DateTime(_selectedYear, _selectedMonth, 1);
+            string monthName = date.ToString("MMMM");
+            selectedMonthLabel.Content = monthName + " (" + date.ToString("MM") + "), " + _selectedYear.ToString();
             LoadTasks();
             UpdateCanvas();
         }
@@ -168,7 +171,7 @@ namespace TasksApp.UI.Pages
                 line.StrokeThickness = 1;
                 line.X1 = 0; line.X2 = width;
                 line.Y1 = 0; line.Y2 = 0;
-                line.Stroke = Brushes.Gray;
+                line.Stroke = ResourceManager.GetColor("gridColor");
                 Canvas.SetTop(line, i * blockHeight);
                 calendarCanvas.Children.Add(line);
             }
@@ -179,7 +182,7 @@ namespace TasksApp.UI.Pages
                 line.StrokeThickness = 1;
                 line.X1 = 0; line.X2 = 0;
                 line.Y1 = 0; line.Y2 = height;
-                line.Stroke = Brushes.Gray;
+                line.Stroke = ResourceManager.GetColor("gridColor");
                 Canvas.SetLeft(line, i * blockWidth);
                 calendarCanvas.Children.Add(line);
             }
@@ -195,9 +198,13 @@ namespace TasksApp.UI.Pages
 
         private Label GetTaskItem(TaskModel taskModel)
         {
-            var label = new Label() { Content = taskModel.Text };
-            var brush = GetRandomBlockColor().CloneCurrentValue();
-            brush.Opacity = 1;
+            var label = new Label() 
+            { 
+                Content = (taskModel.IsDone ? "✓ " : "") + taskModel.Text 
+            };
+            var brush = new SolidColorBrush() {
+                Color = (Color)ColorConverter.ConvertFromString(taskModel.Project.ColorHex),
+            };
             label.Background = brush;
             label.BorderThickness = new Thickness(1);
             label.Uid = taskModel.Id;
@@ -224,7 +231,7 @@ namespace TasksApp.UI.Pages
 
         private Brush GetColor(string key)
         {
-            return (SolidColorBrush)Application.Current.Resources[key];
+            return (SolidColorBrush)System.Windows.Application.Current.Resources[key];
         }
 
         private void nextMonthBtn_Click(object sender, RoutedEventArgs e)
@@ -246,6 +253,11 @@ namespace TasksApp.UI.Pages
                 _selectedMonth = 12;
                 _selectedYear--;
             }
+            UpdateState();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
             UpdateState();
         }
     }

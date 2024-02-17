@@ -16,6 +16,7 @@ using TasksApp.BusinessLogic.Interfaces;
 using TasksApp.UI.Windows;
 using TasksApp.BusinessLogic.Models;
 using System.Net;
+using TasksApp.UI.Windows.Project;
 
 namespace TasksApp.UI.Pages
 {
@@ -25,7 +26,7 @@ namespace TasksApp.UI.Pages
     public partial class ListPage : Page
     {
         private readonly ServicesContainer _services;
-        private string selectedCategoryId;
+        private string _selectedCategoryId;
         private string selectedProjectId;
 
         public ListPage(ServicesContainer services)
@@ -33,7 +34,7 @@ namespace TasksApp.UI.Pages
             InitializeComponent();
             _services = services;
             selectedProjectId = string.Empty;
-            selectedCategoryId = string.Empty;
+            _selectedCategoryId = string.Empty;
             LoadCategories();
         }
 
@@ -53,11 +54,15 @@ namespace TasksApp.UI.Pages
                 var label = new Label() { Content = category.Name };
 
                 var editBtn = new Button() { Uid = category.Id };
-                editBtn.Content = GetIcon("editIcon");
+                var editIcon = ResourceManager.GetIcon("editIcon"); 
+                editIcon.Height = 20; editIcon.Width = 20;
+                editBtn.Content = editIcon;
                 editBtn.Click += EditCategoryEvent;
 
                 var deleteBtn = new Button() { Uid = category.Id };
-                deleteBtn.Content = GetIcon("deleteIcon");
+                var deleteIcon = ResourceManager.GetIcon("deleteIcon");
+                deleteIcon.Height = 20; deleteIcon.Width = 20;
+                deleteBtn.Content = deleteIcon;
                 deleteBtn.Click += DeleteCategoryEvent;
 
                 stack.Children.Add(label);
@@ -82,7 +87,7 @@ namespace TasksApp.UI.Pages
 
         private void ArchiveOpenEvent(object sender, RoutedEventArgs e)
         {
-            selectedCategoryId = string.Empty;
+            _selectedCategoryId = string.Empty;
             LoadArchive();
         }
 
@@ -121,12 +126,16 @@ namespace TasksApp.UI.Pages
                 editBtn.Uid = project.Id;
                 if (!project.IsArchived)
                 {
-                    editBtn.Content = GetIcon("editIcon");
+                    var editIcon = ResourceManager.GetIcon("editIcon");
+                    editIcon.Height = 20; editIcon.Width = 20;
+                    editBtn.Content = editIcon;
                     editBtn.Click += EditProjectEvent;
                 }
                 else
                 {
-                    editBtn.Content = GetIcon("unarchiveIcon");
+                    var icon = ResourceManager.GetIcon("unarchiveIcon");
+                    icon.Height = 20; icon.Width = 20;
+                    editBtn.Content = icon;
                     editBtn.Click += UnarchiveProjectEvent;
                 }
 
@@ -135,12 +144,18 @@ namespace TasksApp.UI.Pages
                 if (!project.IsArchived)
                 {
                     deleteBtn.Click += ArchiveProjectEvent;
-                    deleteBtn.Content = GetIcon("archiveIcon");
+
+                    var icon = ResourceManager.GetIcon("archiveIcon");
+                    icon.Height = 20; icon.Width = 20;
+                    deleteBtn.Content = icon;
                 }
                 else
                 {
                     deleteBtn.Click += DeleteProjectEvent;
-                    deleteBtn.Content = GetIcon("deleteIcon");
+
+                    var icon = ResourceManager.GetIcon("deleteIcon");
+                    icon.Height = 20; icon.Width = 20;
+                    deleteBtn.Content = icon;
                 }
 
                 stack.Children.Add(label);
@@ -180,12 +195,16 @@ namespace TasksApp.UI.Pages
                 var staticRes = new StaticResourceExtension();
                 if (task.IsDone)
                 {
-                    statusBtn.Content = GetIcon("checkedIcon");
+                    var icon = ResourceManager.GetIcon("checkedIcon");
+                    icon.Height = 20; icon.Width = 20;
+                    statusBtn.Content = icon;
                     statusBtn.Click += MarkTaskUndoneEvent;
                 }
                 else
                 {
-                    statusBtn.Content = GetIcon("uncheckedIcon");
+                    var icon = ResourceManager.GetIcon("uncheckedIcon");
+                    icon.Height = 20; icon.Width = 20;
+                    statusBtn.Content = icon;
                     statusBtn.Click += MarkTaskDoneEvent;
                 }
 
@@ -257,7 +276,7 @@ namespace TasksApp.UI.Pages
             {
                 var service = _services.Get<IProjectsService>();
                 service.Archive(service.GetProjectById(id));
-                LoadProjects(selectedCategoryId);
+                LoadProjects(_selectedCategoryId);
             }
         }
 
@@ -272,13 +291,15 @@ namespace TasksApp.UI.Pages
         private void EditProjectEvent(object sender, RoutedEventArgs e)
         {
             var id = ((Button)sender).Uid;
-            MessageBox.Show("EditProjectWindow");
+            var dialog = new EditProjectWindow(_services, id);
+            dialog.ShowDialog();
+            LoadProjects(_selectedCategoryId);
         }
 
         private void CategorySelectedEvent(object sender, RoutedEventArgs e)
         {
             var id = ((ListBoxItem)sender).Uid;
-            selectedCategoryId = id;
+            _selectedCategoryId = id;
             LoadProjects(id);
         }
 
@@ -312,9 +333,9 @@ namespace TasksApp.UI.Pages
 
         private void addProjectBtn_Click(object sender, RoutedEventArgs e)
         {
-            var window = new NewProjectWindow(_services, selectedCategoryId);
+            var window = new NewProjectWindow(_services, _selectedCategoryId);
             window.ShowDialog();
-            LoadProjects(selectedCategoryId);
+            LoadProjects(_selectedCategoryId);
         }
 
         private void addCategoryBtn_Click(object sender, RoutedEventArgs e)
@@ -322,16 +343,6 @@ namespace TasksApp.UI.Pages
             var window = new NewCategoryWindow(_services);
             window.ShowDialog();
             LoadCategories();
-        }
-
-        private Image GetIcon(string name)
-        {
-            return new Image()
-            {
-                Source = (BitmapImage)Application.Current.Resources[name],
-                Height = 20,
-                Width = 20
-            };
         }
     }
 }

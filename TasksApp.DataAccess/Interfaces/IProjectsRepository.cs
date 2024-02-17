@@ -4,7 +4,7 @@ namespace TasksApp.DataAccess.Interfaces
 {
     public interface IProjectsRepository
     {
-        void Create(string projectName, string categoryId);
+        void Create(ProjectEntity project);
         void Delete(ProjectEntity project);
         void Update(ProjectEntity project);
         ProjectEntity GetById(string id);

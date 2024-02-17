@@ -22,6 +22,9 @@
     <Compile Update="Windows\Category\NewCategoryWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Windows\Project\EditProjectWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Windows\Project\NewProjectWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -61,6 +64,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Windows\Category\NewCategoryWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\Project\EditProjectWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Windows\Project\NewProjectWindow.xaml">

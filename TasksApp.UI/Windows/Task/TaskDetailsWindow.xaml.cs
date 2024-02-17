@@ -25,8 +25,9 @@ namespace TasksApp.UI.Windows
         private bool isChanged;
         private ServicesContainer _services;
         private TaskModel _task;
-        private string selectedProjectId;
+        private string selectedProjectId = string.Empty;
         public bool IsModified = false;
+
         public TaskDetailsWindow(string taskId, ServicesContainer services)
         {
             _services = services;
@@ -42,10 +43,16 @@ namespace TasksApp.UI.Windows
             _task = _services.Get<ITasksService>().GetTaskById(_task.Id);
 
             // fill fields
-            if (_task.IsDone)
-                markDoneBtn.Content = "Mark Undone";
-            else 
-                markDoneBtn.Content = "Mark Done";
+            MarkDoneChanged();
+
+            if (_task.StartTime == _task.EndTime && _task.StartTime == TimeOnly.MinValue) 
+            { 
+                TimeBlockedStatus(false); 
+            }
+            else
+            {
+                timeBlockedCheckBox.IsChecked = true;
+            }
 
             taskTextBox.Text = _task.Text;
             startTimeTextBox.Text = _task.StartTime.ToString();
@@ -122,6 +129,14 @@ namespace TasksApp.UI.Windows
                 saveBtn.Visibility = Visibility.Collapsed;
         }
 
+        public void MarkDoneChanged()
+        {
+            if (_task.IsDone)
+                markDoneBtn.Content = ResourceManager.GetIcon("checkedIcon");
+            else
+                markDoneBtn.Content = ResourceManager.GetIcon("uncheckedIcon");
+        }
+
         private void deleteBtn_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure you want to delete this task?", "Delete Confirmation", MessageBoxButton.YesNo);
@@ -142,12 +157,32 @@ namespace TasksApp.UI.Windows
         private void markDoneBtn_Click(object sender, RoutedEventArgs e)
         {
             _task.IsDone = !_task.IsDone;
-            if (_task.IsDone)
-                markDoneBtn.Content = "Mark Undone";
-            else
-                markDoneBtn.Content = "Mark Done";
-
+            MarkDoneChanged();
             SetChanged(true);
+        }
+
+        private void timeBlockedCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            TimeBlockedStatus(timeBlockedCheckBox.IsChecked ?? false);
+        }
+
+        void TimeBlockedStatus(bool value)
+        {
+            if (!value)
+            {
+                endTimeTextBox.Text = TimeOnly.MinValue.ToString();
+                startTimeTextBox.Text = TimeOnly.MinValue.ToString();
+
+                startTimeTextBox.IsEnabled = false;
+                endTimeTextBox.IsEnabled = false;
+            }
+            else
+            {
+                endTimeTextBox.Text = _task.EndTime.ToString();
+                startTimeTextBox.Text = _task.StartTime.ToString();
+                startTimeTextBox.IsEnabled = true;
+                endTimeTextBox.IsEnabled = true;
+            }
         }
     }
 }
