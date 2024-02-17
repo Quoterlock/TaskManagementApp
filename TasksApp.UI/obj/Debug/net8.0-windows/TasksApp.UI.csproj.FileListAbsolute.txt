@@ -201,3 +201,8 @@ C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\obj\Debug\net8.0-wind
 C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\obj\Debug\net8.0-windows\Pages\HomePage.baml
 C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\obj\Debug\net8.0-windows\Windows\Project\EditProjectWindow.g.cs
 C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\obj\Debug\net8.0-windows\Windows\Project\EditProjectWindow.baml
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\bin\Debug\net8.0-windows\TasksApp.UI.dll.config
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\obj\Debug\net8.0-windows\Windows\SettingsWindow.g.cs
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\obj\Debug\net8.0-windows\Windows\SettingsWindow.baml
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\obj\Debug\net8.0-windows\Windows\SelectFolderWindow.g.cs
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\obj\Debug\net8.0-windows\Windows\SelectFolderWindow.baml

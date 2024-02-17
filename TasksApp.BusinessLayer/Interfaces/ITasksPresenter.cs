@@ -16,8 +16,6 @@ namespace TasksApp.BusinessLogic.Interfaces
 
         Dictionary<DateTime, List<ScheduleTaskModel>> GetScheduleTasksByWeek(int year, int weekNumber);
 
-        Dictionary<DateTime, List<ScheduleTaskModel>> GetScheduleTasksByMonth(int year, int month);
-
         List<TaskModel> GetOverdueTasks(DateTime date);
     }
 }

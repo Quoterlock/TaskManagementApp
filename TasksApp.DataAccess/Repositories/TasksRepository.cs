@@ -12,7 +12,7 @@ namespace TasksApp.DataAccess.Repositories
             _context = context;
         }
 
-        public void Create(TaskEntity task)
+        public void Add(TaskEntity task)
         {
             if(task != null)
             {
@@ -22,22 +22,21 @@ namespace TasksApp.DataAccess.Repositories
             }
         }
 
-        public void Delete(TaskEntity task)
+        public void Delete(string id)
         {
-            if (task != null)
+            if (!string.IsNullOrEmpty(id))
             {
-                if (!string.IsNullOrEmpty(task.Id))
+                var task = _context.Tasks.FirstOrDefault(t => t.Id == id);
+                if (task != null)
                 {
-                    _context.ChangeTracker.Clear();
                     _context.Tasks.Remove(task);
                     _context.SaveChanges();
-                }
-                else throw new Exception("task_id is null or empty string");
+                } else throw new Exception("Task not found with id: " + id);
             }
-            else throw new ArgumentNullException(nameof(task));
+            else throw new ArgumentNullException("task_id");
         }
 
-        public TaskEntity GetById(string id)
+        public TaskEntity Get(string id)
         {
             if (!string.IsNullOrEmpty(id))
             {
@@ -64,6 +63,11 @@ namespace TasksApp.DataAccess.Repositories
         public IEnumerable<TaskEntity> GetByMatch(Func<TaskEntity, bool> predicate)
         {
             return _context.Tasks.Where(predicate) ?? Enumerable.Empty<TaskEntity>();
+        }
+
+        public IEnumerable<TaskEntity> GetAll()
+        {
+            return _context.Tasks ?? Enumerable.Empty<TaskEntity>();
         }
     }
 }

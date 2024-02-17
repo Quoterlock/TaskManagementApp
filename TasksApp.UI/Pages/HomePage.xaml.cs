@@ -124,6 +124,8 @@ namespace TasksApp.UI.Pages
             var id = ((ListBoxItem)sender).Uid;
             var window = new TaskDetailsWindow(id, _services);
             window.ShowDialog();
+            if (window.IsModified)
+                LoadTasks();
            
         }
 

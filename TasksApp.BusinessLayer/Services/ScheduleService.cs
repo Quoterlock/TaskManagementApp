@@ -8,12 +8,12 @@ namespace TasksApp.BusinessLogic.Services
 {
     public class ScheduleService : IScheduleService
     {
-        private readonly IScheduleRepository _scheduleRepository;
+        private readonly IScheduleSchemeRepository _scheduleRepository;
         private readonly IAdapterME<ScheduleBlockModel, ScheduleItemEntity> _adapter;
         private readonly IAdapterME<ScheduleTaskModel, ScheduleTaskEntity> _scheduleTaskAdapter;
         private readonly IScheduleTasksRepository _scheduleTasksRepository;
 
-        public ScheduleService(IScheduleRepository scheduleRepository,
+        public ScheduleService(IScheduleSchemeRepository scheduleRepository,
             IScheduleTasksRepository scheduleTasksRepository,
             IAdapterME<ScheduleBlockModel, ScheduleItemEntity> adapter,
             IAdapterME<ScheduleTaskModel, ScheduleTaskEntity> scheduleTaskAdapter)
@@ -30,7 +30,7 @@ namespace TasksApp.BusinessLogic.Services
             {
                 try
                 {
-                    _scheduleRepository.AddItem(_adapter.ModelToEntity(block));
+                    _scheduleRepository.Add(_adapter.ModelToEntity(block));
                 } 
                 catch(Exception ex)
                 {
@@ -75,7 +75,7 @@ namespace TasksApp.BusinessLogic.Services
             var futureTasks = _scheduleTasksRepository.GetAll().Where(t=>t.StartTime >= date);
             if(futureTasks != null)
                 foreach(var task in futureTasks)
-                    _scheduleTasksRepository.Remove(task.Id);
+                    _scheduleTasksRepository.Delete(task.Id);
         }
 
         public void ClearSchedule()
@@ -84,7 +84,7 @@ namespace TasksApp.BusinessLogic.Services
             try
             {
                 foreach (var block in blocks)
-                    _scheduleRepository.DeleteItem(block.Id);
+                    _scheduleRepository.Delete(block.Id);
                 ClearFutureTasks(DateTime.Now.Date);
             }
             catch(Exception ex)
@@ -95,7 +95,7 @@ namespace TasksApp.BusinessLogic.Services
 
         public List<ScheduleBlockModel> GetCurrentSchedule()
         {
-            var items = _scheduleRepository.GetItems();
+            var items = _scheduleRepository.GetAll();
             var result = new List<ScheduleBlockModel>();
             foreach(var item in items) 
             {
@@ -111,7 +111,7 @@ namespace TasksApp.BusinessLogic.Services
             {
                 try
                 {
-                    _scheduleRepository.DeleteItem(id);
+                    _scheduleRepository.Delete(id);
                 }
                 catch (Exception ex)
                 {
@@ -126,7 +126,7 @@ namespace TasksApp.BusinessLogic.Services
             {
                 try
                 {
-                    _scheduleRepository.UpdateItem(_adapter.ModelToEntity(block));
+                    _scheduleRepository.Update(_adapter.ModelToEntity(block));
                 }
                 catch (Exception ex)
                 {
@@ -151,7 +151,7 @@ namespace TasksApp.BusinessLogic.Services
             {
                 try
                 {
-                    _scheduleTasksRepository.Remove(id);
+                    _scheduleTasksRepository.Delete(id);
                 } 
                 catch (Exception ex)
                 {
@@ -191,7 +191,7 @@ namespace TasksApp.BusinessLogic.Services
         {
             if (!string.IsNullOrEmpty(id))
             {
-                var entity = _scheduleTasksRepository.GetById(id);
+                var entity = _scheduleTasksRepository.Get(id);
                 if (entity != null)
                     return _scheduleTaskAdapter.EntityToModel(entity);
                 else 

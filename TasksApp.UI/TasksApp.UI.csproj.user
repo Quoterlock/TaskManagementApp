@@ -40,6 +40,12 @@
     <Compile Update="Windows\Schedule\ScheduleTaskDetailsWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Windows\SelectFolderWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Windows\SettingsWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Windows\Task\NewTaskWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -82,6 +88,12 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Windows\Schedule\ScheduleTaskDetailsWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\SelectFolderWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\SettingsWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Windows\Task\NewTaskWindow.xaml">

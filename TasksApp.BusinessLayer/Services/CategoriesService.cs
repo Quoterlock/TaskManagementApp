@@ -45,7 +45,7 @@ namespace TasksApp.BusinessLogic.Services
             {
                 try
                 {
-                    _categoriesRepository.Create(categoryName);
+                    _categoriesRepository.Add(new CategoryEntity { Name = categoryName});
                 } 
                 catch(Exception ex) 
                 {
@@ -60,10 +60,7 @@ namespace TasksApp.BusinessLogic.Services
             {
                 try
                 {
-                    var projects = _projectsService.GetProjectsList();
-                    foreach (var project in projects.Where(p=>p.CategoryId == category.Id))
-                        _projectsService.DeleteProject(project.Id);
-                    _categoriesRepository.Delete(_categoryAdapter.ModelToEntity(category));
+                    _categoriesRepository.Delete(category.Id);
                 }
                 catch (Exception ex)
                 {
@@ -102,6 +99,23 @@ namespace TasksApp.BusinessLogic.Services
             foreach (var entity in entities)
                 categories.Add(_categoryAdapter.EntityToModel(entity));
             return categories;
+        }
+
+        public CategoryModel GetCategory(string id)
+        {
+            if (!string.IsNullOrEmpty(id))
+            {
+                try
+                {
+                    var category = _categoriesRepository.Get(id);
+                    return _categoryAdapter.EntityToModel(category);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+            }
+            else throw new ArgumentNullException("category_id");
         }
     }
 }

@@ -8,6 +8,7 @@ namespace TasksApp.BusinessLogic.Interfaces
         void DeleteCategory(CategoryModel category);
         void RenameCategory(CategoryModel category, string newName);
         List<CategoryModel> GetList();
+        CategoryModel GetCategory(string id);
         CategoryModel GetCategoryWithProjects(string id);
     }
 }

@@ -38,7 +38,7 @@ namespace TasksApp.DataAccess.Repositories
             return _context.ScheduleTasks;
         }
 
-        public ScheduleTaskEntity GetById(string id)
+        public ScheduleTaskEntity Get(string id)
         {
             if (!string.IsNullOrEmpty(id))
             {
@@ -51,7 +51,7 @@ namespace TasksApp.DataAccess.Repositories
             else throw new ArgumentNullException("task_id");
         }
 
-        public void Remove(string id)
+        public void Delete(string id)
         {
             if (!string.IsNullOrEmpty(id))
             {

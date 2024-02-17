@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\App.xaml
-17-1899493867
+191823873326
 
-241128624237
+27506768409
 2191912132062
-MainWindow.xaml;Pages\HomePage.xaml;Pages\ListPage.xaml;Pages\MonthViewPage.xaml;Pages\PresentationPage.xaml;Pages\SchedulePage.xaml;Pages\WeekViewPage.xaml;Windows\Category\EditCategoryWindow.xaml;Windows\Category\NewCategoryWindow.xaml;Windows\Project\EditProjectWindow.xaml;Windows\Project\NewProjectWindow.xaml;Windows\Schedule\AddScheduleBlockWindow.xaml;Windows\Schedule\EditScheduleBlockWindow.xaml;Windows\Schedule\EnterDateDialog.xaml;Windows\Schedule\ScheduleTaskDetailsWindow.xaml;Windows\Task\NewTaskWindow.xaml;Windows\Task\TaskDetailsWindow.xaml;
+MainWindow.xaml;Pages\HomePage.xaml;Pages\ListPage.xaml;Pages\MonthViewPage.xaml;Pages\PresentationPage.xaml;Pages\SchedulePage.xaml;Pages\WeekViewPage.xaml;Windows\Category\EditCategoryWindow.xaml;Windows\Category\NewCategoryWindow.xaml;Windows\Project\EditProjectWindow.xaml;Windows\Project\NewProjectWindow.xaml;Windows\Schedule\AddScheduleBlockWindow.xaml;Windows\Schedule\EditScheduleBlockWindow.xaml;Windows\Schedule\EnterDateDialog.xaml;Windows\Schedule\ScheduleTaskDetailsWindow.xaml;Windows\SelectFolderWindow.xaml;Windows\SettingsWindow.xaml;Windows\Task\NewTaskWindow.xaml;Windows\Task\TaskDetailsWindow.xaml;
 
 False
 

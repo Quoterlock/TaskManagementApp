@@ -13,34 +13,43 @@ namespace TasksApp.DataAccess.Repositories
     public class CategoriesRepository : ICategoriesRepository
     {
         private readonly AppDbContext _context;
+
         public CategoriesRepository(AppDbContext context) 
         {
             _context = context;
         }
 
-        public void Create(string name)
+        public void Add(CategoryEntity entity)
         {
-            if (!string.IsNullOrEmpty(name))
+            if (entity != null)
             {
-                _context.Categories.Add(new CategoryEntity { Id = Guid.NewGuid().ToString(), Name = name });
+                entity.Id = Guid.NewGuid().ToString();
+                _context.Categories.Add(entity);
                 _context.SaveChanges();
             }
-            else throw new ArgumentNullException("category_name");
+            else throw new ArgumentNullException("category");
         }
 
-        public void Delete(CategoryEntity category)
+        public void Delete(string id)
         {
-            if(category != null)
+            if (!string.IsNullOrEmpty(id))
             {
-                if (!string.IsNullOrEmpty(category.Id))
+                var category = _context.Categories.FirstOrDefault(c => c.Id == id);
+                if(category != null)
                 {
-                    _context.ChangeTracker.Clear();
                     _context.Categories.Remove(category);
+
+                    // unlink project from category
+                    var projects = _context.Projects.Where(p => p.CategoryId == category.Id);
+                    foreach (var project in projects)
+                        project.CategoryId = string.Empty;
+                    
+                    // save changes
                     _context.SaveChanges();
-                }
-                else throw new ArgumentNullException(nameof(category.Id));
-            } 
-            else throw new ArgumentNullException(nameof(category));
+                } 
+                else throw new Exception("Category not found with id: " + id);
+            }
+            else throw new ArgumentNullException("category_id");
         }
 
         public void Update(CategoryEntity category)

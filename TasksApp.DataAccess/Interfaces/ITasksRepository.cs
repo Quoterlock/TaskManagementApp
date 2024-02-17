@@ -2,12 +2,8 @@
 
 namespace TasksApp.DataAccess.Interfaces
 {
-    public interface ITasksRepository
+    public interface ITasksRepository : IRepository<TaskEntity>
     {
-        void Create(TaskEntity task);
-        void Delete(TaskEntity task);
-        void Update(TaskEntity task);
-        TaskEntity GetById(string id);
         IEnumerable<TaskEntity> GetByMatch(Func<TaskEntity, bool> predicate);
     }
 }

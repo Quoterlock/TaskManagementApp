@@ -23,8 +23,9 @@ namespace TasksApp.UI.Windows.Project
     /// </summary>
     public partial class EditProjectWindow : Window
     {
-        ServicesContainer _services;
-        ProjectModel _project;
+        private ServicesContainer _services;
+        private ProjectModel _project;
+        private string _selectedCategoryId;
         public EditProjectWindow(ServicesContainer services, string id)
         {
             _services = services;
@@ -39,12 +40,28 @@ namespace TasksApp.UI.Windows.Project
                 _project = _services.Get<IProjectsService>().GetProjectById(id);
                 projectNameTextBox.Text = _project.Name;
                 colorTextBox.Text = _project.ColorHex;
+
+                var categories = _services.Get<ICategoriesService>().GetList();
+                foreach (var category in categories)
+                {
+
+                    var item = new ComboBoxItem() { Uid = category.Id, Content = category.Name };
+                    item.Selected += CategoryItemSelectedEvent;
+                    categoryComboBox.Items.Add(item);
+                    if (_project.Category.Id == item.Uid)
+                        categoryComboBox.SelectedIndex = categoryComboBox.Items.IndexOf(item);
+                }
             } 
             catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
                 this.Close();
             }
+        }
+
+        private void CategoryItemSelectedEvent(object sender, RoutedEventArgs e)
+        {
+            _selectedCategoryId = ((ComboBoxItem)sender).Uid;
         }
 
         private void saveBtn_Click(object sender, RoutedEventArgs e)
@@ -56,6 +73,14 @@ namespace TasksApp.UI.Windows.Project
             {
                 _project.ColorHex = colorTextBox.Text;
                 _project.Name = projectNameTextBox.Text;
+                if(string.IsNullOrEmpty(_selectedCategoryId))
+                {
+                    MessageBox.Show("Select category");
+                    return;
+                } else
+                {
+                    _project.Category = _services.Get<ICategoriesService>().GetCategory(_selectedCategoryId);
+                }
                 try
                 {
                     _services.Get<IProjectsService>().UpdateProject(_project);

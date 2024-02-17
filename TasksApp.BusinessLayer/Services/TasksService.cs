@@ -27,7 +27,7 @@ namespace TasksApp.BusinessLogic.Services
                     try
                     {
                         // TODO: add check for category existence
-                        _tasks.Create(_tasksAdapter.ModelToEntity(model));
+                        _tasks.Add(_tasksAdapter.ModelToEntity(model));
                     } 
                     catch(Exception ex)
                     {
@@ -44,7 +44,7 @@ namespace TasksApp.BusinessLogic.Services
             {
                 try
                 {
-                    _tasks.Delete(_tasksAdapter.ModelToEntity(model));
+                    _tasks.Delete(model.Id);
                 }
                 catch (Exception ex) 
                 { 
@@ -75,7 +75,7 @@ namespace TasksApp.BusinessLogic.Services
         {
             if (!string.IsNullOrEmpty(id))
             {
-                var entity = _tasks.GetById(id);
+                var entity = _tasks.Get(id);
                 if (entity != null)
                 {
                     var task = _tasksAdapter.EntityToModel(entity);

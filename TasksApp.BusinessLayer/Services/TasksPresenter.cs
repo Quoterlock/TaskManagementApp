@@ -63,17 +63,6 @@ namespace TasksApp.BusinessLogic.Services
             return project;
         }
 
-        public Dictionary<DateTime, List<ScheduleTaskModel>> GetScheduleTasksByMonth(int year, int month)
-        {
-            var monthTasks = new Dictionary<DateTime, List<ScheduleTaskModel>>();
-            for (int i = 1; i < DateTime.DaysInMonth(year, month) + 1; i++)
-            {
-                var date = new DateTime(year, month, i);
-                monthTasks.Add(date, _schedule.GetTasksByDate(date));
-            }
-            return monthTasks;
-        }
-
         public Dictionary<DateTime, List<ScheduleTaskModel>> GetScheduleTasksByWeek(int year, int weekNumber)
         {
             var weekTasks = new Dictionary<DateTime, List<ScheduleTaskModel>>();

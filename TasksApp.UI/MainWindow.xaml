@@ -29,6 +29,9 @@
                 <Image Source="{StaticResource addIcon}"/>
             </Button>
         </StackPanel>
+        <StackPanel VerticalAlignment="Bottom">
+            <Button x:Name="settingsBtn" Content="Set" Click="settingsBtn_Click"/>
+        </StackPanel>
 
         <Frame x:Name="mainFrame" Grid.Column="1" NavigationUIVisibility="Hidden"/>
     </Grid>

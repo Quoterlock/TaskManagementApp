@@ -213,7 +213,7 @@ namespace TasksApp.UI.Pages {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/TasksApp.UI;V1.0.0.0;component/pages/weekviewpage.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/TasksApp.UI;component/pages/weekviewpage.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\Pages\WeekViewPage.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

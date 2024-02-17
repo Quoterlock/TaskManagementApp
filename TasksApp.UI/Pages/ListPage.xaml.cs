@@ -1,21 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Imaging;
 using TasksApp.UI.Services;
 using TasksApp.BusinessLogic.Interfaces;
 using TasksApp.UI.Windows;
 using TasksApp.BusinessLogic.Models;
-using System.Net;
 using TasksApp.UI.Windows.Project;
 
 namespace TasksApp.UI.Pages
@@ -43,33 +31,24 @@ namespace TasksApp.UI.Pages
             categoriesListBox.Items.Clear();
             var service = _services.Get<ICategoriesService>();
             var categories = service.GetList();
+
+            // add uncategorised folder
+            var noCategoryItem = new ListBoxItem()
+            {
+                Uid = string.Empty,
+                Content = new Label()
+                {
+                    Content = "No-Category"
+                },
+            };
+            noCategoryItem.Selected += CategorySelectedEvent;
+            categoriesListBox.Items.Add(noCategoryItem);
+
+            
+            // add categories
             foreach (var category in categories)
             {
-                var item = new ListBoxItem();
-                item.Uid = category.Id;
-                item.Selected += CategorySelectedEvent;
-
-                var stack = new StackPanel();
-                stack.Orientation = Orientation.Horizontal;
-                var label = new Label() { Content = category.Name };
-
-                var editBtn = new Button() { Uid = category.Id };
-                var editIcon = ResourceManager.GetIcon("editIcon"); 
-                editIcon.Height = 20; editIcon.Width = 20;
-                editBtn.Content = editIcon;
-                editBtn.Click += EditCategoryEvent;
-
-                var deleteBtn = new Button() { Uid = category.Id };
-                var deleteIcon = ResourceManager.GetIcon("deleteIcon");
-                deleteIcon.Height = 20; deleteIcon.Width = 20;
-                deleteBtn.Content = deleteIcon;
-                deleteBtn.Click += DeleteCategoryEvent;
-
-                stack.Children.Add(label);
-                stack.Children.Add(editBtn);
-                stack.Children.Add(deleteBtn);
-
-                item.Content = stack;
+                ListBoxItem item = GetCategoryListItem(category);
                 categoriesListBox.Items.Add(item);
             }
 
@@ -83,6 +62,36 @@ namespace TasksApp.UI.Pages
             };
             archiveItem.Selected += ArchiveOpenEvent;
             categoriesListBox.Items.Add(archiveItem);
+        }
+
+        private ListBoxItem GetCategoryListItem(CategoryModel category)
+        {
+            var item = new ListBoxItem();
+            item.Uid = category.Id;
+            item.Selected += CategorySelectedEvent;
+
+            var stack = new StackPanel();
+            stack.Orientation = Orientation.Horizontal;
+            var label = new Label() { Content = category.Name };
+
+            var editBtn = new Button() { Uid = category.Id };
+            var editIcon = ResourceManager.GetIcon("editIcon");
+            editIcon.Height = 20; editIcon.Width = 20;
+            editBtn.Content = editIcon;
+            editBtn.Click += EditCategoryEvent;
+
+            var deleteBtn = new Button() { Uid = category.Id };
+            var deleteIcon = ResourceManager.GetIcon("deleteIcon");
+            deleteIcon.Height = 20; deleteIcon.Width = 20;
+            deleteBtn.Content = deleteIcon;
+            deleteBtn.Click += DeleteCategoryEvent;
+
+            stack.Children.Add(label);
+            stack.Children.Add(editBtn);
+            stack.Children.Add(deleteBtn);
+
+            item.Content = stack;
+            return item;
         }
 
         private void ArchiveOpenEvent(object sender, RoutedEventArgs e)
@@ -102,9 +111,18 @@ namespace TasksApp.UI.Pages
 
         private void LoadProjects(string categoryId)
         {
-            var projects = _services.Get<ICategoriesService>().GetCategoryWithProjects(categoryId)
-                .Projects
-                .Where(p=>p.IsArchived == false).ToList() ?? [];
+            var projects = new List<ProjectInfoModel>();
+            if (categoryId != string.Empty)
+            {
+                projects = _services.Get<ICategoriesService>().GetCategoryWithProjects(categoryId)
+                    .Projects.Where(p => p.IsArchived == false).ToList() ?? [];
+            }
+            else
+            {
+                projects = _services.Get<IProjectsService>()
+                    .GetProjectsList().Where(p => p.IsArchived == false && p.CategoryId == string.Empty)
+                    .ToList() ?? [];
+            }
 
             LoadProjectsItemsToList(projects);
         }

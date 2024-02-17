@@ -25,12 +25,18 @@ namespace TasksApp.UI
             InitializeComponent();
             services = new ServicesContainer();
             SetupBuilder.CheckFiles();
-            var dbContext = new AppDbContext();
+
+            var path = Properties.Settings.Default.databasePath;
+            if (string.IsNullOrEmpty(path))
+                path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\TasksApp\\Tasks.db";
+            var connectionString = @"Data Source=" + path;
+
+            var dbContext = new AppDbContext(connectionString);
 
             services.Bind<ITasksRepository, TasksRepository>(dbContext);
             services.Bind<IProjectsRepository, ProjectsRepository>(dbContext);
             services.Bind<ICategoriesRepository, CategoriesRepository>(dbContext);
-            services.Bind<IScheduleRepository, ScheduleRepository>(dbContext);
+            services.Bind<IScheduleSchemeRepository, ScheduleSchemeRepository>(dbContext);
             services.Bind<IScheduleTasksRepository, ScheduleTasksRepository>(dbContext);
 
             services.Bind<IAdapterME<TaskModel, TaskEntity>, TaskAdapter>();
@@ -54,7 +60,7 @@ namespace TasksApp.UI
                 services.Get<IAdapterME<CategoryModel, CategoryEntity>>());
 
             services.Bind<IScheduleService, ScheduleService>(
-                services.Get<IScheduleRepository>(),
+                services.Get<IScheduleSchemeRepository>(),
                 services.Get<IScheduleTasksRepository>(),
                 services.Get<IAdapterME<ScheduleBlockModel, ScheduleItemEntity>>(),
                 services.Get<IAdapterME<ScheduleTaskModel, ScheduleTaskEntity>>());
@@ -98,6 +104,17 @@ namespace TasksApp.UI
         {
             mainFrame.Content = new HomePage(services);
             mainFrame.NavigationService.RemoveBackEntry();
+        }
+
+        private void settingsBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new SettingsWindow(services);
+            dialog.ShowDialog();
+            if (dialog.IsModified)
+            {
+                MessageBox.Show("Re-boot app to apply changes. So, we'll do it now...");
+                this.Close();
+            }
         }
     }
 }

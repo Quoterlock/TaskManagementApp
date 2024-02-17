@@ -5,13 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TasksApp.UI.Windows.Project"
         mc:Ignorable="d"
-        Title="EditProjectWindow" Height="200" Width="200">
+        Title="EditProjectWindow" Height="230" Width="200">
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <Label>Project Name</Label>
             <TextBox x:Name="projectNameTextBox"></TextBox>
             <Label>Color (Hex)</Label>
             <TextBox x:Name="colorTextBox"></TextBox>
+            <Label>Category</Label>
+            <ComboBox x:Name="categoryComboBox"/>
             <StackPanel Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Center">
                 <Button x:Name="saveBtn" Width="60" Click="saveBtn_Click">Save</Button>
                 <Button x:Name="cancelBtn" Width="60" Click="cancelBtn_Click">Cancel</Button>

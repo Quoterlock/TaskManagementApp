@@ -26,7 +26,7 @@ namespace TasksApp.BusinessLogic.Services
 
             try
             {
-                _projectsRepository.Create(new ProjectEntity 
+                _projectsRepository.Add(new ProjectEntity 
                 { 
                     CategoryId = projectInfo.CategoryId, 
                     ColorHex = projectInfo.ColorHex ,
@@ -45,36 +45,14 @@ namespace TasksApp.BusinessLogic.Services
             {
                 try
                 {
-                    // get project with no tasks
-                    var entity = _projectsRepository.GetById(id);
-                    _projectsRepository.Delete(entity);
+                    _projectsRepository.Delete(id);
                 }
-                catch (Exception ex) 
+                catch (Exception ex)
                 {
                     throw new Exception(ex.Message);
                 }
             }
             else throw new ArgumentNullException("project_id");
-        }
-
-        public void DeleteProject(ProjectModel project)
-        {
-            if (project != null)
-            {
-                if (!string.IsNullOrEmpty(project.Id))
-                {
-                    try
-                    {
-                        _projectsRepository.Delete(_projectAdapter.ModelToEntity(project));
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new Exception(ex.Message);
-                    }
-                }
-                else throw new ArgumentNullException(nameof(project.Id));
-            }
-            else throw new ArgumentNullException(nameof(project));
         }
 
         public List<ProjectModel> GetAll()
@@ -86,7 +64,7 @@ namespace TasksApp.BusinessLogic.Services
         {
             if (!string.IsNullOrEmpty(id))
             {
-                var entity = _projectsRepository.GetById(id);
+                var entity = _projectsRepository.Get(id);
                 if (entity != null)
                 {
                     var project = _projectAdapter.EntityToModel(entity);

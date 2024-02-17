@@ -6,7 +6,6 @@ namespace TasksApp.BusinessLogic.Interfaces
     public interface IProjectsService
     {
         void AddProject(ProjectInfoModel projectInfo);
-        void DeleteProject(ProjectModel project);
         void DeleteProject(string id);
         void UpdateProject(ProjectModel project);
         ProjectModel GetProjectById(string id);

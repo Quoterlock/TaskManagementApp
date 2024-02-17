@@ -2,12 +2,8 @@
 
 namespace TasksApp.DataAccess.Interfaces
 {
-    public interface IScheduleTasksRepository
+    public interface IScheduleTasksRepository : IRepository<ScheduleTaskEntity>
     {
-        void Add(ScheduleTaskEntity task);
-        void Update(ScheduleTaskEntity task);
-        void Remove(string id);
-        IEnumerable<ScheduleTaskEntity> GetAll();
-        ScheduleTaskEntity GetById(string id);
+
     }
 }

@@ -20,6 +20,7 @@ namespace TasksApp.DataAccess.Repositories
                 throw new ArgumentNullException(nameof(project.Id));
 
             project.IsArchived = true;
+            project.CategoryId = string.Empty;
 
             var tasks = _context.Tasks.Where(t=>t.ProjectId == project.Id);
             foreach (var task in tasks)
@@ -50,7 +51,7 @@ namespace TasksApp.DataAccess.Repositories
             _context.SaveChanges();
         }
 
-        public void Create(ProjectEntity project)
+        public void Add(ProjectEntity project)
         {
             ArgumentNullException.ThrowIfNull(project);
 
@@ -70,17 +71,21 @@ namespace TasksApp.DataAccess.Repositories
             else throw new ArgumentNullException("project_name");
         }
 
-        public void Delete(ProjectEntity project)
+        public void Delete(string id)
         {
-            if (project != null)
+            if (!string.IsNullOrEmpty(id))
             {
-                _context.ChangeTracker.Clear();
-                _context.Remove(project);
-                var tasks = _context.Tasks.Where(t => t.ProjectId == project.Id);
-                _context.Tasks.RemoveRange(tasks);
-                _context.SaveChanges();
+                var project = _context.Projects.FirstOrDefault(p => p.Id == id);
+                if (project != null)
+                {
+                    _context.Projects.Remove(project);
+                    var tasks = _context.Tasks.Where(t => t.ProjectId == project.Id);
+                    _context.Tasks.RemoveRange(tasks);
+                    _context.SaveChanges();
+                }
+                else throw new Exception("Project not found with id: " + id);
             }
-            else throw new ArgumentNullException(nameof(project));
+            else throw new ArgumentNullException("project_id");
         }
 
         public IEnumerable<ProjectEntity> GetAll()
@@ -88,7 +93,7 @@ namespace TasksApp.DataAccess.Repositories
             return _context.Projects ?? Enumerable.Empty<ProjectEntity>();
         }
 
-        public ProjectEntity GetById(string id)
+        public ProjectEntity Get(string id)
         {
             if (!string.IsNullOrEmpty(id))
             {
