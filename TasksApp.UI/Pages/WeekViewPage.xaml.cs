@@ -82,7 +82,7 @@ namespace TasksApp.UI.Pages
                 labelsArray[dayCounter].Content = day.Key.DayOfWeek.ToString() + " (" + day.Key.ToString("dd.MM.yyyy") + ")";
                 foreach (var task in day.Value)
                 {
-                    if (task.StartTime == task.EndTime && task.StartTime == TimeOnly.MinValue)
+                    if(task.IsScheduled && !task.IsTimeBlocked)
                     {
                         var item = new ListBoxItem();
                         var grid = new Grid();
@@ -106,7 +106,7 @@ namespace TasksApp.UI.Pages
                         stack.Children.Add(icon);
                         stack.Children.Add(label);
                         stack.Height = itemHeight;
-                        stack.Margin = new Thickness(3, 0 , 3, 0) ;
+                        stack.Margin = new Thickness(3, 0, 3, 0);
 
                         grid.Children.Add(stack);
                         item.Content = grid;
@@ -209,11 +209,9 @@ namespace TasksApp.UI.Pages
             dayCounter = 0;
             foreach (var pair in _tasks)
             {
-                // add title 
                 foreach (var task in pair.Value)
                 {
-                    // if it is blocked
-                    if (task.StartTime != task.EndTime)
+                    if (task.IsTimeBlocked)
                     {
                         var label = new Label();
                         label.Content = (task.IsDone? "✓ " : "") 

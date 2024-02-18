@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -44,6 +45,19 @@ namespace TasksApp.UI.Windows
             {
                 projectsComboBox.Visibility = Visibility.Collapsed;
             }
+
+            // init combo-boxes
+            var time = TimeOnly.MinValue;
+            for (int i = 0; i < 24 * 60 / 5; i++)
+            {
+                if(i != 0)
+                    time = time.AddMinutes(5);
+                startTimeComboBox.Items.Add(time.ToString());
+                endTimeComboBox.Items.Add(time.ToString());
+            }
+            startTimeComboBox.SelectedIndex = 0;
+            endTimeComboBox.SelectedIndex = 0;
+
         }
 
         private void LoadProjects()
@@ -70,24 +84,50 @@ namespace TasksApp.UI.Windows
 
         private void createBtn_Click(object sender, RoutedEventArgs e)
         {
-            if(!(timeBlockedCheckBox.IsChecked ?? false))
-            {
-                startTimeTextBox.Text = TimeOnly.MinValue.ToString();
-                endTimeTextBox.Text = TimeOnly.MinValue.ToString();
-            }
             if (CheckInput())
             {
                 var task = new TaskModel()
                 {
                     Text = taskTextBox.Text,
-                    DueTo = DateOnly.Parse(dueToTextBox.Text),
-                    StartTime = TimeOnly.Parse(startTimeTextBox.Text),
-                    EndTime = TimeOnly.Parse(endTimeTextBox.Text),
-                    Project = new ProjectInfoModel() { Id = _projectId }
+                    Project = new ProjectInfoModel() { Id = _projectId },
                 };
-                var tasksService = _services.Get<ITasksService>();
-                tasksService.AddTask(task);
-                this.Close();
+
+                if (scheduledCheckBox.IsChecked ?? false)
+                {
+                    task.IsScheduled = true;
+                    task.IsTimeBlocked = timeBlockedCheckBox.IsChecked ?? false;
+                }
+                else
+                {
+                    task.IsScheduled = false;
+                    task.IsTimeBlocked = false;
+                }
+
+                if (task.IsScheduled)
+                    task.DueTo = DateOnly.FromDateTime(dueToDatePicker.SelectedDate ?? DateTime.MinValue);
+                else
+                    task.DueTo = DateOnly.MinValue;
+
+                if (task.IsTimeBlocked)
+                {
+                    task.StartTime = TimeOnly.Parse((string)startTimeComboBox.SelectedValue);
+                    task.EndTime = TimeOnly.Parse((string)endTimeComboBox.SelectedValue);
+                }
+                else
+                {
+                    task.StartTime = TimeOnly.MinValue;
+                    task.EndTime = TimeOnly.MinValue;
+                }
+
+                try
+                {
+                    var tasksService = _services.Get<ITasksService>();
+                    tasksService.AddTask(task);
+                    this.Close();
+                } catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
 
@@ -99,47 +139,68 @@ namespace TasksApp.UI.Windows
                 return false;
             }
 
-            try
+            if (scheduledCheckBox.IsChecked ?? false)
             {
-                var time = TimeOnly.Parse(startTimeTextBox.Text);
-                var time2 = TimeOnly.Parse(endTimeTextBox.Text);
-                if(time > time2 && time2 != TimeOnly.MinValue) 
-                { 
-                    MessageBox.Show("Start time must be before end time"); 
-                    return false; 
+                if (dueToDatePicker.SelectedDate == null)
+                {
+                    MessageBox.Show("Select Due-To date");
+                    return false;
                 }
-            } 
-            catch(Exception ex)
-            {
-                MessageBox.Show("Write correct time format");
-                return false;
-            }
-            try
-            {
-                var date = DateOnly.Parse(dueToTextBox.Text);
-            } 
-            catch(Exception ex)
-            {
-                MessageBox.Show("Write correct date format");
-                return false;
-            }
 
+                if (timeBlockedCheckBox.IsChecked ?? false)
+                {
+                    try
+                    {
+                        var time1 = TimeOnly.Parse((string)startTimeComboBox.SelectedValue);
+                        var time2 = TimeOnly.Parse((string)endTimeComboBox.SelectedValue);
+                        if (time1 > time2)
+                        {
+                            MessageBox.Show("Start time can't be larger than end time!");
+                            return false;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Write correct time format (HH:MM)");
+                        return false;
+                    }
+                }
+            }
             return true;
-            
         }
 
         private void timeBlockedCheckBox_Changed(object sender, RoutedEventArgs e)
         {
             if (timeBlockedCheckBox.IsChecked ?? false)
             {
-                startTimeTextBox.IsEnabled = true;
-                endTimeTextBox.IsEnabled = true;
+                startTimeComboBox.IsEnabled = true;
+                endTimeComboBox.IsEnabled = true;
             }
             else
             {
-                startTimeTextBox.IsEnabled = false;
-                endTimeTextBox.IsEnabled = false;
+                startTimeComboBox.IsEnabled = false;
+                endTimeComboBox.IsEnabled = false;
             }
+        }
+
+        private void scheduledCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (scheduledCheckBox.IsChecked?? false)
+            {
+                dueToDatePicker.IsEnabled = true;
+                timeBlockedCheckBox.IsEnabled = true;
+            }
+            else
+            {
+                dueToDatePicker.IsEnabled= false;
+                timeBlockedCheckBox.IsChecked = false;
+                timeBlockedCheckBox.IsEnabled = false;
+            }
+        }
+
+        private void cancelBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

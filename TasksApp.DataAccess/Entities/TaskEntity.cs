@@ -10,5 +10,7 @@
         public int Priority { get; set; } = 0;
         public string ProjectId { get; set; } = string.Empty;
         public bool IsArchived { get; set; } = false;
+        public bool IsTimeBlocked { get;set; } = false;
+        public bool IsScheduled { get; set; } = false;
     }
 }

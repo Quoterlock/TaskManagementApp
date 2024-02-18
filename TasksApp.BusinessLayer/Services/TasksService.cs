@@ -26,7 +26,13 @@ namespace TasksApp.BusinessLogic.Services
                 {
                     try
                     {
-                        // TODO: add check for category existence
+                        if (!model.IsScheduled) 
+                            model.DueTo = DateOnly.MinValue;
+                        if (!model.IsTimeBlocked) 
+                        { 
+                            model.StartTime = TimeOnly.MinValue;
+                            model.EndTime = TimeOnly.MinValue;
+                        }
                         _tasks.Add(_tasksAdapter.ModelToEntity(model));
                     } 
                     catch(Exception ex)
@@ -61,6 +67,13 @@ namespace TasksApp.BusinessLogic.Services
             {
                 try
                 {
+                    if (!model.IsScheduled)
+                        model.DueTo = DateOnly.MinValue;
+                    if (!model.IsTimeBlocked)
+                    {
+                        model.StartTime = TimeOnly.MinValue;
+                        model.EndTime = TimeOnly.MinValue;
+                    }
                     _tasks.Update(_tasksAdapter.ModelToEntity(model));
                 }
                 catch(Exception ex)
@@ -111,7 +124,7 @@ namespace TasksApp.BusinessLogic.Services
 
         public List<TaskModel> GetOverdueTasks(DateTime date)
         {
-            var tasks = _tasks.GetByMatch(t=>t.StartTime.Date < date.Date && t.IsDone == false);
+            var tasks = _tasks.GetByMatch(t=>t.IsScheduled == true && t.StartTime.Date < date.Date && t.IsDone == false);
             return ConvertToModels(tasks);
         }
 

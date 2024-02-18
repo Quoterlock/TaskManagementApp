@@ -19,6 +19,7 @@
             <RowDefinition Height="24"/>
             <RowDefinition Height="24"/>
             <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="24"/>
         </Grid.RowDefinitions>
@@ -28,19 +29,22 @@
         <ComboBox x:Name="projectsComboBox" Grid.Column="1"/>
 
         <TextBox Grid.Row="1" Grid.ColumnSpan="2" x:Name="taskTextBox"/>
-        <Label Grid.Row="2" Grid.ColumnSpan="2">DueTo (Date)</Label>
-        <TextBox Grid.Row="3" Grid.ColumnSpan="2" x:Name="dueToTextBox"/>
 
-        <CheckBox Grid.Row="4" Grid.ColumnSpan="2" x:Name="timeBlockedCheckBox" Content="Time blocked" IsChecked="False" Checked="timeBlockedCheckBox_Changed" Unchecked="timeBlockedCheckBox_Changed"/>
+        <CheckBox Grid.Row="2" Grid.ColumnSpan="2" x:Name="scheduledCheckBox" Content="Scheduled" IsChecked="False" Checked="scheduledCheckBox_Checked" Unchecked="scheduledCheckBox_Checked"/>
 
-        <Label Grid.Row="5">Start Time</Label>
-        <TextBox Grid.Row="6" x:Name="startTimeTextBox" IsEnabled="False" Text="00:00"/>
+        <Label Grid.Row="3" Grid.ColumnSpan="2" >DueTo (Date)</Label>
+        <DatePicker Grid.Row="4" Grid.ColumnSpan="2" IsEnabled="False" x:Name="dueToDatePicker"/>
+        <CheckBox Grid.Row="5" Grid.ColumnSpan="2" IsEnabled="False" x:Name="timeBlockedCheckBox" Content="Time blocked" IsChecked="False" Checked="timeBlockedCheckBox_Changed" Unchecked="timeBlockedCheckBox_Changed"/>
 
-        <Label Grid.Row="5" Grid.Column="1">End Time</Label>
-        <TextBox Grid.Row="6" Grid.Column="1" IsEnabled="False" x:Name="endTimeTextBox" Text="00:00"/>
-        <StackPanel Grid.Row="8" Grid.ColumnSpan="2" HorizontalAlignment="Right" Orientation="Horizontal">
+        <Label Grid.Row="6">Start Time</Label>
+        <ComboBox x:Name="startTimeComboBox" Grid.Row="7" IsEnabled="False" IsEditable="True"/>
+
+        <Label Grid.Row="6" Grid.Column="1">End Time</Label>
+        <ComboBox x:Name="endTimeComboBox" Grid.Row="7" Grid.Column="1" IsEnabled="False" IsEditable="True"/>
+        
+        <StackPanel Grid.Row="9" Grid.ColumnSpan="2" HorizontalAlignment="Right" Orientation="Horizontal">
             <Button Width="60" x:Name="createBtn" Click="createBtn_Click">Create</Button>
-            <Button Width="60" x:Name="cancelBtn">Cancel</Button>
+            <Button Width="60" x:Name="cancelBtn" Click="cancelBtn_Click">Cancel</Button>
         </StackPanel>
     </Grid>
 </Window>

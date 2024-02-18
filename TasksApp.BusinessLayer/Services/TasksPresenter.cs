@@ -34,7 +34,7 @@ namespace TasksApp.BusinessLogic.Services
             for(int i = 1; i < DateTime.DaysInMonth(year, monthNumber)+1; i++)
             {
                 var date = new DateTime(year, monthNumber, i);
-                monthTasks.Add(date, GetByDate(date, archiveIncluded));
+                monthTasks.Add(date, GetByDate(date, archiveIncluded).Where(t=>t.IsScheduled == true).ToList() ?? []);
             }
             return monthTasks;
         }
@@ -46,7 +46,7 @@ namespace TasksApp.BusinessLogic.Services
             for (int i = 0; i < 7; i++)
             {
                 var date = mondayDate.AddDays(i);
-                weekTasks.Add(date, GetByDate(date, archiveIncluded));
+                weekTasks.Add(date, GetByDate(date, archiveIncluded).Where(t => t.IsScheduled == true).ToList() ?? []);
             }
             return weekTasks;
         }

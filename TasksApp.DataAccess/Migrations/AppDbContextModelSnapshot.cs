@@ -118,6 +118,12 @@ namespace TasksApp.DataAccess.Migrations
                     b.Property<bool>("IsDone")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("IsScheduled")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsTimeBlocked")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("Priority")
                         .HasColumnType("INTEGER");
 

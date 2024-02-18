@@ -42,6 +42,17 @@ namespace TasksApp.UI.Windows
         {
             _task = _services.Get<ITasksService>().GetTaskById(_task.Id);
 
+            // init combo-boxes
+            var time = TimeOnly.MinValue;
+            for (int i = 0; i < 24*60/5; i++)
+            {
+                time = time.AddMinutes(5);
+                startTimeComboBox.Items.Add(time.ToString());
+                endTimeComboBox.Items.Add(time.ToString());
+            }
+
+
+
             // fill fields
             MarkDoneChanged();
 
@@ -55,10 +66,32 @@ namespace TasksApp.UI.Windows
             }
 
             taskTextBox.Text = _task.Text;
-            startTimeTextBox.Text = _task.StartTime.ToString();
-            endTimeTextBox.Text = _task.EndTime.ToString();
-            dueToTextBox.Text = _task.DueTo.ToString();
+            startTimeComboBox.SelectedValue = _task.StartTime.ToString();
+            endTimeComboBox.SelectedValue = _task.EndTime.ToString();
+
+
+            dueToDatePicker.SelectedDate = _task.DueTo.ToDateTime(TimeOnly.MinValue);
             selectedProjectId = _task.Project.Id;
+
+            if (_task.IsScheduled)
+            {
+                scheduledCheckBox.IsChecked = true;
+                if (_task.IsTimeBlocked)
+                {
+                    timeBlockedCheckBox.IsChecked = true;
+                }
+                else
+                {
+                    timeBlockedCheckBox.IsChecked = false;
+                }
+            }
+            else
+            {
+                dueToDatePicker.SelectedDate = DateTime.Now;
+                dueToDatePicker.IsEnabled = false;
+                scheduledCheckBox.IsChecked = false;
+            }
+
 
             // load projects to select from
             LoadProjectsList();
@@ -89,28 +122,90 @@ namespace TasksApp.UI.Windows
 
         private void saveBtn_Click(object sender, RoutedEventArgs e)
         {
-            // save
-            _task.Text = taskTextBox.Text;
-            _task.StartTime = TimeOnly.Parse(startTimeTextBox.Text);
-            _task.EndTime = TimeOnly.Parse(endTimeTextBox.Text);
-            _task.DueTo = DateOnly.Parse(dueToTextBox.Text);
-            //_task.Priority = 
-            _task.Project = _services.Get<IProjectsService>()
-                .GetProjectsList()
-                .FirstOrDefault(p => p.Id == selectedProjectId) 
-                ?? _task.Project;
+            if (CheckInput())
+            {
+                if(scheduledCheckBox.IsChecked ?? false)
+                {
+                    _task.IsScheduled = true;
+                    _task.IsTimeBlocked = timeBlockedCheckBox.IsChecked ?? false;
+                }
+                else
+                {
+                    _task.IsScheduled = false;
+                    _task.IsTimeBlocked = false;
 
-            try
-            {
-                _services.Get<ITasksService>().UpdateTask(_task);
-                // hide btn
-                SetChanged(false);
-                IsModified = true;
-            } 
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
+                }
+
+
+                if (_task.IsScheduled)
+                    _task.DueTo = DateOnly.FromDateTime(dueToDatePicker.SelectedDate ?? DateTime.MinValue);
+                else 
+                    _task.DueTo = DateOnly.MinValue;
+
+                if (_task.IsTimeBlocked)
+                {
+                    _task.StartTime = TimeOnly.Parse((string)startTimeComboBox.SelectedValue);
+                    _task.EndTime = TimeOnly.Parse((string)endTimeComboBox.SelectedValue);
+                }
+                else
+                {
+                    _task.StartTime = TimeOnly.MinValue;
+                    _task.EndTime = TimeOnly.MinValue;
+                }
+
+                // save
+                _task.Text = taskTextBox.Text;
+
+                //_task.Priority = 
+                try
+                {
+                    _task.Project = _services.Get<IProjectsService>()
+                        .GetProjectsList()
+                        .FirstOrDefault(p => p.Id == selectedProjectId)
+                        ?? _task.Project;
+
+
+                    _services.Get<ITasksService>().UpdateTask(_task);
+                    // hide btn
+                    SetChanged(false);
+                    IsModified = true;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
+        }
+
+        private bool CheckInput()
+        {
+            if(scheduledCheckBox.IsChecked ?? false)
+            {
+                if (dueToDatePicker.SelectedDate == null)
+                {
+                    MessageBox.Show("Select Due-To Date");
+                    return false;
+                }
+
+                if(timeBlockedCheckBox.IsChecked ?? false)
+                {
+                    try
+                    {
+                        var time1 = TimeOnly.Parse((string)startTimeComboBox.SelectedValue);
+                        var time2 = TimeOnly.Parse((string)endTimeComboBox.SelectedValue);
+                        if(time1 > time2)
+                        {
+                            MessageBox.Show("Start time can't be larger than end time!");
+                            return false;
+                        }
+                    } catch(Exception ex) 
+                    {
+                        MessageBox.Show("Write correct time format (HH:MM)");
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
 
         private void TextChanged(object sender, TextChangedEventArgs e)
@@ -164,25 +259,47 @@ namespace TasksApp.UI.Windows
         private void timeBlockedCheckBox_Checked(object sender, RoutedEventArgs e)
         {
             TimeBlockedStatus(timeBlockedCheckBox.IsChecked ?? false);
+            SetChanged(true);
         }
 
         void TimeBlockedStatus(bool value)
         {
             if (!value)
             {
-                endTimeTextBox.Text = TimeOnly.MinValue.ToString();
-                startTimeTextBox.Text = TimeOnly.MinValue.ToString();
-
-                startTimeTextBox.IsEnabled = false;
-                endTimeTextBox.IsEnabled = false;
+                startTimeComboBox.IsEnabled = false;
+                endTimeComboBox.IsEnabled = false;
             }
             else
             {
-                endTimeTextBox.Text = _task.EndTime.ToString();
-                startTimeTextBox.Text = _task.StartTime.ToString();
-                startTimeTextBox.IsEnabled = true;
-                endTimeTextBox.IsEnabled = true;
+                startTimeComboBox.IsEnabled = true;
+                endTimeComboBox.IsEnabled = true;
             }
+        }
+
+        private void scheduledCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (scheduledCheckBox.IsChecked ?? false)
+            {
+                dueToDatePicker.IsEnabled = true;
+                timeBlockedCheckBox.IsEnabled = true;
+            }
+            else
+            {
+                dueToDatePicker.IsEnabled = false;
+                timeBlockedCheckBox.IsChecked = false;
+                timeBlockedCheckBox.IsEnabled = false;
+            }
+            SetChanged(true);
+        }
+
+        private void dueToDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SetChanged(true);
+        }
+
+        private void endTimeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SetChanged(true);
         }
     }
 }

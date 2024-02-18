@@ -202,13 +202,18 @@ namespace TasksApp.UI.Pages
                 stack.Orientation = Orientation.Horizontal;
                 var statusBtn = new Button();
                 statusBtn.Uid = task.Id;
-                var label = new Label() 
-                { 
-                    Content = task.Text 
-                    + "- DueTo:" + task.DueTo.ToString() 
-                    + " (" + task.StartTime.ToString() 
-                    + "-" + task.EndTime.ToString() + ")"
-                };
+
+                var label = new Label();
+
+                var text = task.Text;
+                if (task.IsScheduled)
+                {
+                    text += "- DueTo:" + task.DueTo.ToString();
+                    if (task.IsTimeBlocked)
+                        text += " (" + task.StartTime.ToString()
+                            + "-" + task.EndTime.ToString() + ")";
+                }
+                label.Content = text;
 
                 var staticRes = new StaticResourceExtension();
                 if (task.IsDone)

@@ -23,6 +23,8 @@ namespace TasksApp.BusinessLogic.Services.Adapters
                 IsDone = entity.IsDone,
                 Text = entity.Text,
                 Priority = entity.Priority,
+                IsTimeBlocked = entity.IsTimeBlocked,
+                IsScheduled = entity.IsScheduled,
             };
         }
 
@@ -37,7 +39,9 @@ namespace TasksApp.BusinessLogic.Services.Adapters
                 Text = model.Text,
                 IsArchived = model.Project.IsArchived,
                 IsDone = model.IsDone,
-                ProjectId = model.Project.Id
+                ProjectId = model.Project.Id,
+                IsScheduled = model.IsScheduled,
+                IsTimeBlocked = model.IsTimeBlocked,
             };
         }
     }

@@ -15,6 +15,7 @@
             <RowDefinition Height="24"/>
             <RowDefinition Height="24"/>
             <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="24"/>
         </Grid.RowDefinitions>
@@ -32,18 +33,22 @@
             <TextBox x:Name="taskTextBox" TextChanged="TextChanged" Width="350"/>
         </StackPanel>
 
-        <Label Grid.Row="2">DueTo (Date)</Label>
-        <TextBox Grid.Row="3" Grid.ColumnSpan="2" x:Name="dueToTextBox" TextChanged="TextChanged"/>
+        <CheckBox Grid.Row="2" Grid.ColumnSpan="2" x:Name="scheduledCheckBox" Content="Scheduled" IsChecked="False" Checked="scheduledCheckBox_Checked" Unchecked="scheduledCheckBox_Checked"/>
 
-        <CheckBox x:Name="timeBlockedCheckBox" Content="Time blocked" Grid.Row="4" Checked="timeBlockedCheckBox_Checked" Unchecked="timeBlockedCheckBox_Checked"/>
+        <Label Grid.Row="3" Grid.ColumnSpan="2" >DueTo (Date)</Label>
 
-        <Label Grid.Row="5">Start Time</Label>
-        <TextBox Grid.Row="6" x:Name="startTimeTextBox" TextChanged="TextChanged"/>
+        <DatePicker x:Name="dueToDatePicker" Grid.Row="4" Grid.ColumnSpan="2" SelectedDateChanged="dueToDatePicker_SelectedDateChanged"></DatePicker>
+        
+        <CheckBox Grid.Row="5" Grid.ColumnSpan="2" IsEnabled="False" x:Name="timeBlockedCheckBox" Content="Time blocked" IsChecked="False" Checked="timeBlockedCheckBox_Checked" Unchecked="timeBlockedCheckBox_Checked"/>
 
-        <Label Grid.Row="5" Grid.Column="1">End Time</Label>
-        <TextBox Grid.Row="6" Grid.Column="1" x:Name="endTimeTextBox" TextChanged="TextChanged"/>
-                
-        <StackPanel Orientation="Horizontal" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Right">
+        <Label Grid.Row="6">Start Time</Label>
+        <ComboBox x:Name="startTimeComboBox" IsEditable="True" Grid.Row="7" SelectionChanged="endTimeComboBox_SelectionChanged"/>
+
+        <Label Grid.Row="6" Grid.Column="1">End Time</Label>
+        <ComboBox x:Name="endTimeComboBox" IsEditable="True" Grid.Row="7" Grid.Column="1" SelectionChanged="endTimeComboBox_SelectionChanged"/>
+        
+        
+        <StackPanel Orientation="Horizontal" Grid.Row="9" Grid.Column="1" HorizontalAlignment="Right">
             <Button x:Name="saveBtn" Click="saveBtn_Click" Width="60">Save</Button>
             <Button x:Name="deleteBtn" Width="24" Click="deleteBtn_Click">
                 <Image Source="{DynamicResource deleteIcon}"/>
