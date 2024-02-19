@@ -113,13 +113,15 @@ namespace TasksApp.UI.Pages
             var blockId = ((Button)sender).Uid;
             var window = new EditScheduleBlockWindow(_services, blockId);
             window.ShowDialog();
-
-            var dialog = new EnterDateDialog("Enter start date to apply new Schedule");
-            dialog.ShowDialog();
-            if (dialog.isConfirmed)
+            if (window.IsModified)
             {
-                _services.Get<IScheduleService>().UpdateFutureTasksToScheme(dialog.date.ToDateTime(TimeOnly.MinValue));
-                LoadSchedule();
+                var dialog = new EnterDateDialog("Enter start date to apply new Schedule");
+                dialog.ShowDialog();
+                if (dialog.isConfirmed)
+                {
+                    _services.Get<IScheduleService>().UpdateFutureTasksToScheme(dialog.date.ToDateTime(TimeOnly.MinValue));
+                    LoadSchedule();
+                }
             }
         }
 
@@ -127,13 +129,15 @@ namespace TasksApp.UI.Pages
         {
             var window = new AddScheduleBlockWindow(_services);
             window.ShowDialog();
-
-            var dialog = new EnterDateDialog("Enter start date to apply new Schedule");
-            dialog.ShowDialog();
-            if (dialog.isConfirmed)
+            if(window.IsModified)
             {
-                _services.Get<IScheduleService>().UpdateFutureTasksToScheme(dialog.date.ToDateTime(TimeOnly.MinValue));
-                LoadSchedule();
+                var dialog = new EnterDateDialog("Enter start date to apply new Schedule");
+                dialog.ShowDialog();
+                if (dialog.isConfirmed)
+                {
+                    _services.Get<IScheduleService>().UpdateFutureTasksToScheme(dialog.date.ToDateTime(TimeOnly.MinValue));
+                    LoadSchedule();
+                }
             }
         }
 

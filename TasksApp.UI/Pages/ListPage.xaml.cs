@@ -349,9 +349,15 @@ namespace TasksApp.UI.Pages
 
         private void addTaskBtn_Click(object sender, RoutedEventArgs e)
         {
-            var window = new NewTaskWindow(_services, selectedProjectId);
-            window.ShowDialog();
-            LoadTasks(selectedProjectId);
+            if (!string.IsNullOrEmpty(selectedProjectId))
+            {
+                var window = new NewTaskWindow(_services, selectedProjectId);
+                window.ShowDialog();
+                LoadTasks(selectedProjectId);
+            } else
+            {
+                MessageBox.Show("Select project first");
+            }
         }
 
         private void addProjectBtn_Click(object sender, RoutedEventArgs e)

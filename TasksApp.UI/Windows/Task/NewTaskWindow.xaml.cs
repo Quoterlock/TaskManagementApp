@@ -33,18 +33,9 @@ namespace TasksApp.UI.Windows
             _projectId = projectId;
             
             if (string.IsNullOrEmpty(projectId))
-            {
                 LoadProjects();
-                if(_projects.Count == 0)
-                {
-                    MessageBox.Show("Create project first!");
-                    this.Close();
-                } 
-            } 
             else
-            {
                 projectsComboBox.Visibility = Visibility.Collapsed;
-            }
 
             // init combo-boxes
             var time = TimeOnly.MinValue;
@@ -155,8 +146,11 @@ namespace TasksApp.UI.Windows
                         var time2 = TimeOnly.Parse((string)endTimeComboBox.SelectedValue);
                         if (time1 > time2)
                         {
-                            MessageBox.Show("Start time can't be larger than end time!");
-                            return false;
+                            if(time2 != TimeOnly.MinValue)
+                            {
+                                MessageBox.Show("Start time can't be larger than end time!");
+                                return false;
+                            }
                         }
                     }
                     catch (Exception ex)

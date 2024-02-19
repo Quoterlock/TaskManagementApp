@@ -40,7 +40,10 @@ namespace TasksApp.UI.Pages
             _selectedYear = DateTime.Now.Year;
 
             InitializeComponent();
-            UpdateState();
+
+            // UpdateState() is in the event in this check-boxes
+            showScheduleCheckBox.IsChecked = true;
+            showTasksCheckBox.IsChecked = true;
         }
 
         private void UpdateState()
@@ -50,7 +53,6 @@ namespace TasksApp.UI.Pages
             currentWeek.Content = "Week " + _selectedWeek.ToString() + ", " + _selectedYear.ToString();
             DisplayNotTimeBlockedTasks();
             DisplayTasksOnCanvas();
-
         }
 
         private void LoadTasks()
@@ -62,6 +64,20 @@ namespace TasksApp.UI.Pages
         private void LoadSchedule()
         {
             _scheduleTasks = _services.Get<ITasksPresenter>().GetScheduleTasksByWeek(_selectedYear, _selectedWeek);
+        }
+
+        private void SetScrollViewOffset()
+        {
+            var dateTimeNow = DateTime.Now;
+            int CurrentPosY = PosByTime(dateTimeNow.Hour, dateTimeNow.Minute, (int)mainCanvas.ActualHeight);
+
+            // set current line in screen center
+            var scrollOffset = CurrentPosY - (int)scrollViewer.ActualHeight / 2;
+            if (scrollOffset < 0)
+                scrollOffset = 0;
+            if (scrollOffset > (int)mainCanvas.ActualHeight)
+                scrollOffset = (int)mainCanvas.ActualHeight;
+            scrollViewer.ScrollToVerticalOffset(scrollOffset);
         }
 
         private void DisplayNotTimeBlockedTasks()
@@ -183,66 +199,76 @@ namespace TasksApp.UI.Pages
             }
 
             // display schedule
-            int dayCounter = 0;
-            foreach (var pair in _scheduleTasks)
+            if (showScheduleCheckBox.IsChecked ?? false)
             {
-                foreach(var task in pair.Value)
+                int dayCounter = 0;
+                foreach (var pair in _scheduleTasks)
                 {
-                    // draw task on canvas
-                    var label = new Label();
-                    label.Content = task.Text + "(" + task.StartTime.ToString() + " - " + task.EndTime.ToString() + ")";
-                    label.Width = blockWidth - blockMargin*2 < 0 ? 0 : blockWidth - blockMargin*2;
-                    label.Uid = task.Id;
-                    label.MouseDown += ScheduleTaskClicked;
-                    label.Background = ResourceManager.GetColor("scheduleBlockColor");
-                    label.Height = CalculateHeightByDuration((int)(task.EndTime - task.StartTime).TotalMinutes, canvasHeight);
-                    if (label.Height < 2) label.Height = minBlockSize;
-                    label.Height -= blockMargin * 2;
-                    Canvas.SetTop(label, PosByTime(task.StartTime.Hour, task.StartTime.Minute, canvasHeight) + blockMargin);
-                    Canvas.SetLeft(label, blockWidth * dayCounter + gridMargin + blockMargin);
-                    mainCanvas.Children.Add(label);
-                }
-                dayCounter++;
-            }
-            
-            // display tasks
-            dayCounter = 0;
-            foreach (var pair in _tasks)
-            {
-                foreach (var task in pair.Value)
-                {
-                    if (task.IsTimeBlocked)
+                    foreach (var task in pair.Value)
                     {
+                        // draw task on canvas
                         var label = new Label();
-                        label.Content = (task.IsDone? "✓ " : "") 
-                            + task.Text + "(" + task.StartTime.ToString() 
-                            + " - " + task.EndTime.ToString() + ")";
-                        label.Width = blockWidth - blockMargin*2 < 0 ? 0 : blockWidth - blockMargin*2;
+                        label.Content = task.Text + "(" + task.StartTime.ToString() + " - " + task.EndTime.ToString() + ")";
+                        label.Width = blockWidth - blockMargin * 2 < 0 ? 0 : blockWidth - blockMargin * 2;
                         label.Uid = task.Id;
-                        label.MouseDown += TaskClicked;
-                        label.Background = new SolidColorBrush() { 
-                            Color = (Color)ColorConverter.ConvertFromString(task.Project.ColorHex), 
-                            Opacity = 0.5
-                        }; //GetRandomBlockColor();
-                        if (task.EndTime == TimeOnly.MinValue && task.StartTime != task.EndTime)
-                        {
-                            label.Height = minBlockSize;
-                        }
-                        else
-                        {
-                            label.Height = CalculateHeightByDuration((int)(task.EndTime - task.StartTime).TotalMinutes, canvasHeight);
-                            if (label.Height < 2) label.Height = minBlockSize;
-                            label.Height -= blockMargin*2;
-                        }
+                        label.MouseDown += ScheduleTaskClicked;
+                        label.Background = ResourceManager.GetColor("scheduleBlockColor");
+                        label.Height = CalculateHeightByDuration((int)(task.EndTime - task.StartTime).TotalMinutes, canvasHeight);
+                        if (label.Height < 2) label.Height = minBlockSize;
+                        label.Height -= blockMargin * 2;
                         Canvas.SetTop(label, PosByTime(task.StartTime.Hour, task.StartTime.Minute, canvasHeight) + blockMargin);
                         Canvas.SetLeft(label, blockWidth * dayCounter + gridMargin + blockMargin);
                         mainCanvas.Children.Add(label);
                     }
+                    dayCounter++;
                 }
-                dayCounter++;
             }
+                       
+            // display tasks
+            if(showTasksCheckBox.IsChecked ?? false)
+            {
+                int dayCounter = 0;
+                foreach (var pair in _tasks)
+                {
+                    foreach (var task in pair.Value)
+                    {
+                        if (task.IsTimeBlocked)
+                        {
+                            var label = new Label();
+                            label.Width = blockWidth - blockMargin * 2 < 0 ? 0 : blockWidth - blockMargin * 2;
+                            label.Uid = task.Id;
+                            label.MouseDown += TaskClicked;
+                            label.Background = new SolidColorBrush()
+                            {
+                                Color = (Color)ColorConverter.ConvertFromString(task.Project.ColorHex),
+                                Opacity = 0.5
+                            }; 
 
+                            var text = (task.IsDone ? "✓ " : "") + task.Text;
+                            if (task.EndTime == TimeOnly.MinValue)
+                            {
+                                label.Height = minBlockSize;
+                                text += " (" + task.StartTime.ToString() + ")";
+                            }
+                            else
+                            {
+                                text += " (" + task.StartTime.ToString()
+                                    + " - " + task.EndTime.ToString() + ")";
+                                label.Height = CalculateHeightByDuration((int)(task.EndTime - task.StartTime).TotalMinutes, canvasHeight);
+                                if (label.Height < 2) label.Height = minBlockSize;
+                                label.Height -= blockMargin * 2;
+                            }
+                            label.Content = text;
 
+                            Canvas.SetTop(label, PosByTime(task.StartTime.Hour, task.StartTime.Minute, canvasHeight) + blockMargin);
+                            Canvas.SetLeft(label, blockWidth * dayCounter + gridMargin + blockMargin);
+                            mainCanvas.Children.Add(label);
+                        }
+                    }
+                    dayCounter++;
+                }
+            }
+            
             // draw current time line
             var dateTimeNow = DateTime.Now;
             if(_selectedWeek == GetWeekNumber(dateTimeNow) && _selectedYear == dateTimeNow.Year)
@@ -268,7 +294,7 @@ namespace TasksApp.UI.Pages
             DisplayTasksOnCanvas();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void refreshBtn_Click(object sender, RoutedEventArgs e)
         {
             UpdateState();
         }
@@ -356,6 +382,16 @@ namespace TasksApp.UI.Pages
             Random rnd = new Random();
             int index = rnd.Next(6);     // creates a number between 0 and 51
             return ResourceManager.GetColor("timeBlockColor" + index.ToString());
+        }
+
+        private void showCheckBox_Changed(object sender, RoutedEventArgs e)
+        {
+            UpdateState();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            SetScrollViewOffset();
         }
     }
 }

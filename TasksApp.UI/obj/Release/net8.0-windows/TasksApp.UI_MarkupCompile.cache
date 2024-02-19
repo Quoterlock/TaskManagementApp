@@ -1,0 +1,20 @@
+﻿TasksApp.UI
+
+
+winexe
+C#
+.cs
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\obj\Release\net8.0-windows\
+TasksApp.UI
+none
+false
+TRACE;RELEASE;NET;NET8_0;NETCOREAPP
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\App.xaml
+191823873326
+
+2795647276
+219-1828573649
+MainWindow.xaml;Pages\HomePage.xaml;Pages\ListPage.xaml;Pages\MonthViewPage.xaml;Pages\PresentationPage.xaml;Pages\SchedulePage.xaml;Pages\WeekViewPage.xaml;Windows\Category\EditCategoryWindow.xaml;Windows\Category\NewCategoryWindow.xaml;Windows\Project\EditProjectWindow.xaml;Windows\Project\NewProjectWindow.xaml;Windows\Schedule\AddScheduleBlockWindow.xaml;Windows\Schedule\EditScheduleBlockWindow.xaml;Windows\Schedule\EnterDateDialog.xaml;Windows\Schedule\ScheduleTaskDetailsWindow.xaml;Windows\SelectFolderWindow.xaml;Windows\SettingsWindow.xaml;Windows\Task\NewTaskWindow.xaml;Windows\Task\TaskDetailsWindow.xaml;
+
+False
+

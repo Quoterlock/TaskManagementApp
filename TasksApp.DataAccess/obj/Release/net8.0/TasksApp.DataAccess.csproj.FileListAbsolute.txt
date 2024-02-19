@@ -1,0 +1,15 @@
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.DataAccess\bin\Release\net8.0\TasksApp.DataAccess.deps.json
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.DataAccess\bin\Release\net8.0\TasksApp.DataAccess.runtimeconfig.json
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.DataAccess\bin\Release\net8.0\TasksApp.DataAccess.dll
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.DataAccess\bin\Release\net8.0\TasksApp.DataAccess.pdb
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.DataAccess\obj\Release\net8.0\TasksApp.DataAccess.csproj.AssemblyReference.cache
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.DataAccess\obj\Release\net8.0\TasksApp.DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.DataAccess\obj\Release\net8.0\TasksApp.DataAccess.AssemblyInfoInputs.cache
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.DataAccess\obj\Release\net8.0\TasksApp.DataAccess.AssemblyInfo.cs
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.DataAccess\obj\Release\net8.0\TasksApp.DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.DataAccess\obj\Release\net8.0\TasksApp.DataAccess.sourcelink.json
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.DataAccess\obj\Release\net8.0\TasksApp.DataAccess.dll
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.DataAccess\obj\Release\net8.0\refint\TasksApp.DataAccess.dll
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.DataAccess\obj\Release\net8.0\TasksApp.DataAccess.pdb
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.DataAccess\obj\Release\net8.0\TasksApp.DataAccess.genruntimeconfig.cache
+C:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.DataAccess\obj\Release\net8.0\ref\TasksApp.DataAccess.dll

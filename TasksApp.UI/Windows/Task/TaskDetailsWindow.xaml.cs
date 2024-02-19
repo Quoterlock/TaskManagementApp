@@ -193,12 +193,16 @@ namespace TasksApp.UI.Windows
                     {
                         var time1 = TimeOnly.Parse((string)startTimeComboBox.SelectedValue);
                         var time2 = TimeOnly.Parse((string)endTimeComboBox.SelectedValue);
-                        if(time1 > time2)
+                        if (time1 > time2)
                         {
-                            MessageBox.Show("Start time can't be larger than end time!");
-                            return false;
+                            if (time2 != TimeOnly.MinValue)
+                            {
+                                MessageBox.Show("Start time can't be larger than end time!");
+                                return false;
+                            }
                         }
-                    } catch(Exception ex) 
+                    } 
+                    catch(Exception ex) 
                     {
                         MessageBox.Show("Write correct time format (HH:MM)");
                         return false;

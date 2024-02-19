@@ -25,9 +25,11 @@ namespace TasksApp.UI.Windows.Schedule
     public partial class AddScheduleBlockWindow : Window
     {
         private readonly ServicesContainer _services;
+        public bool IsModified { get; set; }
         public AddScheduleBlockWindow(ServicesContainer services)
         {
             InitializeComponent();
+            IsModified = false;
             _services = services;
         }
 
@@ -60,6 +62,7 @@ namespace TasksApp.UI.Windows.Schedule
                 try
                 {
                     _services.Get<IScheduleService>().AddBlock(block);
+                    IsModified = true;
                     this.Close();
                 } 
                 catch (Exception ex)

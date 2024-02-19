@@ -96,7 +96,8 @@ namespace TasksApp.UI.Pages
                         cell.Height = blockHeight;
                         cell.Width = blockWidth;
 
-                        if(dayCounter == DateTime.Now.Day && _selectedYear == DateTime.Now.Year 
+                        if(dayCounter + 1 == DateTime.Now.Day 
+                            && _selectedYear == DateTime.Now.Year 
                             && _selectedMonth == DateTime.Now.Month)
                         {
                             cell.Fill = GetColor("todayHighlightColor");

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,11 +25,35 @@ namespace TasksApp.UI.Windows.Schedule
     {
         private readonly ServicesContainer _services;
         private ScheduleBlockModel _block = new();
+        
+        public bool IsModified { get; set; }    
         public EditScheduleBlockWindow(ServicesContainer services, string id)
         {
             InitializeComponent();
             _services = services;
+            IsModified = false;
             TryGetBlock(id);
+            if(!string.IsNullOrEmpty(_block.Id))
+            {
+                titleTextBox.Text = _block.Text;
+                startTimeTextBox.Text = _block.StartTime.ToString();
+                endTimeTextBox.Text = _block.EndTime.ToString();
+                var days = _block.DaysOfWeek;
+                if (days.Contains(DayOfWeek.Monday))
+                    moCheckBox.IsChecked = true;
+                if (days.Contains(DayOfWeek.Tuesday))
+                    tuCheckBox.IsChecked = true;
+                if (days.Contains(DayOfWeek.Wednesday))
+                    weCheckBox.IsChecked = true;
+                if (days.Contains(DayOfWeek.Thursday))
+                    thCheckBox.IsChecked = true;
+                if (days.Contains(DayOfWeek.Friday))
+                    frCheckBox.IsChecked = true;
+                if (days.Contains(DayOfWeek.Saturday))
+                    saCheckBox.IsChecked = true;
+                if (days.Contains(DayOfWeek.Sunday))
+                    suCheckBox.IsChecked = true;
+            }
         }
 
         private void TryGetBlock(string id)
@@ -40,14 +65,15 @@ namespace TasksApp.UI.Windows.Schedule
                     _block = _services.Get<IScheduleService>()
                         .GetCurrentSchedule()
                         .FirstOrDefault(b => b.Id == id) ?? new ScheduleBlockModel();
-                    if (_block.Id != id)
-                        this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Id is null");
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                this.Close();
             }
         }
 
@@ -55,6 +81,7 @@ namespace TasksApp.UI.Windows.Schedule
         {
             if (CheckInput())
             {
+                _block.DaysOfWeek.Clear();
                 // get days
                 if (moCheckBox.IsChecked ?? false)
                     _block.DaysOfWeek.Add(DayOfWeek.Monday);
@@ -79,6 +106,7 @@ namespace TasksApp.UI.Windows.Schedule
                 try
                 {
                     _services.Get<IScheduleService>().UpdateBlock(_block);
+                    IsModified = true;
                     this.Close();
                 }
                 catch (Exception ex)

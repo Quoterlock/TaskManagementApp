@@ -25,18 +25,20 @@ namespace TasksApp.UI.Windows.Schedule
         {
             InitializeComponent();
             messageTextBlock.Text = text;
+            datePicker.SelectedDate = DateTime.Now;
         }
 
         private void confirmBtn_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (datePicker.SelectedDate != null)
             {
-                date = DateOnly.Parse(dateTextBox.Text);
+                date = DateOnly.FromDateTime(datePicker.SelectedDate ?? DateTime.MinValue);
                 isConfirmed = true;
                 this.Close();
-            } catch (Exception ex)
+            }
+            else
             {
-                MessageBox.Show("Write date in a correct format (DD-MM-YYYY)");
+                MessageBox.Show("Select date");
             }
         }
 

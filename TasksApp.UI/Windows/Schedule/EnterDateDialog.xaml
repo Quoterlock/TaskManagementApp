@@ -18,8 +18,9 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <TextBlock x:Name="messageTextBlock" Grid.ColumnSpan="2" TextWrapping="Wrap" TextAlignment="Center"/>
-        <TextBox x:Name="dateTextBox" Grid.Row="1" Grid.ColumnSpan="2"/>
-        <Button x:Name="confirmBtn" Grid.Row="3" Click="confirmBtn_Click">Confirm</Button>
-        <Button x:Name="cancelBtn" Grid.Row="3" Grid.Column="1">Cancel</Button>
+
+        <DatePicker Grid.Row="1" Grid.ColumnSpan="2" x:Name="datePicker"/>
+        <Button x:Name="confirmBtn" Grid.Row="4" Click="confirmBtn_Click">Confirm</Button>
+        <Button x:Name="cancelBtn" Grid.Row="4" Grid.Column="1">Cancel</Button>
     </Grid>
 </Window>
