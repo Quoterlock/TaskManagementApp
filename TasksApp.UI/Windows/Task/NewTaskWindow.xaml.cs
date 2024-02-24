@@ -26,7 +26,8 @@ namespace TasksApp.UI.Windows
         private ServicesContainer _services;
         private string _projectId;
         private List<ProjectInfoModel> _projects = [];
-        public NewTaskWindow(ServicesContainer services, string projectId)
+
+        public NewTaskWindow(ServicesContainer services, string projectId, DateTime date)
         {
             InitializeComponent();
             _services = services;
@@ -41,7 +42,7 @@ namespace TasksApp.UI.Windows
             var time = TimeOnly.MinValue;
             for (int i = 0; i < 24 * 60 / 5; i++)
             {
-                if(i != 0)
+                if (i != 0)
                     time = time.AddMinutes(5);
                 startTimeComboBox.Items.Add(time.ToString());
                 endTimeComboBox.Items.Add(time.ToString());
@@ -49,6 +50,17 @@ namespace TasksApp.UI.Windows
             startTimeComboBox.SelectedIndex = 0;
             endTimeComboBox.SelectedIndex = 0;
 
+            if (date != DateTime.MinValue)
+            {
+                scheduledCheckBox.IsChecked = true;
+                dueToDatePicker.SelectedDate = date.Date;
+                if(TimeOnly.FromDateTime(date) != TimeOnly.MinValue)
+                {
+                    timeBlockedCheckBox.IsChecked = true;
+                    startTimeComboBox.Items.Add(TimeOnly.FromDateTime(date).ToString());
+                    startTimeComboBox.SelectedIndex = startTimeComboBox.Items.Count - 1;
+                }
+            }
         }
 
         private void LoadProjects()

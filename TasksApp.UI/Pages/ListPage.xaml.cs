@@ -351,7 +351,7 @@ namespace TasksApp.UI.Pages
         {
             if (!string.IsNullOrEmpty(selectedProjectId))
             {
-                var window = new NewTaskWindow(_services, selectedProjectId);
+                var window = new NewTaskWindow(_services, selectedProjectId, DateTime.MinValue);
                 window.ShowDialog();
                 LoadTasks(selectedProjectId);
             } else

@@ -1,25 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Conventions;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TasksApp.BusinessLogic.Interfaces;
 using TasksApp.BusinessLogic.Models;
 using TasksApp.UI.Services;
 using TasksApp.UI.Windows;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace TasksApp.UI.Pages
 {
@@ -32,48 +19,50 @@ namespace TasksApp.UI.Pages
         private Dictionary<DateTime, List<TaskModel>> _tasks = [];
         private int _selectedYear;
         private int _selectedMonth;
+
+        private const int baseTaskHeight = 26;
+        private const int leftCellMargin = 25;
+        private const int rows = 6; 
+        private const int columns = 7;
+
         public MonthViewPage(ServicesContainer services)
         {
             _services = services;
             _selectedYear = DateTime.Now.Year;
             _selectedMonth = DateTime.Now.Month;
             InitializeComponent();
-
             UpdateState();
         }
 
         private void UpdateState()
         {
             DateTime date = new DateTime(_selectedYear, _selectedMonth, 1);
-            string monthName = date.ToString("MMMM");
-            selectedMonthLabel.Content = monthName + " (" + date.ToString("MM") + "), " + _selectedYear.ToString();
+            selectedMonthLabel.Content = date.ToString("MMMM") + " (" + date.ToString("MM") + "), " + _selectedYear.ToString();
             LoadTasks();
             UpdateCanvas();
+        }
+
+        private void LoadTasks()
+        {
+            _tasks = _services.Get<ITasksPresenter>().GetByMonth(_selectedYear, _selectedMonth, true);
         }
 
         private void UpdateCanvas()
         {
             calendarCanvas.Children.Clear();
+
             int height = (int)calendarCanvas.ActualHeight;
             int width = (int)calendarCanvas.ActualWidth;
 
-            int rows = 6; int colns = 7;
-
-
             int blockHeight = height / rows;
-            int blockWidth = width / colns;
-
-            int baseTaskHeight = 26;
+            int blockWidth = width / columns;
 
             int defaultTasksCount = blockHeight / baseTaskHeight;
 
-            int leftCellMargin = 25;
-            int taskWidth = blockWidth - leftCellMargin;
-            if (taskWidth < 0) taskWidth = 0;
+            calendarCanvas.Background = ResourceManager.GetColor("calendarBackgroundColor");
 
-            calendarCanvas.Background = GetColor("calendarBackgroundColor");
-
-            var daysList = new List<DayOfWeek> {
+            var daysList = new List<DayOfWeek>
+            {
                 DayOfWeek.Monday, DayOfWeek.Tuesday,
                 DayOfWeek.Wednesday, DayOfWeek.Thursday,
                 DayOfWeek.Friday, DayOfWeek.Saturday,
@@ -82,6 +71,15 @@ namespace TasksApp.UI.Pages
 
             int firstDayIndex = daysList.FindIndex(d => d == _tasks.First().Key.DayOfWeek);
 
+            DrawCells(blockHeight, blockWidth, firstDayIndex);
+
+            DisplayTasks(blockHeight, blockWidth, firstDayIndex);
+
+            DrawGrid(height, width);
+        }
+
+        private void DrawCells(int blockHeight, int blockWidth, int firstDayIndex)
+        {
             // draw cells and numbers
             int dayCounter = 0;
             for (int i = 0; i < 6; i++)
@@ -96,21 +94,21 @@ namespace TasksApp.UI.Pages
                         cell.Height = blockHeight;
                         cell.Width = blockWidth;
 
-                        if(dayCounter + 1 == DateTime.Now.Day 
-                            && _selectedYear == DateTime.Now.Year 
-                            && _selectedMonth == DateTime.Now.Month)
-                        {
-                            cell.Fill = GetColor("todayHighlightColor");
-                        } 
-                        else
-                        {
-                            cell.Fill = Brushes.White;
-                        }
+                        // save the block date
+                        DateOnly blockDate = new DateOnly(_selectedYear, _selectedMonth, dayCounter + 1);
+                        cell.Uid = blockDate.ToString();
 
+                        // color block
+                        if (blockDate == DateOnly.FromDateTime(DateTime.Now))
+                            cell.Fill = ResourceManager.GetColor("todayHighlightColor");
+                        else
+                            cell.Fill = Brushes.White;
+
+                        // set position on canvas
                         Canvas.SetLeft(cell, j * blockWidth);
                         Canvas.SetTop(cell, i * blockHeight);
                         calendarCanvas.Children.Add(cell);
-                       
+
                         // draw number
                         var label = new Label();
                         label.Content = (dayCounter + 1).ToString();
@@ -122,19 +120,14 @@ namespace TasksApp.UI.Pages
                     }
                 }
             }
+        }
 
-            // draw tasks
+        private void DisplayTasks(int blockHeight, int blockWidth, int firstDayIndex)
+        {
+            int taskWidth = blockWidth - leftCellMargin;
+            if (taskWidth < 0) taskWidth = 0;
 
-            for(int i = 0; i < rows; i++)
-            {
-                for(int j = 0; j < colns; j++)
-                {
-
-                }
-            }
-
-
-            foreach(var day in _tasks)
+            foreach (var day in _tasks)
             {
                 int stepBtwTasks = baseTaskHeight;
                 if (day.Value.Count > 1)
@@ -144,12 +137,12 @@ namespace TasksApp.UI.Pages
                         stepBtwTasks = step;
                 }
 
-                for(int i = 0; i < day.Value.Count; i++)
+                for (int i = 0; i < day.Value.Count; i++)
                 {
                     var dayOfTheMonth = day.Value[i].DueTo.Day;
 
-                    var colnIndex = (dayOfTheMonth - 1 + firstDayIndex) % colns;
-                    var rowIndex = ((dayOfTheMonth - 1 + firstDayIndex) - colnIndex) / colns;
+                    var colnIndex = (dayOfTheMonth - 1 + firstDayIndex) % columns;
+                    var rowIndex = ((dayOfTheMonth - 1 + firstDayIndex) - colnIndex) / columns;
 
                     int posX = colnIndex * blockWidth + leftCellMargin;
                     var posY = rowIndex * blockHeight + stepBtwTasks * i;
@@ -162,10 +155,13 @@ namespace TasksApp.UI.Pages
                     calendarCanvas.Children.Add(item);
                 }
             }
+        }
 
+        private void DrawGrid(int height, int width)
+        {
+            int blockHeight = height / rows;
+            int blockWidth = width / columns;
 
-            // draw grid
-            // horizontal lines
             for (int i = 0; i < 6; i++)
             {
                 var line = new Line();
@@ -197,45 +193,12 @@ namespace TasksApp.UI.Pages
             if (taskWindow.IsModified) UpdateState();
         }
 
-        private Label GetTaskItem(TaskModel taskModel)
-        {
-            var label = new Label() 
-            { 
-                Content = (taskModel.IsDone ? "✓ " : "") + taskModel.Text 
-            };
-            var brush = new SolidColorBrush() {
-                Color = (Color)ColorConverter.ConvertFromString(taskModel.Project.ColorHex),
-            };
-            label.Background = brush;
-            label.BorderThickness = new Thickness(1);
-            label.Uid = taskModel.Id;
-            label.MouseDown += TaskClickedEvent;
-            return label;
-        }
-
-        private void LoadTasks()
-        {
-            _tasks = _services.Get<ITasksPresenter>().GetByMonth(_selectedYear, _selectedMonth, true);
-        }
-
-        private void calendarCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void CanvasSizeChangedEvent(object sender, SizeChangedEventArgs e)
         {
             UpdateCanvas();
         }
 
-        private Brush GetRandomBlockColor()
-        {
-            Random rnd = new Random();
-            int index = rnd.Next(6);     // creates a number between 0 and 51
-            return GetColor("timeBlockColor" + index.ToString());
-        }
-
-        private Brush GetColor(string key)
-        {
-            return (SolidColorBrush)System.Windows.Application.Current.Resources[key];
-        }
-
-        private void nextMonthBtn_Click(object sender, RoutedEventArgs e)
+        private void NextMonthBtnClickEvent(object sender, RoutedEventArgs e)
         {
             _selectedMonth++;
             if (_selectedMonth > 12)
@@ -246,7 +209,7 @@ namespace TasksApp.UI.Pages
             UpdateState();
         }
 
-        private void prevMonthBtn_Click(object sender, RoutedEventArgs e)
+        private void PreviousMonthBtnClickEvent(object sender, RoutedEventArgs e)
         {
             _selectedMonth--;
             if(_selectedMonth < 1)
@@ -257,9 +220,45 @@ namespace TasksApp.UI.Pages
             UpdateState();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void RefreshBtnClickEvent(object sender, RoutedEventArgs e)
         {
             UpdateState();
+        }
+
+        private void CanvasMouseLeftButtonDownEvent(object sender, MouseButtonEventArgs e)
+        {
+            if (e.Source.GetType() == typeof(Rectangle))
+            {
+                // block date saved in uid during the creation
+                string dateStr = ((Rectangle)e.Source).Uid;
+                try
+                {
+                    var dialog = new NewTaskWindow(_services, string.Empty, DateTime.Parse(dateStr));
+                    dialog.ShowDialog();
+                    UpdateState();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+
+        private Label GetTaskItem(TaskModel taskModel)
+        {
+            var label = new Label()
+            {
+                Content = (taskModel.IsDone ? "✓ " : "") + taskModel.Text
+            };
+            var brush = new SolidColorBrush()
+            {
+                Color = (Color)ColorConverter.ConvertFromString(taskModel.Project.ColorHex),
+            };
+            label.Background = brush;
+            label.BorderThickness = new Thickness(1);
+            label.Uid = taskModel.Id;
+            label.MouseDown += TaskClickedEvent;
+            return label;
         }
     }
 }

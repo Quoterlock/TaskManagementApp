@@ -84,7 +84,7 @@ namespace TasksApp.UI
 
         private void addBtn_Click(object sender, RoutedEventArgs e)
         {
-            var createTaskDialog = new NewTaskWindow(services, string.Empty);
+            var createTaskDialog = new NewTaskWindow(services, string.Empty, DateTime.MinValue);
             if (services.Get<IProjectsService>().GetProjectsList().Count > 0)
                 createTaskDialog.ShowDialog();
             else

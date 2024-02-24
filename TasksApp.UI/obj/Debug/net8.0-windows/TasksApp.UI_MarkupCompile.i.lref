@@ -1,22 +1,4 @@
 ﻿
-FC:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\App.xaml;;
-FC:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\MainWindow.xaml;;
-FC:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\Pages\HomePage.xaml;;
-FC:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\Pages\ListPage.xaml;;
-FC:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\Pages\MonthViewPage.xaml;;
-FC:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\Pages\PresentationPage.xaml;;
-FC:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\Pages\SchedulePage.xaml;;
+
 FC:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\Pages\WeekViewPage.xaml;;
-FC:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\Windows\Category\EditCategoryWindow.xaml;;
-FC:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\Windows\Category\NewCategoryWindow.xaml;;
-FC:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\Windows\Project\EditProjectWindow.xaml;;
-FC:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\Windows\Project\NewProjectWindow.xaml;;
-FC:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\Windows\Schedule\AddScheduleBlockWindow.xaml;;
-FC:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\Windows\Schedule\EditScheduleBlockWindow.xaml;;
-FC:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\Windows\Schedule\EnterDateDialog.xaml;;
-FC:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\Windows\Schedule\ScheduleTaskDetailsWindow.xaml;;
-FC:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\Windows\SelectFolderWindow.xaml;;
-FC:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\Windows\SettingsWindow.xaml;;
-FC:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\Windows\Task\NewTaskWindow.xaml;;
-FC:\Users\Kyrpa Vladislav\source\repos\TasksApp\TasksApp.UI\Windows\Task\TaskDetailsWindow.xaml;;
 
